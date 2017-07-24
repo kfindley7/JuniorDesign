@@ -6,14 +6,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/addons/p5.dom.min.js"></script>
     <title>PZ Tile Manager</title>
     <script>
-        var serverResponse;	// UI elements
         var someData = [];
+        var time = 0;
 
         function setup() {
-            serverResponse = createSpan();	// create a div for server responses
-            serverResponse.style('word-wrap', 'normal');
-            serverResponse.style('position', 'relative');
-            serverResponse.attribute('id','serialData');
             getData(3);								// make a request back to the server
         }
 
@@ -24,17 +20,74 @@
 
         // update the page when the server responds:
         function update(data) {
-            someData.push(data);
-            var span = document.getElementById('serialData');
-            span.innerHTML = someData;
+            var temp = data.split(' ');
+            someData.push({x: time, y: temp[1]});
+            time += 1;
+
+            //document.getElementById('serialData').innerHTML += temp;
             //serverResponse.html(someData); // put the response in the span
             getData(3);							// make another call to the server
         }
 
+
+
+
     </script>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            var dps = [];
+             // dataPoints
+
+            var chart = new CanvasJS.Chart("chartContainer",{
+                title :{
+                    text: "Live Tile Data"
+                },
+                data: [{
+                    type: "line",
+                    dataPoints: dps
+                }]
+            });
+
+            var xVal = 0;
+            var yVal = 100;
+            var updateInterval = 100;
+            var dataLength = 500; // number of dataPoints visible at any point
+
+            var updateChart = function (count) {
+                count = count || 1;
+                // count is number of times loop runs to generate random dataPoints.
+
+                for (var j = 0; j < count; j++) {
+                    yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+                    dps.push({
+                        x: xVal,
+                        y: yVal
+                    });
+                    xVal++;
+                }
+                if (dps.length > dataLength) {
+                    dps.shift();
+                }
+
+                chart.render();
+
+            };
+
+            // generates first set of dataPoints
+            updateChart(dataLength);
+
+            // update chart after specified time.
+            setInterval(function(){updateChart()}, updateInterval);
+
+        }
+    </script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
     <h2>Visualization Page</h2>
     <span id="serialData" style="word-wrap: normal; position: relative; z-index: auto"></span>
+    <div id="chartContainer" style="height: 300px; width: 100%;">
+    </div>
 </body>
 </html>
