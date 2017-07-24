@@ -88,7 +88,6 @@ body {
   text-decoration: inherit;
   letter-spacing: inherit;
   word-spacing: inherit;
-  color: inherit;
   opacity: 1;
   word-break: normal;
   word-wrap: normal;
@@ -126,6 +125,7 @@ body {
   font-style: inherit;
   font-size: 3.125em;
   font-weight: inherit;
+  color: inherit;
 }
 
 .text-2 span,
@@ -133,10 +133,12 @@ body {
   font-style: normal;
   font-size: inherit;
   font-weight: 700;
+  color: inherit;
 }
 
 .text-4 span {
   font-style: normal;
   font-size: 0.75em;
   font-weight: 700;
+  color: rgb(57, 191, 255);
 }
