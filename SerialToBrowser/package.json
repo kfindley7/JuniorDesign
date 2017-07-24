@@ -1,0 +1,15 @@
+{
+  "name": "SerialToBrowser",
+  "version": "0.0.3",
+  "author": {
+  	"name":"Tom Igoe"
+   },
+  "dependencies": {
+    "express": ">=4.0.0",
+    "serialport" : "*"
+  },
+  "engines": {
+    "node": "*",
+    "npm": "*"
+  }
+}

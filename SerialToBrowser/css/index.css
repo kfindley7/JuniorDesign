@@ -1,0 +1,142 @@
+body {
+  height: 100%;
+  background: url('../images/honeycomb.jpg') rgb(255, 255, 255);
+  background-repeat: repeat-x;
+  background-size: 565.5px 810px;
+  background-position: left top;
+  font: 400 1em/1.38 Helvetica;
+  color: rgb(0, 0, 0);
+}
+
+.text {
+  margin-right: auto;
+  margin-left: auto;
+  font-size: 1em;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+._button {
+  display: block;
+  float: left;
+  clear: both;
+  width: 12%;
+  height: 34px;
+  margin: 62px 0 0 44%;
+  border-radius: 3px;
+  background-color: rgb(222, 222, 222);
+  font-size: 1em;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+._input {
+  display: block;
+  float: left;
+  clear: both;
+  height: 35px;
+  margin-left: 36.39871%;
+  padding: 0 10px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 2px;
+  background: rgb(255, 255, 255);
+  font-size: 0.813em;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+.text-1 {
+  margin-top: 105px;
+}
+
+.text-2 {
+  margin-top: 25px;
+}
+
+.text-3 {
+  margin-top: 84px;
+}
+
+.text-4 {
+  width: 13.6%;
+  min-height: 20px;
+  margin-top: 45px;
+}
+
+._input-1 {
+  width: 27.2%;
+}
+
+._input-2 {
+  width: 27.1993534482%;
+}
+
+.text span {
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-color: transparent;
+  border-style: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: transparent;
+  font-family: inherit;
+  text-transform: inherit;
+  text-decoration: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  color: inherit;
+  opacity: 1;
+  word-break: normal;
+  word-wrap: normal;
+  white-space: normal;
+}
+
+.text strong {
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-color: transparent;
+  border-style: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: transparent;
+  font-family: inherit;
+  font-style: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  text-decoration: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  color: inherit;
+  opacity: 1;
+  word-break: normal;
+  word-wrap: normal;
+  white-space: normal;
+}
+
+.text-1 span {
+  font-style: inherit;
+  font-size: 3.125em;
+  font-weight: inherit;
+}
+
+.text-2 span,
+.text-3 span {
+  font-style: normal;
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.text-4 span {
+  font-style: normal;
+  font-size: 0.75em;
+  font-weight: 700;
+}
