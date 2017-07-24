@@ -18,8 +18,9 @@ modified 10 Jun 2015
 by Tom Igoe
 */
 
-var express = require('express');				// include express.js
-var app = express();								  	// a local instance of it
+var express = require('express');
+var app = express();
+require('events').EventEmitter.defaultMaxListeners = 0;
 
 // serial port initialization:
 var serialport = require('serialport');	// include the serialport library

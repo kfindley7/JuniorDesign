@@ -5,7 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/addons/p5.dom.min.js"></script>
     <title>PZ Tile Manager</title>
-    <script>
+    <script type="text/javascript">
         var someData = [];
         var time = 0;
 
@@ -21,25 +21,21 @@
         // update the page when the server responds:
         function update(data) {
             var temp = data.split(' ');
-            someData.push({x: time, y: temp[1]});
+            someData.push(temp[1]);
             time += 1;
-
-            //document.getElementById('serialData').innerHTML += temp;
-            //serverResponse.html(someData); // put the response in the span
+            updateChart(someData, 1);
+            if (someData.length >= 100) {
+                return;
+            }
             getData(3);							// make another call to the server
         }
-
-
-
-
-    </script>
-    <script type="text/javascript">
+    <!--<script type="text/javascript">-->
         window.onload = function () {
 
-            var dps = [];
+            this.dps = [];
              // dataPoints
 
-            var chart = new CanvasJS.Chart("chartContainer",{
+            this.chart = new CanvasJS.Chart("chartContainer",{
                 title :{
                     text: "Live Tile Data"
                 },
@@ -48,40 +44,41 @@
                     dataPoints: dps
                 }]
             });
+            this.chart.render();
 
-            var xVal = 0;
-            var yVal = 100;
-            var updateInterval = 100;
-            var dataLength = 500; // number of dataPoints visible at any point
+        };
 
-            var updateChart = function (count) {
-                count = count || 1;
-                // count is number of times loop runs to generate random dataPoints.
+        var xVal = 0;
+        var yVal = 0;
+        var roundNum = 0;
+        //var updateInterval = 100;
+        var dataLength = 500; // number of dataPoints visible at any point
 
-                for (var j = 0; j < count; j++) {
-                    yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-                    dps.push({
-                        x: xVal,
-                        y: yVal
-                    });
-                    xVal++;
+        var updateChart = function (data, count) {
+            count = count || 1;
+
+            for (var j = 0; j < count; j++) {
+                if (someData.length <= 100) {
+                    yVal = parseFloat(someData[someData.length - 1]);
+                    if ((someData.length % 100) === 0) {
+                        roundNum++;
+                    }
+                } else {
+                    yVal = parseFloat(someData[roundNum][someData.length - 1]);
                 }
-                if (dps.length > dataLength) {
-                    dps.shift();
-                }
+                this.dps.push({x: xVal, y: yVal});
+                xVal += 0.01;
+            }
+            if (this.dps.length > dataLength) {
+                this.dps.shift();
+            }
 
-                chart.render();
+            this.chart.render();
 
-            };
+        };
 
-            // generates first set of dataPoints
-            updateChart(dataLength);
+        </script>
 
-            // update chart after specified time.
-            setInterval(function(){updateChart()}, updateInterval);
-
-        }
-    </script>
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
