@@ -1,6 +1,6 @@
 body {
   height: 100%;
-  background: url('../images/honeycomb.jpg') rgb(255, 255, 255);
+  background: url('honeycomb.jpg') rgb(255, 255, 255);
   background-repeat: repeat-x;
   background-size: 565.5px 810px;
   background-position: left top;

@@ -40,7 +40,7 @@ var myPort = new SerialPort(portName, portConfig);
 function getSensorReading(request, response) {
 	// the parameter after /device/ is the channel number:
 	var channel = request.params.channel;
-	console.log("getting channel: "+ channel + "...");
+	//console.log("getting channel: "+ channel + "...");
 
 	// send the channel number out the serial port
 	//and wait for a response:
