@@ -7,11 +7,13 @@
     <title>Visualization Page</title>
     <script>
         var label, serverResponse;	// UI elements
+        var someData = [];
 
         function setup() {
             label = createSpan("Serial Data:");	// the label
             label.position(10,20);				// position it
             serverResponse = createSpan();	// create a div for server responses
+            serverResponse.style('word-wrap', 'normal');
             serverResponse.position(label.width + 15, 20);		// position it
             getData(3);								// make a request back to the server
         }
@@ -23,7 +25,9 @@
 
         // update the page when the server responds:
         function update(data) {
-            serverResponse.html(data);		// put the response in the span
+            someData.push(data);
+            serverResponse.html(someData);
+            //serverResponse.html(data);		// put the response in the span
             getData(3);							// make another call to the server
         }
 
