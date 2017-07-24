@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/addons/p5.dom.min.js"></script>
-    <title>Visualization Page</title>
+    <title>PZ Tile Manager</title>
     <script>
-        var label, serverResponse;	// UI elements
+        var serverResponse;	// UI elements
         var someData = [];
 
         function setup() {
-            label = createSpan("Serial Data:");	// the label
-            label.position(10,20);				// position it
             serverResponse = createSpan();	// create a div for server responses
             serverResponse.style('word-wrap', 'normal');
-            serverResponse.position(label.width + 15, 20);		// position it
+            serverResponse.style('position', 'relative');
+            serverResponse.attribute('id','serialData');
             getData(3);								// make a request back to the server
         }
 
@@ -26,14 +25,16 @@
         // update the page when the server responds:
         function update(data) {
             someData.push(data);
-            serverResponse.html(someData);
-            //serverResponse.html(data);		// put the response in the span
+            var span = document.getElementById('serialData');
+            span.innerHTML = someData;
+            //serverResponse.html(someData); // put the response in the span
             getData(3);							// make another call to the server
         }
 
     </script>
 </head>
 <body>
-
+    <h2>Visualization Page</h2>
+    <span id="serialData" style="word-wrap: normal; position: relative; z-index: auto"></span>
 </body>
 </html>
