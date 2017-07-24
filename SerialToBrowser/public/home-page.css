@@ -5,10 +5,12 @@ body {
 }
 
 .text {
+  position: relative;
   float: left;
+  z-index: 0;
   width: 18.25%;
   min-height: 46px;
-  margin: 9px 0 0 1%;
+  margin: 9px 0 0 0.93112%;
   font-size: 1em;
   color: rgb(0, 0, 0);
 }
@@ -16,14 +18,45 @@ body {
 ._button {
   display: block;
   float: left;
-  width: 16.7999999999%;
-  height: 57px;
-  margin-left: 63.94922%;
-  border-radius: 3px;
-  background-color: rgb(222, 222, 222);
   font-size: 1em;
   text-align: center;
   color: rgb(0, 0, 0);
+}
+
+._button-1 {
+  position: relative;
+  z-index: 1;
+  width: 16.7999999999%;
+  height: 57px;
+  margin-left: 64.01679%;
+  border-radius: 3px;
+  background-color: rgb(222, 222, 222);
+}
+
+._button-2 {
+  position: relative;
+  clear: both;
+  z-index: 2;
+  width: 480px;
+  height: 54px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: rgb(145, 183, 249);
+}
+
+._button-3 {
+  width: 480px;
+  height: 54px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: rgb(145, 183, 249);
+}
+
+._button-4 {
+  position: relative;
+  z-index: 4;
+  width: 480px;
+  height: 54px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: rgb(145, 183, 249);
 }
 
 .text strong {
