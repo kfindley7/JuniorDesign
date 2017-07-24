@@ -1,7 +1,7 @@
 body {
     min-width: none;
     min-height: nonepx;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(194, 214, 248);
     font: 400 1em/1.38 Helvetica;
     color: rgb(0, 0, 0);
     -webkit-transform: none;
@@ -26,7 +26,7 @@ body {
     clear: both;
     width: 100.4081632653%;
     height: 628px;
-    margin-top: 24px;
+    margin: 7px 0 0 -0.40816%;
 }
 
 .text {
@@ -35,7 +35,7 @@ body {
     z-index: 0;
     width: 27.2108843537%;
     min-height: 46px;
-    margin: 9px 0 0 19.60034%;
+    margin: 2px 0 0 20%;
     font-size: 1em;
     color: rgb(0, 0, 0);
 }
@@ -43,11 +43,8 @@ body {
 ._button {
     display: block;
     position: relative;
-    width: 16.7995323129%;
-    height: 57px;
+    float: left;
     border: 1px solid rgb(0, 0, 0);
-    border-radius: 2px;
-    background-color: rgb(222, 222, 222);
     font-size: 1em;
     text-align: center;
     color: rgb(0, 0, 0);
@@ -55,18 +52,52 @@ body {
 
 ._button-1 {
     z-index: 2;
-    float: left;
+    width: 16.7995323129%;
+    height: 57px;
+    margin: -7px 0 0 -0.40604%;
+    border-radius: 2px;
+    background-color: rgb(222, 222, 222);
 }
 
 ._button-2 {
+    clear: both;
     z-index: 1;
-    margin-left: 19.58546%;
-    float: right;
+    width: 16.7995323129%;
+    height: 57px;
+    margin: -57px 0 0 83.51935%;
+    border-radius: 2px;
+    background-color: rgb(222, 222, 222);
+}
+
+._button-3 {
+    clear: both;
+    z-index: 4;
+    width: 492px;
+    height: 54px;
+    margin-left: -1.1554%;
+    background-color: rgb(145, 183, 249);
+}
+
+._button-4 {
+    z-index: 5;
+    width: 492px;
+    height: 54px;
+    background-color: rgb(145, 183, 249);
+}
+
+._button-5 {
+    clear: both;
+    z-index: 6;
+    width: 492px;
+    height: 54px;
+    margin: -54px 0 0 66.9324%;
+    background-color: rgb(145, 183, 249);
 }
 
 @media(max-width: 1200px) {
     .container {
-        margin-top: 0;
+        margin-top: 24px;
+        margin-left: 0;
     }
 
     .text {
@@ -83,12 +114,29 @@ body {
     ._button-1 {
         z-index: 2;
         margin-top: 6px;
+        margin-left: 0;
     }
 
     ._button-2 {
-        clear: both;
         z-index: 1;
         margin-top: -105px;
         margin-left: 101.91927%;
+    }
+
+    ._button-3 {
+        z-index: 4;
+        margin-top: -54px;
+        margin-left: -4.08073%;
+    }
+
+    ._button-4 {
+        z-index: 5;
+        margin-top: -54px;
+        margin-left: 35.91667%;
+    }
+
+    ._button-5 {
+        z-index: 6;
+        margin-left: 75.91667%;
     }
 }
