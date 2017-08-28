@@ -1,3 +1,11 @@
+<!--Kaley Findley-->
+<!--Mon. 8/28-->
+
+
+<!--Commented out the serial port functionality so you don't need the actual Arduino-->
+<!--to run the app itself. This functionality will soon go away once Matt gives us access.-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,80 +14,80 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/addons/p5.dom.min.js"></script>
     <link rel="stylesheet" href="visualization-page.css">
     <title>PZ Tile Manager</title>
-    <script type="text/javascript">
-        var someData = [];
-        var time = 0;
-
-        function setup() {
-            getData(3);								// make a request back to the server
-        }
-
-        // this function makes a call to the server:
-        function getData(channel) {
-            httpGet('/device/' + channel, update);
-        }
-
-        // update the page when the server responds:
-        function update(data) {
-            var temp = data.split(' ');
-            someData.push(temp[1]);
-            time += 1;
-            updateChart(someData, 1);
-            if (someData.length >= 100) {
-                return;
-            }
-            getData(3);							// make another call to the server
-        }
     <!--<script type="text/javascript">-->
-        window.onload = function () {
+        <!--var someData = [];-->
+        <!--var time = 0;-->
 
-            this.dps = [];
-             // dataPoints
+        <!--function setup() {-->
+            <!--getData(3);								// make a request back to the server-->
+        <!--}-->
 
-            this.chart = new CanvasJS.Chart("chartContainer",{
-                title :{
-                    text: "Live Tile Data"
-                },
-                data: [{
-                    type: "line",
-                    dataPoints: dps
-                }]
-            });
-            this.chart.options.backgroundColor = 'rgb(225, 232, 251)';
-            this.chart.render();
+        <!--// this function makes a call to the server:-->
+        <!--function getData(channel) {-->
+            <!--httpGet('/device/' + channel, update);-->
+        <!--}-->
 
-        };
+        <!--// update the page when the server responds:-->
+        <!--function update(data) {-->
+            <!--var temp = data.split(' ');-->
+            <!--someData.push(temp[1]);-->
+            <!--time += 1;-->
+            <!--updateChart(someData, 1);-->
+            <!--if (someData.length >= 100) {-->
+                <!--return;-->
+            <!--}-->
+            <!--getData(3);							// make another call to the server-->
+        <!--}-->
+    <!--&lt;!&ndash;<script type="text/javascript">&ndash;&gt;-->
+        <!--window.onload = function () {-->
 
-        var xVal = 0;
-        var yVal = 0;
-        var roundNum = 0;
-        //var updateInterval = 100;
-        var dataLength = 500; // number of dataPoints visible at any point
+            <!--this.dps = [];-->
+             <!--// dataPoints-->
 
-        var updateChart = function (data, count) {
-            count = count || 1;
+            <!--this.chart = new CanvasJS.Chart("chartContainer",{-->
+                <!--title :{-->
+                    <!--text: "Live Tile Data"-->
+                <!--},-->
+                <!--data: [{-->
+                    <!--type: "line",-->
+                    <!--dataPoints: dps-->
+                <!--}]-->
+            <!--});-->
+            <!--this.chart.options.backgroundColor = 'rgb(225, 232, 251)';-->
+            <!--this.chart.render();-->
 
-            for (var j = 0; j < count; j++) {
-                if (someData.length <= 100) {
-                    yVal = parseFloat(someData[someData.length - 1]);
-                    if ((someData.length % 100) === 0) {
-                        roundNum++;
-                    }
-                } else {
-                    yVal = parseFloat(someData[roundNum][someData.length - 1]);
-                }
-                this.dps.push({x: xVal, y: yVal});
-                xVal += 0.01;
-            }
-            if (this.dps.length > dataLength) {
-                this.dps.shift();
-            }
+        <!--};-->
 
-            this.chart.render();
+        <!--var xVal = 0;-->
+        <!--var yVal = 0;-->
+        <!--var roundNum = 0;-->
+        <!--//var updateInterval = 100;-->
+        <!--var dataLength = 500; // number of dataPoints visible at any point-->
 
-        };
+        <!--var updateChart = function (data, count) {-->
+            <!--count = count || 1;-->
 
-        </script>
+            <!--for (var j = 0; j < count; j++) {-->
+                <!--if (someData.length <= 100) {-->
+                    <!--yVal = parseFloat(someData[someData.length - 1]);-->
+                    <!--if ((someData.length % 100) === 0) {-->
+                        <!--roundNum++;-->
+                    <!--}-->
+                <!--} else {-->
+                    <!--yVal = parseFloat(someData[roundNum][someData.length - 1]);-->
+                <!--}-->
+                <!--this.dps.push({x: xVal, y: yVal});-->
+                <!--xVal += 0.01;-->
+            <!--}-->
+            <!--if (this.dps.length > dataLength) {-->
+                <!--this.dps.shift();-->
+            <!--}-->
+
+            <!--this.chart.render();-->
+
+        <!--};-->
+
+        <!--</script>-->
 
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
