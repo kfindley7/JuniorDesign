@@ -1,3 +1,8 @@
+/*
+* Kaley Findley
+* Mon. 9/4
+* */
+
 $(function() {
     var $usernameInput = $('.js-username');
     var $passwordInput = $('.js-password');
