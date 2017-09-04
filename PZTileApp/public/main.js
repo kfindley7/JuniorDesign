@@ -1,11 +1,13 @@
-$(function () {
+$(function() {
     var $usernameInput = $('.js-username');
     var $passwordInput = $('.js-password');
 
     var username;
     var password;
+    var currentGames;
 
     var $loginButton = $('.js-login');
+    var $listGames = $('.js-list-of-games');
 
     var socket = io();
 
@@ -20,8 +22,9 @@ $(function () {
             // $homePage.show();
             // $loginPage.off('click');
             console.log("HI");
-            socket.emit('user logged in');
-            window.location = 'home-page.html';
+            socket.emit('user logged in', username, password);
+            // $(window).location = 'home-page.html';
+            // socket.emit('get list of games');
         }
     }
 
@@ -29,19 +32,16 @@ $(function () {
         loginAttempt();
     });
 
-    var $listGames = $('.js-list-of-games');
-
     // var listOfGames = ['ESCAPE FROM MARS', 'MINING FOR RESOURCES', 'ROCKET JUMP',
     //     'SCAVENGER HUNT', 'SIMON SAYS', 'SPACEFOOD SQUEEZE', 'SPACE INVADERS',
     //     'SPACE TRIVIA', 'WHACK-A-MOLE', 'GALAGA', 'PACMAN'];
 
     function showGames(aList) {
-        // var container = document.getElementById('listGames');
         var start = 2;
         var img = 1;
         for (var i = 0; i < aList.length; i++) {
-            $listGames.append("<div class=\"element js-game1\"><p style=\"padding-left: 0.5%\" class=\"text text-"+ start +"\">" + listOfGames[i] + "</p>\n" +
-                "      <p class=\"text text-"+ (start + 1) +"\"><span>Edit Game</span></p>\n" +
+            $listGames.append("<div class=\"element js-game1\"><p style=\"padding-left: 0.5%\" class=\"text text-" + start + "\">" + aList[i] + "</p>\n" +
+                "      <p class=\"text text-" + (start + 1) + "\"><span>Edit Game</span></p>\n" +
                 "      <img class=\"image image-1\" src=\"android-arrow-dropright.png\">\n" +
                 "    </div>");
             start += 2;
@@ -51,13 +51,18 @@ $(function () {
 
     socket.on('show home page', function () {
         console.log("HOME PAGE");
-        // window.location = 'home-page.html';
-        socket.emit('get list of games');
+        window.location = 'home-page.html';
+        // socket.emit('get list of games');
     });
 
-    socket.on('got games', function (games) {
-        showGames(games);
-    })
+    $.fn.getGames = function () {
+        socket.emit('get list of games');
+        socket.on('got games', function (games) {
+            // $.fn.currentGames = games;
+            console.log("ughhhhh", games);
+            showGames(games);
+        });
+    };
 
 });
 

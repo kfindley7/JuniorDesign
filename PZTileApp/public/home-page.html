@@ -13,7 +13,8 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-  <script type="application/javascript" src="main.js"></script>
+  <script type="application/javascript" src="main.js">
+  </script>
 </head>
 <body class="body page-home-page clearfix">
   <p class="text"><strong>HOME PAGE</strong></p>
@@ -22,7 +23,12 @@
   <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
   <button class="_button js-sensing-button">Sensing</button>
 
-  <div class="js-list-of-games">
+  <div id="listGames" class="js-list-of-games">
+    <script>
+      $(window).load(function () {
+          $(window).getGames();
+      })
+    </script>
   </div>
 </body>
 </html>

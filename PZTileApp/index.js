@@ -28,14 +28,14 @@ io.on('connection', function(socket) {
     socket.on('user logged in', function(username, password) {
         socket.username = username;
         socket.password = password;
-        console.log("LOGGED IN");
-        socket.broadcast.emit('show home page');
+        console.log("LOGGED IN", socket.username);
+        socket.emit('show home page');
     });
 
     socket.on('get list of games', function () {
         // query mongo db for games
         console.log("GAMESSSSSSSs");
-        socket.broadcast.emit('got games', ['ESCAPE FROM MARS', 'MINING FOR RESOURCES', 'ROCKET JUMP',
+        socket.emit('got games', ['ESCAPE FROM MARS', 'MINING FOR RESOURCES', 'ROCKET JUMP',
             'SCAVENGER HUNT', 'SIMON SAYS', 'SPACEFOOD SQUEEZE', 'SPACE INVADERS',
             'SPACE TRIVIA', 'WHACK-A-MOLE', 'GALAGA', 'PACMAN']);
     });
