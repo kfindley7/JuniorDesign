@@ -10,7 +10,10 @@
   <link rel="stylesheet" href="standardize.css">
   <link rel="stylesheet" href="home-page-grid.css">
   <link rel="stylesheet" href="home-page.css">
-  <script type="application/javascript" src="home.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <script type="application/javascript" src="main.js"></script>
 </head>
 <body class="body page-home-page clearfix">
   <p class="text"><strong>HOME PAGE</strong></p>
@@ -19,8 +22,7 @@
   <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
   <button class="_button js-sensing-button">Sensing</button>
 
-  <div id='listGames' class="js-list-of-games">
-    <script>showGames();</script>
+  <div class="js-list-of-games">
   </div>
 </body>
 </html>

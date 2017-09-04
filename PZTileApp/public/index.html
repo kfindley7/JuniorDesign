@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/p5.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/p5.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/addons/p5.dom.min.js"></script>
+    <script src="main.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0">
     <title>PZ Tile Manager</title>
     <link rel="stylesheet" href="standardize.css">
     <link rel="stylesheet" href="index-grid.css">
     <link rel="stylesheet" href="index.css">
-
 	</head>
     <body class="body page-index clearfix">
         <p class="text text-1"><span>PZ TILE MANAGER</span></p>
         <p class="text text-2"><span>Username</span></p>
-        <input class="_input _input-1 js-username" name="username" type="text">
+        <input id="username" class="_input _input-1 js-username" name="username" type="text">
         <p class="text text-3"><span>Password</span></p>
-        <input class="_input _input-2 js-password" name="password" type="password">
+        <input id="password" class="_input _input-2 js-password" name="password" type="password">
         <p class="text text-4"><span>Forgot Password?</span></p>
-        <button onClick="window.location='home-page.html';" class="_button js-login">Login</button>
+        <button class="_button js-login">Login</button>
     </body>
 </html>
