@@ -1,0 +1,154 @@
+/*
+Created by John Cody Berry on Monday, September 4, 2017
+*/
+
+body {
+    background-color: rgb(255, 255, 255);
+    font: 400 1em/1.38 Helvetica;
+    color: rgb(0, 0, 0);
+}
+
+.header-logout-back {
+    z-index: 0;
+    width: auto;
+    min-width: 100%;
+}
+
+.nav-buttons {
+    z-index: 1;
+    width: auto;
+    min-width: 100%;
+}
+
+.activity-fields {
+    z-index: 2;
+    width: auto;
+    min-width: 100%;
+    text-align: center;
+}
+
+.activity-text-header {
+    font-weight: bold;
+    font-size: 150%;
+}
+
+.activity-text {
+    z-index: 3;
+    width: auto;
+    min-width: 100%;
+}
+
+.save-buttons {
+    width: auto;
+    min-width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.js-back-button {
+    width: 16%;
+    min-width: 16%;
+    min-height: 3em;
+    border-radius: 1px;
+    position: relative;
+    float: left;
+    background-color: rgb(222, 222, 222);
+}
+
+.js-logout-button {
+    width: auto;
+    min-width: 16%;
+    min-height: 3em;
+    position: relative;
+    float: right;
+    border-radius: 1px;
+    background-color: rgb(222, 222, 222);
+}
+
+.js-edit-task-button {
+    clear: both;
+    width: auto;
+    min-width: 33.33%;
+    height: 54px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(145, 183, 249);
+}
+
+.js-visual-button {
+    width: auto;
+    min-width: 33.33%;
+    height: 54px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(145, 183, 249);
+}
+
+.js-sensing-button {
+    width: auto;
+    min-width: 33.33%;
+    height: 54px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(145, 183, 249);
+}
+
+._button {
+    display: block;
+    position: relative;
+    float: left;
+    font-size: 1em;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.save_activity_button {
+    width: auto;
+    min-width: 100%;
+    height: 54px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(145, 183, 249);
+}
+
+.text {
+    position: relative;
+    float: left;
+}
+
+.text-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 3em;
+    z-index: 0;
+    width: 68%;
+    position: relative;
+    margin-left: auto;
+    margin-right:auto;
+    float: left;
+    text-align: center;
+}
+
+.text strong {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-color: transparent;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: transparent;
+    font-family: inherit;
+    font-style: inherit;
+    font-size: 2.188em;
+    font-weight: 700;
+    text-transform: inherit;
+    text-decoration: inherit;
+    letter-spacing: inherit;
+    word-spacing: inherit;
+    color: #000000;
+    opacity: 1;
+    word-break: normal;
+    word-wrap: normal;
+    white-space: normal;
+}
