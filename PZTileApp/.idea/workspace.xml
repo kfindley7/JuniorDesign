@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f115b2c0-3af6-4d92-9f37-89ed2f5cfed0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/Create_Activity.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/Create_Activity.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/Create_Activity.html" afterPath="$PROJECT_DIR$/public/Create_Activity.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -43,8 +43,8 @@
       <file leaf-file-name="Create_Activity.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/Create_Activity.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1710">
-              <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+            <state relative-caret-position="120">
+              <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -53,8 +53,8 @@
       <file leaf-file-name="Create_Activity.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/Create_Activity.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="99" lean-forward="true" selection-start-line="25" selection-start-column="99" selection-end-line="25" selection-end-column="99" />
+            <state relative-caret-position="326">
+              <caret line="27" column="42" lean-forward="true" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -126,8 +126,8 @@
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/public/home-page.css" />
         <option value="$PROJECT_DIR$/public/home-page.html" />
-        <option value="$PROJECT_DIR$/public/Create_Activity.html" />
         <option value="$PROJECT_DIR$/public/Create_Activity.css" />
+        <option value="$PROJECT_DIR$/public/Create_Activity.html" />
       </list>
     </option>
   </component>
@@ -220,12 +220,12 @@
       <workItem from="1504023291039" duration="99000" />
       <workItem from="1504023441446" duration="18000" />
       <workItem from="1504023474607" duration="314000" />
-      <workItem from="1504549340667" duration="6740000" />
+      <workItem from="1504549340667" duration="8193000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7171000" />
+    <option name="totallyTimeSpent" value="8624000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="812" extended-state="0" />
@@ -318,14 +318,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/visualization-page.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-283">
-          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/home-page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -345,18 +337,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/visualization-page.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-283">
+          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/Create_Activity.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1710">
-          <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+        <state relative-caret-position="120">
+          <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Create_Activity.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="99" lean-forward="true" selection-start-line="25" selection-start-column="99" selection-end-line="25" selection-end-column="99" />
+        <state relative-caret-position="326">
+          <caret line="27" column="42" lean-forward="true" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
           <folding />
         </state>
       </provider>
