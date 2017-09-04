@@ -18,11 +18,13 @@ $(function() {
         //query mongodb
         console.log("USERNAME ", username);
 
-        if (username) {
+        socket.emit('login check', username, password);
+
+        if (username && password) {
             // $homePage.show();
             // $loginPage.off('click');
             console.log("HI");
-            socket.emit('user logged in', username, password);
+            socket.emit('login check', username, password);
             // $(window).location = 'home-page.html';
             // socket.emit('get list of games');
         }
@@ -30,6 +32,10 @@ $(function() {
 
     $loginButton.click(function() {
         loginAttempt();
+    });
+
+    socket.on('login success', function () {
+        socket.emit('user logged in', username, password);
     });
 
     // var listOfGames = ['ESCAPE FROM MARS', 'MINING FOR RESOURCES', 'ROCKET JUMP',
@@ -58,8 +64,6 @@ $(function() {
     $.fn.getGames = function () {
         socket.emit('get list of games');
         socket.on('got games', function (games) {
-            // $.fn.currentGames = games;
-            console.log("ughhhhh", games);
             showGames(games);
         });
     };
