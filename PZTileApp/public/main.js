@@ -1,6 +1,6 @@
 /*
 * Kaley Findley
-* Mon. 9/4
+* Tues. 9/5
 * */
 
 $(function() {
@@ -9,32 +9,24 @@ $(function() {
 
     var username;
     var password;
-    var currentGames;
 
     var $loginButton = $('.js-login');
     var $listGames = $('.js-list-of-games');
 
     var socket = io();
 
+    // check is login credentials are correct
+    // send socket message 'login check' to index.js in order to query DB
     function loginAttempt() {
         username = $usernameInput.val();
         password = $passwordInput.val();
 
-        //query mongodb
-        console.log("USERNAME ", username);
-
-        socket.emit('login check', username, password);
-
         if (username && password) {
-            // $homePage.show();
-            // $loginPage.off('click');
-            console.log("HI");
             socket.emit('login check', username, password);
-            // $(window).location = 'home-page.html';
-            // socket.emit('get list of games');
         }
     }
 
+    // when a user clicks the login button, start login check functionality
     $loginButton.click(function() {
         loginAttempt();
     });
@@ -43,10 +35,12 @@ $(function() {
         socket.emit('user logged in', username, password);
     });
 
-    // var listOfGames = ['ESCAPE FROM MARS', 'MINING FOR RESOURCES', 'ROCKET JUMP',
-    //     'SCAVENGER HUNT', 'SIMON SAYS', 'SPACEFOOD SQUEEZE', 'SPACE INVADERS',
-    //     'SPACE TRIVIA', 'WHACK-A-MOLE', 'GALAGA', 'PACMAN'];
+    socket.on('login unsuccessful', function() {
+        // put some pop up here to alert user of login failure
+       console.log("LOGIN FAILED WRONG USER/PASS");
+    });
 
+    // add games to home-page.html after querying the DB
     function showGames(aList) {
         var start = 2;
         var img = 1;
@@ -60,12 +54,14 @@ $(function() {
         }
     }
 
+    // receives show home page message from index.js and switches to that page
     socket.on('show home page', function () {
         console.log("HOME PAGE");
         window.location = 'home-page.html';
-        // socket.emit('get list of games');
     });
 
+    // this function is called directly through the html to ensure
+    // home page is fully loaded before html is updated with games
     $.fn.getGames = function () {
         socket.emit('get list of games');
         socket.on('got games', function (games) {
@@ -74,32 +70,3 @@ $(function() {
     };
 
 });
-
-// var MongoClient = require('mongodb').MongoClient;
-//
-// var uri = "mongodb://kfindley7:pztile17@cluster0-shard-00-00-na7zh.mongodb.net:27017,cluster0-shard-00-01-na7zh.mongodb.net:27017," +
-//     "cluster0-shard-00-02-na7zh.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin";
-// // MongoClient.connect(uri, function(err, db) {
-// //     //var obj = {username: "kfindley7", password: "pztile17", email: "kfindleygt@gmail.com"};
-// //     //db.collection("Cluster0").insertOne(obj);
-// //     db.collection("Cluster0").findOne("kfindley7");
-// //     db.close();
-// // });
-// // console.log("Connection Successful!!");
-//
-//
-// function loginCheck() {
-//     var usernameInput = document.getElementById("username");
-//     var userPassword = document.getElementById("password");
-//     MongoClient.connect(uri, function(err, db) {
-//         var validUsers = db.find({ $and: [{"username": usernameInput, "password": userPassword}]},
-//             {"username": 1, "password": 1, "email": 0});
-//         if (validUsers) {
-//             console.log(validUsers.username);
-//         }
-//         db.close();
-//     })
-// }
-
-
-
