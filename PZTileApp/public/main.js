@@ -6,6 +6,7 @@
 $(function() {
     var $usernameInput = $('.js-username');
     var $passwordInput = $('.js-password');
+    var $alert = $('.alert');
 
     var username;
     var password;
@@ -23,6 +24,8 @@ $(function() {
 
         if (username && password) {
             socket.emit('login check', username, password);
+        } else {
+            alert("Please enter your username and password.");
         }
     }
 
@@ -37,7 +40,7 @@ $(function() {
 
     socket.on('login unsuccessful', function() {
         // put some pop up here to alert user of login failure
-       console.log("LOGIN FAILED WRONG USER/PASS");
+        alert("Login Failure! Incorrect username or password. Please try again.");
     });
 
     // add games to home-page.html after querying the DB
