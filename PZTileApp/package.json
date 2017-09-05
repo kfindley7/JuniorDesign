@@ -1,13 +1,9 @@
 {
-  "name": "SerialToBrowser",
-  "version": "0.0.3",
-  "author": {
-    "name": "Tom Igoe"
-  },
   "dependencies": {
     "express": ">=4.0.0",
     "mongodb": "^2.2.31",
-    "serialport": "*"
+    "serialport": "*",
+    "socket.io": "^2.0.3"
   },
   "engines": {
     "node": "*",
