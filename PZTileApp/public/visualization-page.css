@@ -22,6 +22,8 @@ body {
     z-index: 0;
     width: 68%;
     position: relative;
+    margin-left: auto;
+    margin-right:auto;
     float: left;
     text-align: center;
 }
@@ -36,8 +38,19 @@ body {
     color: rgb(0, 0, 0);
 }
 
-.js-back-button {
+.header-logout-back {
     z-index: 0;
+    width: auto;
+    min-width: 100%;
+}
+
+.nav-buttons {
+    z-index: 1;
+    width: auto;
+    min-width: 100%;
+}
+
+.js-back-button {
     width: 16%;
     min-width: 16%;
     min-height: 3em;
@@ -48,28 +61,25 @@ body {
 }
 
 .js-logout-button {
-    z-index: 0;
-    width: 16%;
+    width: auto;
     min-width: 16%;
     min-height: 3em;
-    border-radius: 1px;
     position: relative;
-    background-color: rgb(222, 222, 222);
     float: right;
+    border-radius: 1px;
+    background-color: rgb(222, 222, 222);
 }
 
 .js-edit-task-button {
     clear: both;
-    z-index: 1;
     width: auto;
     min-width: 33.33%;
     height: 54px;
-    text-align: center;
+    border: 1px solid rgb(0, 0, 0);
     background-color: rgb(145, 183, 249);
 }
 
 .js-visual-button {
-    z-index: 1;
     width: auto;
     min-width: 33.33%;
     height: 54px;
@@ -78,7 +88,6 @@ body {
 }
 
 .js-sensing-button {
-    z-index: 1;
     width: auto;
     min-width: 33.33%;
     height: 54px;

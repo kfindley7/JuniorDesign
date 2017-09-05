@@ -1,5 +1,5 @@
 <!--Kaley Findley-->
-<!--Mon. 8/28-->
+<!--Tues. 9/4-->
 
 
 <!--Commented out the serial port functionality so you don't need the actual Arduino-->
@@ -89,18 +89,20 @@
 
         <!--</script>-->
 
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <!--<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>-->
 </head>
 <body class="body page-visualization-page clearfix">
-    <button onClick="window.location='home-page.html';" class="_button js-back-button">Back</button>
-    <div class="text-container">
-        <p class="text"><strong>VISUALIZATION</strong></p>
+    <div class="header-logout-back">
+        <button onClick="window.location='home-page.html';" class="_button js-back-button">Back</button>
+        <div class="text-container">
+            <p class="text"><strong>VISUALIZATION</strong></p>
+        </div>
+        <button onClick="window.location='index.html';" class="_button js-logout-button">Logout</button>
     </div>
-    <button onClick="window.location='index.html';" class="_button js-logout-button">Logout</button>
-    <button onClick="window.location='home-page.html';" class="_button js-edit-task-button">Edit Task</button>
-    <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
-    <button class="_button js-sensing-button">Sensing</button>
-    <div class="container" id="chartContainer" style="height: 300px; width: 100%; z-index: 1;">
+    <div class="nav-buttons">
+        <button onClick="window.location='home-page.html';" class="_button js-edit-task-button">Edit Task</button>
+        <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
+        <button class="_button js-sensing-button">Sensing</button>
     </div>
 </body>
 </html>
