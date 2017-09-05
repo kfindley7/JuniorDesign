@@ -8,16 +8,37 @@ body {
     color: rgb(0, 0, 0);
 }
 
-.js-list-of-games {
-    position: relative;
-    float: left;
-    clear: both;
-    z-index: 2;
+.header-logout-back {
+    z-index: 0;
     width: auto;
-    height: auto;
-    border: 1px solid rgb(0, 0, 0);
+    min-width: 100%;
+}
+
+.nav-buttons {
+    z-index: 0;
+    width: auto;
+    min-width: 100%;
+}
+
+.save-buttons {
+    width: auto;
+    min-width: 100%;
+    position: relative;
+    left: 0;
+    bottom: 0;
+}
+
+.js-list-of-games {
+    /*position: relative;*/
+    float: left;
+    /*clear: both;*/
+    z-index: 0;
+    width: auto;
+    /*height: auto;*/
+    /*border: 1px solid rgb(0, 0, 0);*/
     background-color: rgba(255, 255, 255, 0);
     overflow: scroll;
+    min-height: 100%;
 }
 
 .rt-element {
@@ -76,9 +97,6 @@ body {
     height: 54px;
     border: 1px solid rgb(0, 0, 0);
     background-color: rgb(145, 183, 249);
-    position: absolute;
-    left: 0;
-    bottom: 0;
 }
 
 .js-game1 {

@@ -15,16 +15,17 @@ body {
 }
 
 .nav-buttons {
-    z-index: 1;
+    z-index: 0;
     width: auto;
     min-width: 100%;
 }
 
 .activity-fields {
-    z-index: 2;
+    z-index: 0;
     width: auto;
     min-width: 100%;
     text-align: center;
+    min-height: 100%;
 }
 
 .activity-text-header {
@@ -33,7 +34,7 @@ body {
 }
 
 .activity-text {
-    z-index: 3;
+    z-index: 0;
     width: auto;
     min-width: 100%;
 }
@@ -41,7 +42,7 @@ body {
 .save-buttons {
     width: auto;
     min-width: 100%;
-    position: absolute;
+    position: relative;
     left: 0;
     bottom: 0;
 }

@@ -17,12 +17,15 @@
   </script>
 </head>
 <body class="body page-home-page clearfix">
-  <p class="text"><strong>HOME PAGE</strong></p>
-  <button onClick="window.location='index.html';" class="_button js-logout-button">Logout</button>
-  <button class="_button js-edit-task-button">Edit Task</button>
-  <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
-  <button class="_button js-sensing-button">Sensing</button>
-
+  <div class="header-logout-back">
+      <p class="text"><strong>HOME PAGE</strong></p>
+      <button onClick="window.location='index.html';" class="_button js-logout-button">Logout</button>
+  </div>
+  <div class="nav-buttons">
+      <button class="_button js-edit-task-button">Edit Task</button>
+      <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
+      <button class="_button js-sensing-button">Sensing</button>
+  </div>
   <div id="listGames" class="js-list-of-games">
     <script>
       $(window).load(function () {
@@ -30,7 +33,8 @@
       })
     </script>
   </div>
-  <button onClick="window.location='Create_Activity.html';" class="button create-activity-button">CREATE NEW ACTIVITY</button>
-
+  <div class="save-buttons">
+      <button onClick="window.location='Create_Activity.html';" class="button create-activity-button">CREATE NEW ACTIVITY</button>
+  </div>
 </body>
 </html>
