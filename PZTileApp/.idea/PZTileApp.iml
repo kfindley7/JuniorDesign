@@ -8,5 +8,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="canvasjs" level="application" />
+    <orderEntry type="library" name="p5" level="application" />
+    <orderEntry type="library" name="p5.dom" level="application" />
   </component>
 </module>
