@@ -20,14 +20,6 @@ body {
     min-width: 100%;
 }
 
-.save-buttons {
-    width: auto;
-    min-width: 100%;
-    position: relative;
-    left: 0;
-    bottom: 0;
-}
-
 .js-list-of-games {
     /*position: relative;*/
     float: left;

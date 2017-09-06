@@ -6,7 +6,7 @@
 $(function() {
     var $usernameInput = $('.js-username');
     var $passwordInput = $('.js-password');
-    var $alert = $('.alert');
+    var $logoutButton = $('.js-logout-button');
 
     var username;
     var password;
@@ -32,6 +32,13 @@ $(function() {
     // when a user clicks the login button, start login check functionality
     $loginButton.click(function() {
         loginAttempt();
+    });
+
+    $logoutButton.click(function() {
+        var userConfirm = confirm("Are you sure you want to logout? Any unsaved changes will be lost.");
+        if (userConfirm) {
+            window.location = "index.html";
+        }
     });
 
     socket.on('login success', function () {
