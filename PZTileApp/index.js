@@ -29,7 +29,7 @@ io.on('connection', function(socket) {
                         if (data) {
                             validUser = data.username;
                             validPass = data.password;
-                            socket.emit('login success');
+                            socket.emit('login success'); //cant this just be a 'user logged in' call?
                         } else {
                             socket.emit('login unsuccessful');
                         }
@@ -68,6 +68,31 @@ io.on('connection', function(socket) {
             });
 
             db.close();
+        });
+    });
+
+    socket.on('register', function(username, password, secQ1, secA1){
+        MongoClient.connect(uri, function(err, db) {
+            db.collection("Cluster0").findOne(
+                {username: username}).then(
+                    function (data) {
+                        if (data) {
+                           socket.emit('user already exists');
+                           console.log(data);
+                        } else {
+                            db.collection("Cluster0").insertOne(
+                                {
+                                    username: username,
+                                    password: password,
+                                    question1: secQ1,
+                                    answer1: secA1
+                                }
+                            );
+                            socket.emit("register-successful");
+                        }
+                    }
+            );
+
         });
     });
 });
