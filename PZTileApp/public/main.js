@@ -7,6 +7,7 @@ $(function() {
     var $usernameInput = $('.js-username');
     var $passwordInput = $('.js-password');
     var $logoutButton = $('.js-logout-button');
+    var $registerButton = $('[id=register-button]');
 
     var username;
     var password;
@@ -39,6 +40,10 @@ $(function() {
         if (userConfirm) {
             window.location = "index.html";
         }
+    });
+
+    $registerButton.click(function(){
+       window.location = 'Register.html'
     });
 
     socket.on('login success', function () {
