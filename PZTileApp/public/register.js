@@ -11,6 +11,8 @@ $(function() {
     var $registerButton = $('.js-register');
     var $secQuest1 = $('[id=question1]');
     var $secAnswer1 = $('[id=answer1]');
+    var $secQuest2 = $('[id=question2]');
+    var $secAnswer2 = $('[id=answer2]');
 
     var socket = io();
 
@@ -24,7 +26,9 @@ $(function() {
             if(password === confirm){
                 var question1 = $secQuest1.val();
                 var answer1 = $secAnswer1.val();
-                socket.emit('register', username, password, question1, answer1);
+                var question2 = $secQuest2.val();
+                var answer2 = $secAnswer2.val();
+                socket.emit('register', username, password, question1, answer1, question2, answer2);
             } else{
                 window.alert("Passwords do not match");
             }
