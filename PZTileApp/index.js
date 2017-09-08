@@ -112,8 +112,11 @@ io.on('connection', function(socket) {
                 {username: username}).then(
                 function (data) {
                     if (data) {
-                        question1 = data.question1;
-                        question2 = data.question2;
+                        var question1 = data.question1;
+                        var question2 = data.question2;
+                        console.log("this is in index.js");
+                        console.log(question1);
+                        console.log(question2);
                         socket.emit('load-security-questions', question1, question2);
                     }
                 }
