@@ -1,6 +1,9 @@
 /*
 Kaley Findley
 Tues. 9/5
+Modified by John Berry September 8, 2017.
+    * added socket.on('create activity', ...)
+    * added socket.on('get activities', ...)
 */
 
 var express = require('express');
@@ -87,7 +90,54 @@ io.on('connection', function(socket) {
                         }
                     }
             );
-
+            db.close();
         });
+    });
+
+    // Functionality for creating the games.
+    // First checks to see if the activity and activity name combination already exist
+    // If the combination does exist, then the creation fails and the user is notified.
+    // Else store the combination in the database and alert the user to successful creation.
+    socket.on('create activity', function (activity, activityName) {
+        MongoClient.connect(uri, function(err, db) {
+            db.collection("Cluster0").findOne(
+                {
+                    activity: activity,
+                    activityName: activityName
+                }
+                ).then( function(data) {
+                        if (data)  {
+                            socket.emit('activity creation failed')
+                            console.log(data);
+                        } else {
+                            db.collection("Cluster0").insertOne(
+                                {
+                                    activity: activity,
+                                    activityName: activityName
+                                }
+                            );
+                            socket.emit('activity created');
+                        }
+                    }
+
+            );
+            db.close();
+        })
+    });
+
+
+    // Sends a list of current activities to the client.
+    socket.on('get activities', function () {
+        MongoClient.connect(uri, function(err,db) {
+            db.collection("Cluster0").find({},
+                {
+                    activity: true,
+                    activityName: true
+                }).then( function(data) {
+                    console.log(data);
+                    socket.emit('activity list', data)
+            });
+            db.close();
+        })
     });
 });

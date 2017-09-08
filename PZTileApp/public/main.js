@@ -1,8 +1,6 @@
 /*
 * Kaley Findley
 * Tues. 9/5
-* Edited by John Berry
-* Friday, 9/8
 * */
 
 $(function() {
@@ -76,33 +74,9 @@ $(function() {
     // this function is called directly through the html to ensure
     // home page is fully loaded before html is updated with games
     $.fn.getGames = function () {
-        socket.emit('get list of games');
-        socket.on('got games', function (games) {
+        socket.emit('get activites');
+        socket.on('activity list', function (games) {
             showGames(games);
         });
     };
-    /*********************************************************************************************/
-    // Methods and Variables for the Create Activity Page
-    // By: John Berry
-
-    // Crate_Activity_Page variables
-    var $activityInput = $();
-    var $activityNameInput = $('.js-activity-name');
-    var $saveNewActivityButton = $('.save_activity_button');
-
-    var activity;
-    var activityName;
-
-    function createActivity() {
-        activity = $activityInput.val();
-        activityName = $activityNameInput.val();
-    }
-
-    // When user clicks save new activity, create and save it to the database.
-    $saveNewActivityButton.click(function () {
-        createActivity();
-    });
-
-    /*********************************************************************************************/
-
 });
