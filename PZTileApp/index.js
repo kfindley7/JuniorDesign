@@ -71,7 +71,7 @@ io.on('connection', function(socket) {
         });
     });
 
-    socket.on('register', function(username, password, secQ1, secA1){
+    socket.on('register', function(username, password, secQ1, secA1, secQ2, secA2){
         MongoClient.connect(uri, function(err, db) {
             db.collection("Cluster0").findOne(
                 {username: username}).then(
@@ -85,7 +85,9 @@ io.on('connection', function(socket) {
                                     username: username,
                                     password: password,
                                     question1: secQ1,
-                                    answer1: secA1
+                                    answer1: secA1,
+                                    question2: secQ2,
+                                    answer2: secA2
                                 }
                             );
                             socket.emit("register-successful");
