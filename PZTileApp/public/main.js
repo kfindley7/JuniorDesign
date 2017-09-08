@@ -41,9 +41,6 @@ $(function() {
         }
     });
 
-    socket.on('login success', function () {
-        socket.emit('user logged in', username, password);
-    });
 
     socket.on('login unsuccessful', function() {
         // put some pop up here to alert user of login failure
