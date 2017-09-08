@@ -7,6 +7,8 @@ $(function() {
     var $activityInput = $('[id=gameSelect]');
     var $activityNameInput = $('.js-activity-name');
     var $saveNewActivityButton = $('.save_activity_button');
+    var $logoutButton = $('.js-logout-button');
+    var $backButton = $('[id=back-button]');
 
     var activity;
     var activityName;
@@ -28,7 +30,7 @@ $(function() {
             var option = document.createElement("option");
             option.value = aList[i];
             option.text = aList[i];
-            $activityInput.appendChild(option);
+            $activityInput.append(option);
         }
     }
 
