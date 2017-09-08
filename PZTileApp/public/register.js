@@ -7,12 +7,13 @@ $(function() {
     var $usernameInput = $('.js-username');
     var $passwordInput = $('[id=password]');
     var $confirmPassInput = $('[id=confirm-password]');
-
-    var $registerButton = $('.js-register');
     var $secQuest1 = $('[id=question1]');
     var $secAnswer1 = $('[id=answer1]');
     var $secQuest2 = $('[id=question2]');
     var $secAnswer2 = $('[id=answer2]');
+
+    var $registerButton = $('.js-register');
+    var $backButton = $('[id=back-button]');
 
     var socket = io();
 
@@ -43,6 +44,20 @@ $(function() {
 
     $registerButton.click(function(){
         registerAttempt();
+    });
+
+    $backButton.click(function(){
+        var username = $usernameInput.val();
+        var password = $passwordInput.val();
+        var passConfirm = $confirmPassInput.val();
+        var answer1 = $secAnswer1.val();
+        var answer2 = $secAnswer2.val();
+        if(username || password || passConfirm || answer1 || answer2) {
+            var userConfirm = confirm("Are you sure you want to quit registration? Any unsaved changes will be lost.");
+            if (userConfirm) {
+                window.location = "index.html";
+            }
+        }
     });
 
     socket.on('register-successful', function(){
