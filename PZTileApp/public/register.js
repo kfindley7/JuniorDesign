@@ -57,6 +57,8 @@ $(function() {
             if (userConfirm) {
                 window.location = "index.html";
             }
+        } else {
+            window.location = "index.html";
         }
     });
 
