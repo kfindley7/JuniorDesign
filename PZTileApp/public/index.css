@@ -146,3 +146,14 @@ body {
   font-weight: 700;
   color: rgb(57, 191, 255);
 }
+
+.button-small{
+  font-style: normal;
+  font-size: 0.75em;
+  font-weight: 700;
+  width: 7%;
+  margin: auto;
+  height: 23px;
+  float: inherit;
+
+}

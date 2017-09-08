@@ -16,8 +16,13 @@ $(function() {
 
 
     socket.on('load-security-questions', function(secQ1, secQ2){
-        $secQuest1 = secQ1;
-        $secQuest2 = secQ2;
+        $secQuest1.value = secQ1;
+        $secQuest2.value = secQ2;
+    });
+
+
+    $backButton.click(function(){
+        window.location = "index.html";
     });
 
 });

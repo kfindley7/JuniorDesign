@@ -8,6 +8,7 @@ $(function() {
     var $passwordInput = $('.js-password');
     var $logoutButton = $('.js-logout-button');
     var $registerButton = $('[id=register-button]');
+    var $forgotPasswordButton = $('[id=forgot-password]');
 
     var username;
     var password;
@@ -44,6 +45,10 @@ $(function() {
 
     $registerButton.click(function(){
        window.location = 'Register.html'
+    });
+
+    $forgotPasswordButton.click(function(){
+       window.location = 'recover-password.html'
     });
 
     socket.on('login unsuccessful', function() {
