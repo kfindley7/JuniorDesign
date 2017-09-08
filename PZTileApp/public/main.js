@@ -74,9 +74,10 @@ $(function() {
     // this function is called directly through the html to ensure
     // home page is fully loaded before html is updated with games
     $.fn.getGames = function () {
-        socket.emit('get activites');
-        socket.on('activity list', function (games) {
-            showGames(games);
-        });
+        socket.emit('get activities');
     };
+
+    socket.on('activity list', function (games) {
+        showGames(games);
+    });
 });

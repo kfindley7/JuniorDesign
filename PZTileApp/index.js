@@ -129,14 +129,11 @@ io.on('connection', function(socket) {
     // Sends a list of current activities to the client.
     socket.on('get activities', function () {
         MongoClient.connect(uri, function(err,db) {
-            db.collection("Cluster0").find({},
-                {
-                    activity: true,
-                    activityName: true
-                }).then( function(data) {
+            db.collection("Cluster0").distinct("activityName")
+                .then(function (data) {
                     console.log(data);
-                    socket.emit('activity list', data)
-            });
+                    socket.emit('activity list', data);
+                });
             db.close();
         })
     });
