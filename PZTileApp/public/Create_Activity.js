@@ -4,12 +4,14 @@
 
 $(function() {
     // Crate_Activity_Page variables
-    var $activityInput = $();
+    var $activityInput = $('[id=gameSelect]');
     var $activityNameInput = $('.js-activity-name');
     var $saveNewActivityButton = $('.save_activity_button');
 
     var activity;
     var activityName;
+
+    var socket = io();
 
     // Called directly through the html page to make sure that
     // the list is fully up to date.
@@ -22,12 +24,11 @@ $(function() {
 
     // Add games to the selections to be made on Create_Activity.html.
     function showGames(aList) {
-        $listGames.append("<select class=\"selection\" name=\"game\">");
         for (var i = 0; i < aList.length; i++) {
             var option = document.createElement("option");
             option.value = aList[i];
             option.text = aList[i];
-            selectList.appendChild(option);
+            $activityInput.appendChild(option);
         }
     }
 
