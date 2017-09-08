@@ -14,11 +14,16 @@ $(function() {
     });
 
     socket.on('recover-no-user', function () {
-        window.alert("That user does not exist")
+        window.alert("That user does not exist");
     });
 
-    socket.on('recover-user-exits', function(){
-
+    socket.on('recover-user-exists', function(){
+        window.location = 'security-questions.html';
+        socket.emit('get-security-questions');
     });
 
-}
+    $backButton.click(function(){
+        window.location = "index.html";
+    });
+
+});

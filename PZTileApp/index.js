@@ -90,4 +90,34 @@ io.on('connection', function(socket) {
 
         });
     });
+
+    socket.on('recover-check-user', function (username) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").findOne(
+                {username: username}).then(
+                function (data) {
+                    if (data) {
+                        socket.emit('recover-user-exists');
+                    } else {
+                        socket.emit('recover-no-user');
+                    }
+                }
+            );
+        })
+    });
+
+    socket.on('get-security-questions', function (username) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").findOne(
+                {username: username}).then(
+                function (data) {
+                    if (data) {
+                        question1 = data.question1;
+                        question2 = data.question2;
+                        socket.emit('load-security-questions', question1, question2);
+                    }
+                }
+            );
+        })
+    })
 });
