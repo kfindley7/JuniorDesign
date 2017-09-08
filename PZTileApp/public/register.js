@@ -20,14 +20,14 @@ $(function() {
         var username = $usernameInput.val();
         var password = $passwordInput.val();
         var confirm = $confirmPassInput.val();
+        var question1 = $secQuest1.val();
+        var answer1 = $secAnswer1.val();
+        var question2 = $secQuest2.val();
+        var answer2 = $secAnswer2.val();
 
-        if(username && password && confirm){
+        if(username && password && confirm && answer1 && answer2){
 
             if(password === confirm){
-                var question1 = $secQuest1.val();
-                var answer1 = $secAnswer1.val();
-                var question2 = $secQuest2.val();
-                var answer2 = $secAnswer2.val();
                 socket.emit('register', username, password, question1, answer1, question2, answer2);
             } else{
                 window.alert("Passwords do not match");
