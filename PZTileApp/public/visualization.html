@@ -13,83 +13,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/addons/p5.dom.min.js"></script>
     <link rel="stylesheet" href="visualization-page.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="main.js"></script>
     <title>PZ Tile Manager</title>
-    <!--<script type="text/javascript">-->
-        <!--var someData = [];-->
-        <!--var time = 0;-->
-
-        <!--function setup() {-->
-            <!--getData(3);								// make a request back to the server-->
-        <!--}-->
-
-        <!--// this function makes a call to the server:-->
-        <!--function getData(channel) {-->
-            <!--httpGet('/device/' + channel, update);-->
-        <!--}-->
-
-        <!--// update the page when the server responds:-->
-        <!--function update(data) {-->
-            <!--var temp = data.split(' ');-->
-            <!--someData.push(temp[1]);-->
-            <!--time += 1;-->
-            <!--updateChart(someData, 1);-->
-            <!--if (someData.length >= 100) {-->
-                <!--return;-->
-            <!--}-->
-            <!--getData(3);							// make another call to the server-->
-        <!--}-->
-    <!--&lt;!&ndash;<script type="text/javascript">&ndash;&gt;-->
-        <!--window.onload = function () {-->
-
-            <!--this.dps = [];-->
-             <!--// dataPoints-->
-
-            <!--this.chart = new CanvasJS.Chart("chartContainer",{-->
-                <!--title :{-->
-                    <!--text: "Live Tile Data"-->
-                <!--},-->
-                <!--data: [{-->
-                    <!--type: "line",-->
-                    <!--dataPoints: dps-->
-                <!--}]-->
-            <!--});-->
-            <!--this.chart.options.backgroundColor = 'rgb(225, 232, 251)';-->
-            <!--this.chart.render();-->
-
-        <!--};-->
-
-        <!--var xVal = 0;-->
-        <!--var yVal = 0;-->
-        <!--var roundNum = 0;-->
-        <!--//var updateInterval = 100;-->
-        <!--var dataLength = 500; // number of dataPoints visible at any point-->
-
-        <!--var updateChart = function (data, count) {-->
-            <!--count = count || 1;-->
-
-            <!--for (var j = 0; j < count; j++) {-->
-                <!--if (someData.length <= 100) {-->
-                    <!--yVal = parseFloat(someData[someData.length - 1]);-->
-                    <!--if ((someData.length % 100) === 0) {-->
-                        <!--roundNum++;-->
-                    <!--}-->
-                <!--} else {-->
-                    <!--yVal = parseFloat(someData[roundNum][someData.length - 1]);-->
-                <!--}-->
-                <!--this.dps.push({x: xVal, y: yVal});-->
-                <!--xVal += 0.01;-->
-            <!--}-->
-            <!--if (this.dps.length > dataLength) {-->
-                <!--this.dps.shift();-->
-            <!--}-->
-
-            <!--this.chart.render();-->
-
-        <!--};-->
-
-        <!--</script>-->
-
-    <!--<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>-->
 </head>
 <body class="body page-visualization-page clearfix">
     <div class="header-logout-back">
@@ -97,7 +24,7 @@
         <div class="text-container">
             <p class="text"><strong>VISUALIZATION</strong></p>
         </div>
-        <button onClick="window.location='index.html';" class="_button js-logout-button">Logout</button>
+        <button class="_button js-logout-button">Logout</button>
     </div>
     <div class="nav-buttons">
         <button onClick="window.location='home-page.html';" class="_button js-edit-task-button">Edit Task</button>
