@@ -63,4 +63,31 @@ io.on('connection', function(socket) {
             db.close();
         });
     });
+
+    socket.on('register', function(username, password, secQ1, secA1, secQ2, secA2){
+        MongoClient.connect(uri, function(err, db) {
+            db.collection("Cluster0").findOne(
+                {username: username}).then(
+                    function (data) {
+                        if (data) {
+                           socket.emit('user already exists');
+                           console.log(data);
+                        } else {
+                            db.collection("Cluster0").insertOne(
+                                {
+                                    username: username,
+                                    password: password,
+                                    question1: secQ1,
+                                    answer1: secA1,
+                                    question2: secQ2,
+                                    answer2: secA2
+                                }
+                            );
+                            socket.emit("register-successful");
+                        }
+                    }
+            );
+
+        });
+    });
 });

@@ -7,6 +7,7 @@ $(function() {
     var $usernameInput = $('.js-username');
     var $passwordInput = $('.js-password');
     var $logoutButton = $('.js-logout-button');
+    var $registerButton = $('[id=register-button]');
 
     var username;
     var password;
@@ -41,6 +42,9 @@ $(function() {
         }
     });
 
+    $registerButton.click(function(){
+       window.location = 'Register.html'
+    });
 
     socket.on('login unsuccessful', function() {
         // put some pop up here to alert user of login failure

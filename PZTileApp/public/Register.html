@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.16/addons/p5.dom.min.js"></script>
+    <script src="main.js"></script>
+    <script src="register.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="standardize.css">
+    <link rel="stylesheet" href="index-grid.css">
+    <link rel="stylesheet" href="Register.css">
+</head>
+<body class="body page-index clearfix">
+    <button class="_button back-button" id="back-button">Back</button>
+
+    <p class="text text-1"><span>Register</span></p>
+    <p class="text text-2"><span>Username</span></p>
+    <input id="username" class="_input _input-1 js-username" name="username" type="text">
+    <p class="text text-3"><span>Password</span></p>
+    <input id="password" class="_input _input-2 js-password" name="password" type="password">
+    <p class="text text-3"><span>Confirm Password</span></p>
+    <input id="confirm-password" class="_input _input-2 js-password-confirm" name="confirm-password" type="password">
+
+
+    <p class="text text-3"><span>Security Question 1</span></p>
+    <select class="select security-question js-security-question-1" id="question1" name="question1"><span>
+        <option value="Childhood">What was your childhood nickname?</option>
+        <option value="Family">In what city or town did your mother and father meet?</option>
+        <option value="Favorites">What is your favorite sports team?</option>
+        <option value="Education">What school did you attend for sixth grade?</option>
+        <option value="Work">In what town was your first job?</option></span>
+    </select>
+    <input id="answer1" class="_input _input-1 js-answer" name="answer1" type="text">
+
+    <p class="text text-3"><span>Security Question 2</span></p>
+    <select class="select security-question js-security-question-1" id="question2" name="question2"><span>
+        <option value="Childhood">What is the name of your favorite childhood friend?</option>
+        <option value="Family">What is the middle name of your oldest child?</option>
+        <option value="Favorites">What is your favorite movie?</option>
+        <option value="Education">What was the last name of your third grade teacher?</option>
+        <option value="Work">What was the name of the company where you had your first job?</option></span>
+    </select>
+    <input id="answer2" class="_input _input-1 js-answer" name="answer2" type="text">
+
+    <button class="_button js-register">Register</button>
+</body>
+</html>
