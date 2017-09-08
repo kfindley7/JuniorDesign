@@ -1,6 +1,8 @@
 /*
 * Kaley Findley
 * Tues. 9/5
+* Edited by John Berry
+* Friday, 9/8
 * */
 
 $(function() {
@@ -78,5 +80,28 @@ $(function() {
             showGames(games);
         });
     };
+    /*********************************************************************************************/
+    // Methods and Variables for the Create Activity Page
+    // By: John Berry
+
+    // Crate_Activity_Page variables
+    var $activityInput = $();
+    var $activityNameInput = $('.js-activity-name');
+    var $saveNewActivityButton = $('.save_activity_button');
+
+    var activity;
+    var activityName;
+
+    function createActivity() {
+        activity = $activityInput.val();
+        activityName = $activityNameInput.val();
+    }
+
+    // When user clicks save new activity, create and save it to the database.
+    $saveNewActivityButton.click(function () {
+        createActivity();
+    });
+    
+    /*********************************************************************************************/
 
 });
