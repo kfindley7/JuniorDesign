@@ -48,10 +48,6 @@ $(function() {
        window.location = 'Register.html'
     });
 
-    socket.on('login success', function () {
-        socket.emit('user logged in', username, password);
-    });
-
     socket.on('login unsuccessful', function() {
         // put some pop up here to alert user of login failure
         alert("Login Failure! Incorrect username or password. Please try again.");
@@ -106,7 +102,7 @@ $(function() {
     $saveNewActivityButton.click(function () {
         createActivity();
     });
-    
+
     /*********************************************************************************************/
 
 });

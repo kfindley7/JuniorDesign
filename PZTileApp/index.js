@@ -29,7 +29,7 @@ io.on('connection', function(socket) {
                         if (data) {
                             validUser = data.username;
                             validPass = data.password;
-                            socket.emit('login success'); //cant this just be a 'user logged in' call?
+                            socket.emit('show home page');
                         } else {
                             socket.emit('login unsuccessful');
                         }
@@ -39,13 +39,6 @@ io.on('connection', function(socket) {
         });
     });
 
-    // user has successfully logged in and socket sends message to
-    // show the home page now.
-    socket.on('user logged in', function(username, password) {
-        socket.username = username;
-        socket.password = password;
-        socket.emit('show home page');
-    });
 
     // Query DB for the currently running games
     socket.on('get list of games', function () {
