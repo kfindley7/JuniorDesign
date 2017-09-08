@@ -22,15 +22,12 @@ $(function() {
 
     // Add games to the selections to be made on Create_Activity.html.
     function showGames(aList) {
-        var start = 2;
-        var img = 1;
+        $listGames.append("<select class=\"selection\" name=\"game\">");
         for (var i = 0; i < aList.length; i++) {
-            $listGames.append("<div class=\"element js-game1\"><p style=\"padding-left: 0.5%\" class=\"text text-" + start + "\">" + aList[i] + "</p>\n" +
-                "      <p class=\"text text-" + (start + 1) + "\"><span>Edit Game</span></p>\n" +
-                "      <img class=\"image image-1\" src=\"android-arrow-dropright.png\">\n" +
-                "    </div>");
-            start += 2;
-            img++;
+            var option = document.createElement("option");
+            option.value = aList[i];
+            option.text = aList[i];
+            selectList.appendChild(option);
         }
     }
 
