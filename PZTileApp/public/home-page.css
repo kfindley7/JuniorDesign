@@ -6,6 +6,7 @@ body {
     background-color: rgb(255, 255, 255);
     font: 400 1em/1.38 Helvetica;
     color: rgb(0, 0, 0);
+    min-width: 850px;
 }
 
 .header-logout-back {
@@ -62,6 +63,7 @@ body {
     width: 39px;
     height: auto;
     margin-left: 96.93878%;
+    padding-top: 1.2%;
 }
 
 .text {
@@ -101,7 +103,7 @@ body {
     float: right;
     position: relative;
     padding-right: 3%;
-    padding-top: 0.7%;
+    padding-top: 1.9%;
 }
 
 .text-2 {
@@ -112,7 +114,15 @@ body {
     font-size: 1.5em;
     font-weight: 500;
     color: rgb(0, 0, 0);
-    padding-top: 0.3%;
+    padding-top: 0.8%;
+}
+
+.text-3 {
+    z-index: 0;
+    position: relative;
+    bottom: auto;
+    font-style: italic;
+    font-size: small
 }
 
 .js-logout-button {

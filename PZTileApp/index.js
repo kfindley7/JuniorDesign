@@ -129,12 +129,25 @@ io.on('connection', function(socket) {
     // Sends a list of current activities to the client.
     socket.on('get activities', function () {
         MongoClient.connect(uri, function(err,db) {
-            db.collection("Cluster0").distinct("activityName")
-                .then(function (data) {
-                    console.log(data);
+            db.collection("Cluster0").find({}, {_id: false, activity: true, activityName: true})
+                .toArray(function(err, results){
+                    // console.log("RESULTS", results); // output all records
+                    var data = [];
+                    results.forEach(function (item) {
+                        if (Object.keys(item).length > 0) {
+                            data.push(item);
+                        }
+                    });
+                    console.log("DATA", data);
+                    db.close();
                     socket.emit('activity list', data);
-                });
-            db.close();
+            });
+            // db.collection("Cluster0").distinct("activityName")
+            //     .then(function (data) {
+            //         console.log(data);
+            //         socket.emit('activity list', data);
+            //     });
+            // db.close();
         })
     });
 });
