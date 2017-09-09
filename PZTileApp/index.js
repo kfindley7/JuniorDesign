@@ -114,13 +114,28 @@ io.on('connection', function(socket) {
                     if (data) {
                         var question1 = data.question1;
                         var question2 = data.question2;
-                        console.log("this is in index.js");
-                        console.log(question1);
-                        console.log(question2);
                         socket.emit('load-security-questions', question1, question2);
                     }
                 }
             );
         })
-    })
+    });
+
+    socket.on('validate-security-answers', function (username, ans1, ans2) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").findOne(
+                {username: username}).then(
+                function (data) {
+                    if (data) {
+                        if(ans1===data.answer1 && ans2===data.answer2){
+                            socket.emit('correct-security-answers');
+                        } else {
+                            socket.emit('wrong-security-answers');
+                        }
+                    }
+                }
+            );
+        })
+    });
+
 });
