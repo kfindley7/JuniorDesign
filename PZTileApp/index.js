@@ -86,11 +86,11 @@ io.on('connection', function(socket) {
                                     answer2: secA2
                                 }
                             );
+                            db.close();
                             socket.emit("register-successful");
                         }
                     }
             );
-            db.close();
         });
     });
 
@@ -107,7 +107,7 @@ io.on('connection', function(socket) {
                 }
                 ).then( function(data) {
                         if (data)  {
-                            socket.emit('activity creation failed')
+                            socket.emit('activity creation failed');
                             console.log(data);
                         } else {
                             db.collection("Cluster0").insertOne(
@@ -116,12 +116,12 @@ io.on('connection', function(socket) {
                                     activityName: activityName
                                 }
                             );
+                            db.close();
                             socket.emit('activity created');
                         }
                     }
-
             );
-            db.close();
+            // db.close();
         })
     });
 
