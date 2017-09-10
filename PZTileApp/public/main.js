@@ -53,15 +53,12 @@ $(function() {
 
     // add games to home-page.html after querying the DB
     function showGames(aList) {
-        var start = 2;
-        var img = 1;
         for (var i = 0; i < aList.length; i++) {
-            $listGames.append("<div class=\"element js-game1\"><p style=\"padding-left: 0.5%\" class=\"text text-" + start + "\">" + aList[i] + "</p>\n" +
-                "      <p class=\"text text-" + (start + 1) + "\"><span>Edit Game</span></p>\n" +
-                "      <img class=\"image image-1\" src=\"android-arrow-dropright.png\">\n" +
+            $listGames.append("<div class=\"element js-game1\"><p class=\"text text-2\">" + aList[i].activityName + "</p>" +
+                "      <p class=\"text text-1\"><span>Edit Game</span></p>\n" +
+                "      <img class=\"image\" src=\"android-arrow-dropright.png\">\n" +
+                "<p class=\"text text-3\">" + aList[i].activity + "</p>\n" +
                 "    </div>");
-            start += 2;
-            img++;
         }
     }
 
@@ -74,10 +71,10 @@ $(function() {
     // this function is called directly through the html to ensure
     // home page is fully loaded before html is updated with games
     $.fn.getGames = function () {
-        socket.emit('get list of games');
-        socket.on('got games', function (games) {
-            showGames(games);
-        });
+        socket.emit('get activities');
     };
 
+    socket.on('activity list', function (games) {
+        showGames(games);
+    });
 });

@@ -1,6 +1,9 @@
 /*
 Kaley Findley
 Tues. 9/5
+Modified by John Berry September 8, 2017.
+    * added socket.on('create activity', ...)
+    * added socket.on('get activities', ...)
 */
 
 var express = require('express');
@@ -43,17 +46,6 @@ io.on('connection', function(socket) {
     // Query DB for the currently running games
     socket.on('get list of games', function () {
         MongoClient.connect(uri, function(err, db) {
-            // commented out adding games to database manually: leave commented out unless
-            // you want to add or delete games for testing purposes.
-
-            // var aList = ['ESCAPE FROM MARS', 'MINING FOR RESOURCES', 'ROCKET JUMP',
-            //     'SCAVENGER HUNT', 'SIMON SAYS', 'SPACEFOOD SQUEEZE', 'SPACE INVADERS',
-            //     'SPACE TRIVIA', 'WHACK-A-MOLE', 'GALAGA', 'PACMAN'];
-            //
-            // for (var i = 0; i < aList.length; i++) {
-            //     db.collection("Cluster0").insertOne({game: aList[i]});
-            // }
-
             db.collection("Cluster0").distinct("game")
                 .then(function(data) {
                     console.log("documents", data);
@@ -83,11 +75,59 @@ io.on('connection', function(socket) {
                                     answer2: secA2
                                 }
                             );
+                            db.close();
                             socket.emit("register-successful");
                         }
                     }
             );
-
         });
+    });
+
+    // Functionality for creating the games.
+    // First checks to see if the activity and activity name combination already exist
+    // If the combination does exist, then the creation fails and the user is notified.
+    // Else store the combination in the database and alert the user to successful creation.
+    socket.on('create activity', function (activity, activityName) {
+        MongoClient.connect(uri, function(err, db) {
+            db.collection("Cluster0").findOne(
+                {
+                    activity: activity,
+                    activityName: activityName
+                }
+                ).then( function(data) {
+                        if (data)  {
+                            socket.emit('activity creation failed');
+                            console.log(data);
+                        } else {
+                            db.collection("Cluster0").insertOne(
+                                {
+                                    activity: activity,
+                                    activityName: activityName
+                                }
+                            );
+                            db.close();
+                            socket.emit('activity created');
+                        }
+                    }
+            );
+        })
+    });
+
+
+    // Sends a list of current activities to the client.
+    socket.on('get activities', function () {
+        MongoClient.connect(uri, function(err,db) {
+            db.collection("Cluster0").find({}, {_id: false, activity: true, activityName: true})
+                .toArray(function(err, results){
+                    var data = [];
+                    results.forEach(function (item) {
+                        if (Object.keys(item).length > 0) {
+                            data.push(item);
+                        }
+                    });
+                    db.close();
+                    socket.emit('activity list', data);
+            });
+        })
     });
 });

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="Create_Activity.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="main.js"></script>
+    <script src="Create_Activity.js"></script>
 </head>
 <body class="body clearfix">
     <div class="header-logout-back">
@@ -28,13 +28,19 @@
         <p class="activity-text-header activity-text">SELECT DESIRED ACTIVITY:</p>
         <p class="activity-text">Select the activity type and enter a unique name for it below.</p>
         <br><br><br><br>
-        <p> DROPDOWN MENU WILL GO HERE</p>
+        <div id="listGames" class="js-list-of-games">
+            <select class="selection" name="gameSelect" id="gameSelect"></select>
+            <script>
+                $(window).load(function () {
+                    $(window).getGames();
+                })
+            </script>
+        </div>
         <br><br><br><br>
         <p class="activity-text-header activity-text">ENTER NEW ACTIVITY NAME:</p>
         <p class="activity-text">Enter a unique name for the activity<br>type selected above, otherwise <br>creation will result in an error. <br>Then click "SAVE NEW ACTIVITY"</p>
     </div>
-    <div class="save-buttons">
-        <button class="button save_activity_button">SAVE NEW ACTIVITY</button>
-    </div>
+    <input id="activityName" class="_input js-activity-name" name="activityName" type="text">
+    <button class="button save_activity_button">SAVE NEW ACTIVITY</button>
 </body>
 </html>
