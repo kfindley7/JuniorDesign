@@ -46,17 +46,6 @@ io.on('connection', function(socket) {
     // Query DB for the currently running games
     socket.on('get list of games', function () {
         MongoClient.connect(uri, function(err, db) {
-            // commented out adding games to database manually: leave commented out unless
-            // you want to add or delete games for testing purposes.
-
-            // var aList = ['ESCAPE FROM MARS', 'MINING FOR RESOURCES', 'ROCKET JUMP',
-            //     'SCAVENGER HUNT', 'SIMON SAYS', 'SPACEFOOD SQUEEZE', 'SPACE INVADERS',
-            //     'SPACE TRIVIA', 'WHACK-A-MOLE', 'GALAGA', 'PACMAN'];
-            //
-            // for (var i = 0; i < aList.length; i++) {
-            //     db.collection("Cluster0").insertOne({game: aList[i]});
-            // }
-
             db.collection("Cluster0").distinct("game")
                 .then(function(data) {
                     console.log("documents", data);
@@ -121,7 +110,6 @@ io.on('connection', function(socket) {
                         }
                     }
             );
-            // db.close();
         })
     });
 
@@ -131,23 +119,15 @@ io.on('connection', function(socket) {
         MongoClient.connect(uri, function(err,db) {
             db.collection("Cluster0").find({}, {_id: false, activity: true, activityName: true})
                 .toArray(function(err, results){
-                    // console.log("RESULTS", results); // output all records
                     var data = [];
                     results.forEach(function (item) {
                         if (Object.keys(item).length > 0) {
                             data.push(item);
                         }
                     });
-                    console.log("DATA", data);
                     db.close();
                     socket.emit('activity list', data);
             });
-            // db.collection("Cluster0").distinct("activityName")
-            //     .then(function (data) {
-            //         console.log(data);
-            //         socket.emit('activity list', data);
-            //     });
-            // db.close();
         })
     });
 });
