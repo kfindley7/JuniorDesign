@@ -8,7 +8,7 @@ $(function() {
     var $activityNameInput = $('.js-activity-name');
     var $saveNewActivityButton = $('.save_activity_button');
     var $logoutButton = $('.js-logout-button');
-    var $backButton = $('[id=back-button]');
+    var $backButton = $('.js-back-button');
 
     var activity;
     var activityName;
