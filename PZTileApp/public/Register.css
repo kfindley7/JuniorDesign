@@ -173,3 +173,7 @@ body {
 .security-questions{
     display: none;
 }
+
+.reset-password{
+    display: none;
+}

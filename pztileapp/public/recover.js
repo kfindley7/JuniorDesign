@@ -6,15 +6,20 @@
 $(function() {
     var $usernameInput = $('[id=username]');
     var $recoverButton = $('[id=recover-button]');
+    var $backButton = $('[id=back-button]');
 
     var $questionDiv = $('[id=security-questions]');
     var $secQuest1 = $('[id=question1]');
     var $secAnswer1 = $('[id=answer1]');
     var $secQuest2 = $('[id=question2]');
     var $secAnswer2 = $('[id=answer2]');
+    var $securityButton = $('[id=security-button]');
 
-    var $submitButton = $('[id=submit-button]');
-    var $backButton = $('[id=back-button]');
+    var $passwordDiv = $('[id=reset-password]');
+    var $passwordButton = $('[id=reset-password-button]');
+    var $newPassword = $('[id=new-password]');
+    var $confirmPassword = $('[id=confirm-new-password]');
+
 
     var socket = io();
 
@@ -31,6 +36,7 @@ $(function() {
         // $questionDiv.style.display = "block";
         $($questionDiv).show();
         document.getElementById("username").disabled = true;
+        document.getElementById("recover-button").style.display = "none";
         socket.emit('get-security-questions', $usernameInput.val());
     });
 
@@ -77,7 +83,7 @@ $(function() {
         }
     }
 
-    $submitButton.click(function () {
+    $securityButton.click(function () {
         var ans1 = $secAnswer1.val();
         var ans2 = $secAnswer2.val();
         if(ans1&&ans2){
@@ -88,11 +94,26 @@ $(function() {
     });
 
     socket.on('correct-security-answers', function () {
-        window.alert("THIS WILL GO TO A CHANGE PASSWORD PAGE");
+        // window.alert("THIS WILL GO TO A CHANGE PASSWORD PAGE");
+        document.getElementById("security-questions").style.display = "none";
+        $($passwordDiv).show();
     });
 
     socket.on('wrong-security-answers', function () {
         window.alert("At least one of your answers is incorrect. Please try again")
+    });
+
+    $passwordButton.click(function () {
+       var pass = $newPassword.val();
+       console.log(pass);
+       var confirm = $confirmPassword.val();
+       console.log(confirm);
+       if(pass&&confirm&&pass===confirm){
+            window.alert("PASSWORDS MATCH HURRAY")
+       //    socket.emit somthing and update password with mongo
+       } else{
+           window.alert("Please enter matching passwords")
+       }
     });
 
 });
