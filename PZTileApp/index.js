@@ -87,7 +87,7 @@ io.on('connection', function(socket) {
                         }
                     }
             );
-
+            //db.close();
         });
     });
 
@@ -103,6 +103,7 @@ io.on('connection', function(socket) {
                     }
                 }
             );
+            //db.close();
         })
     });
 
@@ -118,6 +119,7 @@ io.on('connection', function(socket) {
                     }
                 }
             );
+            db.close();
         })
     });
 
@@ -135,7 +137,19 @@ io.on('connection', function(socket) {
                     }
                 }
             );
+            db.close();
         })
     });
 
+    socket.on('update password', function (password, username) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").updateOne(
+                {username: username},
+                {
+                    $set: {password: password}
+                }
+            );
+            db.close();
+        })
+    });
 });

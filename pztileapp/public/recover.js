@@ -105,12 +105,11 @@ $(function() {
 
     $passwordButton.click(function () {
        var pass = $newPassword.val();
-       console.log(pass);
        var confirm = $confirmPassword.val();
-       console.log(confirm);
        if(pass&&confirm&&pass===confirm){
-            window.alert("PASSWORDS MATCH HURRAY")
-       //    socket.emit somthing and update password with mongo
+           var username = $usernameInput.val();
+           socket.emit('update password', pass, username);
+           window.location = "index.html"
        } else{
            window.alert("Please enter matching passwords")
        }
