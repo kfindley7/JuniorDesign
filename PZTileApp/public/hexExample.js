@@ -13,8 +13,9 @@ var listOfPos = [];
 
 function drawHexagonAt(po_ctr_hex, pn_circle, pn_sector) {
     var cur;
-    var pos = [po_ctr_hex.x, po_ctr_hex.y];
+    var pos = {x: po_ctr_hex.x, y: po_ctr_hex.y};
 
+    // console.log(listOfPos.find(pos));
     // if (listOfPos.findIndex(pos) < 0) {
 
         cur = {x: po_ctr_hex.x - 0.5 * hexagon.r, y: po_ctr_hex.y - delta};
@@ -45,6 +46,7 @@ function drawHexagonAt(po_ctr_hex, pn_circle, pn_sector) {
         numHex++;
         ctx.fillText(numHex, cur.x - 6, cur.y + 4);
         listOfPos.push(pos);
+        // console.log(listOfPos);
     // }
 } // drawHexagonAt
 
@@ -55,6 +57,7 @@ function fill_CircleWithHex(circle){
     var sector = 0;
     var ctr = {x: circle.pos.x, y: circle.pos.y};
     var cur = {x: 0, y: 0};
+    numHex = 0;
 
     delta = Math.floor(Math.sqrt(3) * 0.5 * hexagon.r);
     radacc2 = hexagon.r * hexagon.r;
@@ -65,7 +68,7 @@ function fill_CircleWithHex(circle){
         if (iter === 0) {
             drawHexagonAt(cur, 0, 0);
         } else {
-            for (var i=0; i < 6; i++) {
+            // for (var i=0; i < 6; i++) {
                 // j-loops -- next honeycomb
                 sector = 0;
                 for (var j=0; j < iter; j++) {
@@ -96,7 +99,7 @@ function fill_CircleWithHex(circle){
                     cur.y = cur.y - delta;
                     drawHexagonAt(cur, iter, sector++);
                 }
-            } // i-loop -- meta-honeycomb
+            // } // i-loop -- meta-honeycomb
         } // if -- Iteration 1 vs. n > 1
 
         // radacc update
@@ -110,7 +113,7 @@ function fill_CircleWithHex(circle){
         cur.y = ctr.y - iter * 2 * delta;
         proceed = false;
 
-        for (var i=0; i < 6; i++) {
+        // for (var i=0; i < 6; i++) {
             // j-loops -- next honeycomb
             sector = 0;
             for (var j=0; j < iter; j++) {
@@ -165,7 +168,7 @@ function fill_CircleWithHex(circle){
                     proceed = true;
                 }
             }
-        } // i-loop -- meta-honeycomb
+        // } // i-loop -- meta-honeycomb
         iter++;
     } while (proceed && (iter < 15));
 
