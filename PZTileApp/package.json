@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "express": ">=4.0.0",
+    "honeycomb-grid": "^0.6.1",
     "mongodb": "^2.2.31",
     "serialport": "*",
     "socket.io": "^2.0.3"
