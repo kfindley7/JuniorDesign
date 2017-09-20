@@ -32,13 +32,14 @@ io.on('connection', function(socket) {
                         if (data) {
                             validUser = data.username;
                             validPass = data.password;
+                            db.close();
                             socket.emit('show home page');
                         } else {
+                            db.close();
                             socket.emit('login unsuccessful');
                         }
                     }
             );
-            db.close();
         });
     });
 
@@ -62,6 +63,7 @@ io.on('connection', function(socket) {
                 {username: username}).then(
                     function (data) {
                         if (data) {
+                            db.close();
                            socket.emit('user already exists');
                            console.log(data);
                         } else {
@@ -96,6 +98,7 @@ io.on('connection', function(socket) {
                 }
                 ).then( function(data) {
                         if (data)  {
+                            db.close();
                             socket.emit('activity creation failed');
                             console.log(data);
                         } else {
