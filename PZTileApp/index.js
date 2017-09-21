@@ -47,7 +47,7 @@ io.on('connection', function(socket) {
     // Query DB for the currently running games
     socket.on('get list of games', function () {
         MongoClient.connect(uri, function(err, db) {
-            db.collection("Cluster0").distinct("game")
+            db.collection("Cluster0").distinct("gameType")
                 .then(function(data) {
                     console.log("documents", data);
                     socket.emit('got games', data);
@@ -237,12 +237,26 @@ io.on('connection', function(socket) {
                 console.log(data);
                 socket.emit('tile list', data.length);
             });
+        })
+    });
 
-            var planets = db.collection("Cluster0").distinct("planet")
-                .then(function (planets) {
-                    console.log(planets);
-                });
+    socket.on('add user manually', function () {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").insertOne({username: "admin", password: "pztiles17",
+                question1: "Favorites", answer1: "yellow jackets", question2: "Work", answer2: "publix"
+            });
             db.close();
+        })
+    });
+
+    socket.on('show user', function() {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").findOne({username: "admin", password: "pztiles17",
+                question1: "Favorites", answer1: "yellow jackets", question2: "Work", answer2: "publix"
+            }).then(function (user) {
+                db.close();
+                socket.emit('user', user);
+            })
         })
     })
 
