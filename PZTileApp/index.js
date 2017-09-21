@@ -210,5 +210,40 @@ io.on('connection', function(socket) {
             db.close();
             console.log("GAME TYPES RE-ENTERED");
         });
+    });
+
+    socket.on('add tiles', function() {
+        MongoClient.connect(uri, function (err, db) {
+            var siteList = [["Earth", 425], ["Moon", 55], ["Mars", 121], ["ISS", 117]];
+            var aList = ["a", "b", "c", "d"];
+            var tiles = [];
+            for (var i = 0; i < siteList.length; i++) {
+                var tileNum = 1;
+                for (var j = 0; j < siteList[i][1]; j++) {
+                    var tile = {tile_id: aList[i] + "00" + tileNum.toString(),
+                        planet: siteList[i][0], planet_id: tileNum, game: "FREE"};
+                    tiles.push(tile);
+                    tileNum++;
+                }
+            }
+            db.collection("Cluster0").insertMany(tiles);
+            db.close();
+        });
+    });
+
+    socket.on('get tiles', function () {
+        MongoClient.connect(uri, function (err, db) {
+            var tile_id = db.collection("Cluster0").distinct("tile_id").then(function(data) {
+                console.log(data);
+                socket.emit('tile list', data);
+            });
+
+            var planets = db.collection("Cluster0").distinct("planet")
+                .then(function (planets) {
+                    console.log(planets);
+                });
+            db.close();
+        })
     })
+
 });

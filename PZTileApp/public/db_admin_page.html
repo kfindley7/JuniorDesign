@@ -10,6 +10,14 @@
 <body>
     <button onclick="window.location='index.html'">Back to Login Page</button>
     <button class="clear-database">Clear Database</button>
-    <button class="game-types" disabled="true">Add Game Types</button>
+    <button class="game-types" disabled="disabled">Add Game Types</button>
+    <button class="add-tiles" disabled="disabled">Add Tiles</button>
+    <div class="tiles">
+        <script>
+            $(window).load(function () {
+                $(window).getTiles();
+            })
+        </script>
+    </div>
 </body>
 </html>
