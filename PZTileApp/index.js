@@ -192,4 +192,23 @@ io.on('connection', function(socket) {
             db.close();
         })
     });
+
+    socket.on('clear all', function() {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").deleteMany({});
+            db.close();
+            console.log("DATABASE CLEARED!");
+        });
+    });
+
+    socket.on('add game types', function() {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").insertMany([{game: "ESCAPE FROM MARS"}, {game: "ROCKET JUMP"},
+                {game: "SPACE INVADERS"}, {game: "WHACK-A-MOLE"}, {game: "GALAGA"},
+                {game: "SIMON SAYS"}, {game: "SPACEFOOD SQUEEZE"}, {game: "PACMAN"},
+                {game: "SCAVENGER HUNT"}, {game: "SPACE TRIVIA"}]);
+            db.close();
+            console.log("GAME TYPES RE-ENTERED");
+        });
+    })
 });
