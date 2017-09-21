@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Page</title>
+    <link rel="stylesheet" href="visualization-page.css">
+    <link rel="stylesheet" href="home-page.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="main.js"></script>
+    <script src="hexExample.js"></script>
+</head>
+<body>
+    <div class="header-logout-back">
+        <button class="_button js-back-button">Back</button>
+        <div class="text-container">
+            <p class="text"><strong>
+                <script>
+                    var queryString = decodeURIComponent(window.location.search);
+                    queryString = queryString.substring(1);
+                    var gameText = queryString.split("=")[1];
+                    document.write(gameText);
+                </script>
+            </strong></p>
+        </div>
+        <button class="_button js-logout-button">Logout</button>
+    </div>
+    <div class="nav-buttons">
+        <button onClick="window.location='home-page.html';" class="_button js-edit-task-button">Edit Task</button>
+        <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
+        <button class="_button js-sensing-button">Sensing</button>
+    </div>
+
+    <div class='element js-game1'><p class='text text-2'>Edit Tile Reservations</p>
+         <img class='image' style="padding-top: 2%; padding-right: 3%; width: 45px;" src='android-arrow-dropright.png'>
+    </div>
+    <select id="location" style="display: none; width: 25%; float: left; font-size: large; position: relative;">
+        <option class="earth" value="Earth">EARTH</option>
+        <option class="mars" value="Mars">MARS</option>
+        <option class="moon" value="Moon">MOON</option>
+        <option class="iss" value="ISS">ISS</option>
+    </select>
+    <button class="_button choose-loc" style="display: none; position: relative;">Choose Location</button>
+
+    <canvas id="myCanvas" width="1000" height="1000" style="width: 100%; height: 100%; position: relative; overflow: scroll"></canvas>
+</body>
+</html>

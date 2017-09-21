@@ -67,6 +67,11 @@ $(function() {
         }
     }
 
+    $listGames.click(function(item) {
+        console.log(item.target.childNodes[0].innerHTML);
+        window.location = "game-page.html?para=" + item.target.childNodes[0].innerHTML;
+    });
+
     // receives show home page message from index.js and switches to that page
     socket.on('show home page', function () {
         console.log("HOME PAGE");
