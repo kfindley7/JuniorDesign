@@ -1,6 +1,6 @@
 /*
-* Kaley Findley
-* Tues. 9/5
+* William Hornsby
+* Thur. 9/7
 * */
 
 $(function() {

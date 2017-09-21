@@ -32,13 +32,14 @@ io.on('connection', function(socket) {
                         if (data) {
                             validUser = data.username;
                             validPass = data.password;
+                            db.close();
                             socket.emit('show home page');
                         } else {
+                            db.close();
                             socket.emit('login unsuccessful');
                         }
                     }
             );
-            db.close();
         });
     });
 
@@ -62,6 +63,7 @@ io.on('connection', function(socket) {
                 {username: username}).then(
                     function (data) {
                         if (data) {
+                            db.close();
                            socket.emit('user already exists');
                            console.log(data);
                         } else {
@@ -83,6 +85,37 @@ io.on('connection', function(socket) {
         });
     });
 
+    socket.on('recover-check-user', function (username) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").findOne(
+                {username: username}).then(
+                function (data) {
+                    if (data) {
+                        socket.emit('recover-user-exists');
+                    } else {
+                        socket.emit('recover-no-user');
+                    }
+                }
+            );
+            db.close();
+        })
+    });
+
+    socket.on('get-security-questions', function (username) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").findOne(
+                {username: username}).then(
+                function (data) {
+                    if (data) {
+                        var question1 = data.question1;
+                        var question2 = data.question2;
+                        socket.emit('load-security-questions', question1, question2);
+                    }
+                }
+            );
+            db.close();
+        });
+    });
     // Functionality for creating the games.
     // First checks to see if the activity and activity name combination already exist
     // If the combination does exist, then the creation fails and the user is notified.
@@ -96,7 +129,7 @@ io.on('connection', function(socket) {
                 }
                 ).then( function(data) {
                         if (data)  {
-                            socket.emit('activity creation failed');
+                            db.close();socket.emit('activity creation failed');
                             console.log(data);
                         } else {
                             db.collection("Cluster0").insertOne(
@@ -108,9 +141,9 @@ io.on('connection', function(socket) {
                             db.close();
                             socket.emit('activity created');
                         }
-                    }
-            );
-        })
+                    });
+            });
+
     });
 
 
@@ -128,6 +161,35 @@ io.on('connection', function(socket) {
                     db.close();
                     socket.emit('activity list', data);
             });
+        })
+    });
+
+    socket.on('validate-security-answers', function (username, ans1, ans2) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").findOne(
+                {username: username}).then(
+                function (data) {
+                    if (data) {
+                        if(ans1===data.answer1 && ans2===data.answer2){
+                            socket.emit('correct-security-answers');
+                        } else {
+                            socket.emit('wrong-security-answers');
+                        }
+                    }
+                });
+            db.close();
+        })
+    });
+
+    socket.on('update password', function (password, username) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").updateOne(
+                {username: username},
+                {
+                    $set: {password: password}
+                }
+            );
+            db.close();
         })
     });
 });
