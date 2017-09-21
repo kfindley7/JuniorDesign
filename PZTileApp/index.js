@@ -56,8 +56,8 @@ io.on('connection', function(socket) {
         });
     });
 
-    socket.on('register', function(username, password, secQ1, secA1, secQ2, secA2){
-        MongoClient.connect(uri, function(err, db) {
+    socket.on('register', function(username, password, secQ1, secA1, secQ2, secA2) {
+        MongoClient.connect(uri, function (err, db) {
             db.collection("Cluster0").findOne(
                 {username: username}).then(
                     function (data) {
@@ -80,6 +80,8 @@ io.on('connection', function(socket) {
                         }
                     }
             );
+        });
+    });
 
     socket.on('recover-check-user', function (username) {
         MongoClient.connect(uri, function (err, db) {
@@ -93,7 +95,7 @@ io.on('connection', function(socket) {
                     }
                 }
             );
-            //db.close();
+            db.close();
         })
     });
 
@@ -110,7 +112,8 @@ io.on('connection', function(socket) {
                 }
             );
             db.close();
-        })
+        });
+    });
     // Functionality for creating the games.
     // First checks to see if the activity and activity name combination already exist
     // If the combination does exist, then the creation fails and the user is notified.
@@ -121,24 +124,22 @@ io.on('connection', function(socket) {
                 {
                     activity: activity,
                     activityName: activityName
-                }
-                ).then( function(data) {
-                        if (data)  {
-                            socket.emit('activity creation failed');
-                            console.log(data);
-                        } else {
-                            db.collection("Cluster0").insertOne(
-                                {
-                                    activity: activity,
-                                    activityName: activityName
-                                }
-                            );
-                            db.close();
-                            socket.emit('activity created');
+                }).then(function (data) {
+                if (data) {
+                    socket.emit('activity creation failed');
+                    console.log(data);
+                } else {
+                    db.collection("Cluster0").insertOne(
+                        {
+                            activity: activity,
+                            activityName: activityName
                         }
-                    }
-            );
-        })
+                    );
+                    db.close();
+                    socket.emit('activity created');
+                }
+            });
+        });
     });
 
 
@@ -171,8 +172,7 @@ io.on('connection', function(socket) {
                             socket.emit('wrong-security-answers');
                         }
                     }
-                }
-            );
+                });
             db.close();
         })
     });
