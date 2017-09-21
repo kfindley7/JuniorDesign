@@ -203,10 +203,10 @@ io.on('connection', function(socket) {
 
     socket.on('add game types', function() {
         MongoClient.connect(uri, function (err, db) {
-            db.collection("Cluster0").insertMany([{game: "ESCAPE FROM MARS"}, {game: "ROCKET JUMP"},
-                {game: "SPACE INVADERS"}, {game: "WHACK-A-MOLE"}, {game: "GALAGA"},
-                {game: "SIMON SAYS"}, {game: "SPACEFOOD SQUEEZE"}, {game: "PACMAN"},
-                {game: "SCAVENGER HUNT"}, {game: "SPACE TRIVIA"}]);
+            db.collection("Cluster0").insertMany([{gameType: "ESCAPE FROM MARS"}, {gameType: "ROCKET JUMP"},
+                {gameType: "SPACE INVADERS"}, {gameType: "WHACK-A-MOLE"}, {gameType: "GALAGA"},
+                {gameType: "SIMON SAYS"}, {gameType: "SPACEFOOD SQUEEZE"}, {gameType: "PACMAN"},
+                {gameType: "SCAVENGER HUNT"}, {gameType: "SPACE TRIVIA"}]);
             db.close();
             console.log("GAME TYPES RE-ENTERED");
         });
