@@ -235,7 +235,7 @@ io.on('connection', function(socket) {
         MongoClient.connect(uri, function (err, db) {
             var tile_id = db.collection("Cluster0").distinct("tile_id").then(function(data) {
                 console.log(data);
-                socket.emit('tile list', data);
+                socket.emit('tile list', data.length);
             });
 
             var planets = db.collection("Cluster0").distinct("planet")

@@ -37,10 +37,8 @@ $(function () {
         socket.emit('get tiles');
     };
 
-    function showTiles(aList) {
-        for (var i = 0; i < aList.length; i++) {
-            $tilesDiv.append("<div><p>" + aList[i] + "</p></div>");
-        }
+    function showTiles(numTiles) {
+        $tilesDiv.append("<div><p>There are " + numTiles.toString() + " tiles across 4 locations!</p></div>");
     }
 
 });
