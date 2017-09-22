@@ -8,7 +8,8 @@ var hex_w;
 var hex_h;
 var hex_s;
 var delta;
-var numHex = 0;
+var numHex = 1;
+var mapLoc = "";
 
 function drawHexagonAt(po_ctr_hex, pn_circle, pn_sector) {
     var cur;
@@ -33,13 +34,37 @@ function drawHexagonAt(po_ctr_hex, pn_circle, pn_sector) {
     cur.y = cur.y - delta;
     ctx.lineTo(cur.x, cur.y);
     ctx.closePath();
-    ctx.stroke();
+    colorHex();
+    ctx.fill();
 
     cur.x = cur.x + hexagon.r / 2;
     cur.y = cur.y + delta;
-    numHex++;
+    ctx.fillStyle = "#000000";
     ctx.fillText(numHex, cur.x - 6, cur.y + 4);
+    numHex++;
 } // drawHexagonAt
+
+function colorHex() {
+    if (mapLoc === "Earth" || mapLoc === "") {
+        var landList = [1,3,4,5,10,11,12, 13, 14, 15, 24, 25, 26, 27, 28,
+            29, 30, 44, 45, 46, 47, 48, 49, 50, 70, 71, 72, 73, 74, 75, 102,
+            103, 104, 105, 106, 107, 108, 140, 141, 142, 143, 144, 145, 146,
+            147, 187, 188, 189, 190, 191, 192, 240, 241, 242, 243, 299, 300];
+        console.log(numHex);
+        if (landList.includes(numHex)) {
+            console.log("GREEN");
+            ctx.fillStyle = "#19a818";
+            // ctx.stroke();
+        } else {
+            ctx.fillStyle = "#236dff";
+            // ctx.stroke();
+        }
+    } else {
+        ctx.fillStyle = "#000000";
+        ctx.stroke();
+        ctx.fillStyle = "#ffffff";
+    }
+}
 
 function fill_CircleWithHex(circle){
     // drawCircle(circle);
@@ -48,7 +73,7 @@ function fill_CircleWithHex(circle){
     var sector = 0;
     var ctr = {x: circle.pos.x, y: circle.pos.y};
     var cur = {x: 0, y: 0};
-    numHex = 0;
+    numHex = 1;
 
     delta = Math.floor(Math.sqrt(3) * 0.5 * hexagon.r);
     radacc2 = hexagon.r * hexagon.r;
@@ -167,18 +192,18 @@ function fill_CircleWithHex(circle){
 
 $(function () {
    $('.choose-loc').click(function () {
-       var location = $('[id=location]').val();
-       if (location === "Earth") {
+       mapLoc = $('[id=location]').val();
+       if (mapLoc === "Earth") {
            circle.r = 389;
            circle.pos.y = canvas_height / 3;
            ctx.clearRect(0,0, canvas_width, canvas_height);
            fill_CircleWithHex(circle);
-       } else if (location === "Mars") {
+       } else if (mapLoc === "Mars") {
            circle.r = 213;
            circle.pos.y = canvas_height / 5;
            ctx.clearRect(0,0, canvas_width, canvas_height);
            fill_CircleWithHex(circle);
-       } else if (location === "Moon") {
+       } else if (mapLoc === "Moon") {
            circle.r = 145;
            circle.pos.y = canvas_height / 6;
            ctx.clearRect(0,0, canvas_width, canvas_height);
