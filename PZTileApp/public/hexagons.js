@@ -53,6 +53,7 @@
                     drawHexagon(ctx, screenX, screenY, true);
                 }
             }
+            console.log(screenX, screenY)
         });
     }
 

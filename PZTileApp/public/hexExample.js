@@ -11,7 +11,7 @@ var delta;
 var numHex = 1;
 var mapLoc = "";
 
-function drawHexagonAt(po_ctr_hex, pn_circle, pn_sector) {
+function drawHexagonAt(po_ctr_hex, hover) {
     var cur;
     cur = {x: po_ctr_hex.x - 0.5 * hexagon.r, y: po_ctr_hex.y - delta};
 
@@ -34,8 +34,13 @@ function drawHexagonAt(po_ctr_hex, pn_circle, pn_sector) {
     cur.y = cur.y - delta;
     ctx.lineTo(cur.x, cur.y);
     ctx.closePath();
-    colorHex();
-    ctx.fill();
+    if (hover) {
+        ctx.fillStyle = "#000000";
+        ctx.stroke();
+    } else {
+        colorHex();
+        ctx.fill();
+    }
 
     cur.x = cur.x + hexagon.r / 2;
     cur.y = cur.y + delta;
@@ -56,9 +61,9 @@ function colorHex() {
             263, 264, 265, 266, 267, 268, 269, 270, 299, 300, 323, 324, 325,
             326, 327, 328, 329, 384, 385, 386, 387, 388, 389, 390, 420, 421,
             422, 423, 424];
-        console.log(numHex);
+        // console.log(numHex);
         if (landList.includes(numHex)) {
-            console.log("GREEN");
+            // console.log("GREEN");
             ctx.fillStyle = "#19a818";
             // ctx.stroke();
         } else {
@@ -88,36 +93,36 @@ function fill_CircleWithHex(circle){
         cur.y = ctr.y - iter * 2 * delta;
 
         if (iter === 0) {
-            drawHexagonAt(cur, 0, 0);
+            drawHexagonAt(cur,false);
         } else {
             sector = 0;
             for (var j=0; j < iter; j++) {
                 cur.x = cur.x + 1.5 * hexagon.r;
                 cur.y = cur.y + delta;
-                drawHexagonAt(cur, iter, sector++);
+                drawHexagonAt(cur,false);
             }
             for (var j=0; j < iter; j++) {
                 cur.y = cur.y + 2 * delta;
-                drawHexagonAt(cur, iter, sector++);
+                drawHexagonAt(cur,false);
             }
             for (var j=0; j < iter; j++) {
                 cur.x = cur.x - 1.5 * hexagon.r;
                 cur.y = cur.y + delta;
-                drawHexagonAt(cur, iter, sector++);
+                drawHexagonAt(cur,false);
             }
             for (var j=0; j < iter; j++) {
                 cur.x = cur.x - 1.5 * hexagon.r;
                 cur.y = cur.y - delta;
-                drawHexagonAt(cur, iter, sector++);
+                drawHexagonAt(cur, false);
             }
             for (var j=0; j < iter; j++) {
                 cur.y = cur.y - 2 * delta;
-                drawHexagonAt(cur, iter, sector++);
+                drawHexagonAt(cur);
             }
             for (var j=0; j < iter; j++) {
                 cur.x = cur.x + 1.5 * hexagon.r;
                 cur.y = cur.y - delta;
-                drawHexagonAt(cur, iter, sector++);
+                drawHexagonAt(cur, false);
             }
         }
 
@@ -136,7 +141,7 @@ function fill_CircleWithHex(circle){
             cur.y = cur.y + delta;
             sector++;
             if (Math.sqrt ((cur.x - ctr.x) * (cur.x - ctr.x) + (cur.y - ctr.y) * (cur.y - ctr.y)) + hexagon.r < circle.r) {
-                drawHexagonAt(cur, iter, sector);
+                drawHexagonAt(cur, false);
                 proceed = true;
             }
         }
@@ -144,7 +149,7 @@ function fill_CircleWithHex(circle){
             cur.y = cur.y + 2 * delta;
             sector++;
             if (Math.sqrt ((cur.x - ctr.x) * (cur.x - ctr.x) + (cur.y - ctr.y) * (cur.y - ctr.y)) + hexagon.r < circle.r) {
-                drawHexagonAt(cur, iter, sector);
+                drawHexagonAt(cur,false);
                 proceed = true;
             }
         }
@@ -153,7 +158,7 @@ function fill_CircleWithHex(circle){
             cur.y = cur.y + delta;
             sector++;
             if (Math.sqrt ((cur.x - ctr.x) * (cur.x - ctr.x) + (cur.y - ctr.y) * (cur.y - ctr.y)) + hexagon.r < circle.r) {
-                drawHexagonAt(cur, iter, sector);
+                drawHexagonAt(cur, false);
                 proceed = true;
             }
         }
@@ -162,7 +167,7 @@ function fill_CircleWithHex(circle){
             cur.y = cur.y - delta;
             sector++;
             if (Math.sqrt ((cur.x - ctr.x) * (cur.x - ctr.x) + (cur.y - ctr.y) * (cur.y - ctr.y)) + hexagon.r < circle.r) {
-                drawHexagonAt(cur, iter, sector);
+                drawHexagonAt(cur, false);
                 proceed = true;
             }
         }
@@ -170,7 +175,7 @@ function fill_CircleWithHex(circle){
             cur.y = cur.y - 2 * delta;
             sector++;
             if (Math.sqrt ((cur.x - ctr.x) * (cur.x - ctr.x) + (cur.y - ctr.y) * (cur.y - ctr.y)) + hexagon.r < circle.r) {
-                drawHexagonAt(cur, iter, sector);
+                drawHexagonAt(cur, false);
                 proceed = true;
             }
         }
@@ -179,7 +184,7 @@ function fill_CircleWithHex(circle){
             cur.y = cur.y - delta;
             sector++;
             if (Math.sqrt ((cur.x - ctr.x) * (cur.x - ctr.x) + (cur.y - ctr.y) * (cur.y - ctr.y)) + hexagon.r < circle.r) {
-                drawHexagonAt(cur, iter, sector);
+                drawHexagonAt(cur, false);
                 proceed = true;
             }
         }
@@ -215,6 +220,7 @@ $(function () {
            ctx.clearRect(0,0, canvas_width, canvas_height);
            fill_CircleWithHex(circle);
        }
+       // ctx.rotate(90);
    });
 
    $('.js-back-button').click(function () {
@@ -224,7 +230,7 @@ $(function () {
        $('.choose-loc').hide();
    });
 
-    $('.js-game1').click(function() {
+    $('[id=reserve]').click(function() {
         $('.js-game1').hide();
         $('[id=myCanvas]').show();
         $('[id=location]').show();
@@ -235,6 +241,7 @@ $(function () {
 $(document).ready(function () {
     c_el = document.getElementById("myCanvas");
     ctx = c_el.getContext("2d");
+    // ctx.rotate(15);
 
     canvas_width = c_el.clientWidth;
     canvas_height = c_el.clientHeight;
@@ -261,4 +268,26 @@ $(document).ready(function () {
 
     fill_CircleWithHex(circle);
     c_el.hidden = true;
+
+
+    c_el.addEventListener("click", function(eventInfo) {
+        var x, y, hexX, hexY, screenX, screenY;
+
+        x = eventInfo.offsetX || eventInfo.layerX;
+        y = eventInfo.offsetY || eventInfo.layerY;
+
+        hexY = Math.floor(y / hex_h + hex_s);
+        hexX = Math.floor((x - (hexY % 2) * 20) / 40);
+
+        screenX = hexX * 40 + ((hexY % 2) * 20);
+        screenY = hexY * (hex_h + hex_s);
+
+        ctx.clearRect(screenX,screenY, canvas_width, canvas_height);
+
+        ctx.fillStyle = "#000000";
+        drawHexagonAt({r: 20, pos:{x: screenX, y: screenY}}, true);
+        console.log("MOUSE", x,y);
+        console.log("HEX", hexX, hexY);
+        console.log("SCREEN",screenX,screenY)
+    })
 });
