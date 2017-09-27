@@ -193,4 +193,72 @@ io.on('connection', function(socket) {
         })
     });
 
+    // Functionality for adding tiles to a game.
+    // Changes the "game" field of a tile to the "activityName" given.
+    socket.on('add tiles to game', function (activityName, planet, planet_id) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").findOne(
+                {
+                    planet: planet,
+                    planet_id: planet_id
+                }
+            ).then(
+                function(data) {
+                    if (data.game !== "FREE") {
+                        db.close();
+                        socket.emit('tile already in use');
+                    } else {
+                        db.collection("Cluster0").updateOne(
+                            {
+                                planet: planet,
+                                planet_id: planet_id
+                            },
+                            {
+                                $set: {
+                                    game: activityName
+                                }
+                            }
+                        );
+                    }
+                    db.close();
+                    socket.emit('successful addition');
+                }
+            );
+        });
+    });
+
+    // Functionality for removing tiles from a game.
+    // Changes the "game" field of a tile to "FREE".
+    socket.on('remove tiles from game', function (activityName, planet, planet_id) {
+        MongoClient.connect(uri, function(err, db) {
+            db.collection("Cluster0").findOne(
+                {
+                    game: activityName,
+                    planet: planet,
+                    planet_id: planet_id
+                }
+            ).then(
+                function(data) {
+                    if (data.game !== activityName) {
+                        db.close();
+                        socket.emit('tile does not belong to the game');
+                    } else {
+                        db.collection("Cluster0").updateOne(
+                            {
+                                planet: planet,
+                                planet_id: planet_id
+                            },
+                            {
+                                $set: {
+                                    game: "FREE"
+                                }
+                            }
+                        );
+                    }
+                    db.close();
+                    socket.emit("successful removal")
+                }
+            );
+        });
+    });
 });
