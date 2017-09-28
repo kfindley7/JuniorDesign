@@ -22,7 +22,10 @@
         ctx.strokeStyle = "#CCCCCC";
         ctx.lineWidth = 1;
 
-        drawBoard(ctx, boardWidth, boardHeight);
+        var posList = [2,3,2];
+        var startList = [1,0,1];
+
+        drawBoard2(ctx, posList, startList);
 
         canvas.addEventListener("mousemove", function(eventInfo) {
             var x,
@@ -44,16 +47,60 @@
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            drawBoard(ctx, boardWidth, boardHeight);
+            var oldBoard = false;
+
+            if(oldBoard){
+                drawBoard(ctx, boardWidth, boardHeight);
+            } else {
+                drawBoard2(ctx, posList, startList);
+            }
 
             // Check if the mouse's coords are on the board
-            if(hexX >= 0 && hexX < boardWidth) {
+            if(oldBoard){
                 if(hexY >= 0 && hexY < boardHeight) {
-                    ctx.fillStyle = "#000000";
-                    drawHexagon(ctx, screenX, screenY, true);
+                    if(hexX >= 0 && hexX < boardWidth) {
+                        ctx.fillStyle = "#000000";
+                        drawHexagon(ctx, screenX, screenY, true);
+                    }
+                }
+            } else {
+                if(hexY >= 0 && hexY < posList.length) {
+                    if(hexX >= startList[hexY] && hexX < posList[hexY]+startList[hexY]) {
+                        ctx.fillStyle = "#000000";
+                        drawHexagon(ctx, screenX, screenY, true);
+                    }
                 }
             }
-            console.log(screenX, screenY)
+        });
+
+        canvas.addEventListener("click", function (eventInfo) {
+            var x,
+                y,
+                hexX,
+                hexY,
+                screenX,
+                screenY;
+
+            x = eventInfo.offsetX || eventInfo.layerX;
+            y = eventInfo.offsetY || eventInfo.layerY;
+
+
+            hexY = Math.floor(y / (hexHeight + sideLength));
+            hexX = Math.floor((x - (hexY % 2) * hexRadius) / hexRectangleWidth);
+
+            screenX = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
+            screenY = hexY * (hexHeight + sideLength);
+
+            var posList = [2,3,2];
+            var startList = [1,0,1];
+
+            if(hexY >= 0 && hexY < posList.length) {
+                if (hexX >= startList[hexY] && hexX < posList[hexY] + startList[hexY]) {
+                    ctx.fillStyle = "#FF0000";
+                    drawHexagon(ctx, screenX, screenY, true);
+                    console.log("[",hexX,", ",hexY,"]");
+                }
+            }
         });
     }
 
@@ -64,16 +111,30 @@
         for(i = 0; i < width; ++i) {
             for(j = 0; j < height; ++j) {
                 drawHexagon(
-                    ctx,
+                    canvasContext,
                     i * hexRectangleWidth + ((j % 2) * hexRadius),
                     j * (sideLength + hexHeight),
-                    false
+                    false, i, j
                 );
             }
         }
     }
 
-    function drawHexagon(canvasContext, x, y, fill) {           
+    function drawBoard2(canvasContext, posList, startList) {
+
+        for(var j = 0; j < posList.length; j++) {
+            for(var i = startList[j]; i < posList[j]+startList[j]; i++) {
+                drawHexagon(
+                    canvasContext,
+                    i * hexRectangleWidth + ((j % 2) * hexRadius),
+                    j * (sideLength + hexHeight),
+                    false, i, j
+                );
+            }
+        }
+    }
+
+    function drawHexagon(canvasContext, x, y, fill, i, j) {
         var fill = fill || false;
 
         canvasContext.beginPath();
@@ -88,6 +149,7 @@
         if(fill) {
             canvasContext.fill();
         } else {
+            canvasContext.fillText(""+i+","+j, x+hexRectangleWidth/2-5, y+hexRadius+5);
             canvasContext.stroke();
         }
     }
