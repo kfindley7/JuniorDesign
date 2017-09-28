@@ -22,8 +22,13 @@
         ctx.strokeStyle = "#CCCCCC";
         ctx.lineWidth = 1;
 
+        //prototype
         var posList = [2,3,2];
         var startList = [1,0,1];
+
+        //earth
+        // var posList = [5,11,15,17,21,23,25,27,29,31,31];
+        // var startList = [18,13,10,8,7,5,4,3,2,1,0];
 
         drawBoard2(ctx, posList, startList);
 
