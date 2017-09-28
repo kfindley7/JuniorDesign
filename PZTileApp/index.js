@@ -214,7 +214,7 @@ io.on('connection', function(socket) {
 
     socket.on('add tiles', function() {
         MongoClient.connect(uri, function (err, db) {
-            var siteList = [["Earth", 425], ["Moon", 55], ["Mars", 121], ["ISS", 117]];
+            var siteList = [["Prototype", 7], ["Earth", 425], ["Moon", 55], ["Mars", 121], ["ISS", 117]];
             var aList = ["a", "b", "c", "d"];
             var tiles = [];
             for (var i = 0; i < siteList.length; i++) {
