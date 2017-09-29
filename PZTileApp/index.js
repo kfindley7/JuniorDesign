@@ -214,18 +214,38 @@ io.on('connection', function(socket) {
 
     socket.on('add tiles', function() {
         MongoClient.connect(uri, function (err, db) {
-            var siteList = [["Prototype", 7], ["Earth", 425], ["Moon", 55], ["Mars", 121], ["ISS", 117]];
-            var aList = ["a", "b", "c", "d"];
+            // ---Right now this is just for adding the prototype---
+            //
+            // Commented out because the planet_id indexing system is different
+            //
+            // var siteList = [["Prototype", 7], ["Earth", 425], ["Moon", 55], ["Mars", 121], ["ISS", 117]];
+            // var aList = ["a", "b", "c", "d"];
+            // var tiles = [];
+            // for (var i = 0; i < siteList.length; i++) {
+            //     var tileNum = 1;
+            //     for (var j = 0; j < siteList[i][1]; j++) {
+            //         var tile = {tile_id: aList[i] + "00" + tileNum.toString(),
+            //             planet: siteList[i][0], planet_id: tileNum, game: "FREE"};
+            //         tiles.push(tile);
+            //         tileNum++;
+            //     }
+            // }
             var tiles = [];
-            for (var i = 0; i < siteList.length; i++) {
-                var tileNum = 1;
-                for (var j = 0; j < siteList[i][1]; j++) {
-                    var tile = {tile_id: aList[i] + "00" + tileNum.toString(),
-                        planet: siteList[i][0], planet_id: tileNum, game: "FREE"};
-                    tiles.push(tile);
-                    tileNum++;
-                }
+            var xcoords = [1,2,0,1,2,1,2];
+            var ycoords = [0,0,1,1,1,2,2];
+
+
+            for (var j = 0; j < 7; j++) {
+                var tileNum = (1000*xcoords[j]+ycoords[j]);
+                var tile = {
+                    tile_id: "a" + tileNum.toString(),
+                    planet: siteList[i][0], planet_id: tileNum, game: "FREE"
+                };
+                tiles.push(tile);
+                tileNum++;
             }
+
+
             db.collection("Cluster0").insertMany(tiles);
             db.close();
         });
