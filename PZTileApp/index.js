@@ -217,7 +217,7 @@ io.on('connection', function(socket) {
                     function(data) {
                         if (data.game !== "FREE") {
                             db.close();
-                            failedTiles.append(
+                            failedTiles.push(
                                 {
                                     planet: item.planet,
                                     planet_id: item.planet_id,
@@ -276,7 +276,7 @@ io.on('connection', function(socket) {
                     function(data) {
                         if (data.game !== item.acivityName) {
                             db.close();
-                            failedTiles.append(
+                            failedTiles.push(
                                 {
                                     planet: item.planet,
                                     planet_id: item.planet_id,
