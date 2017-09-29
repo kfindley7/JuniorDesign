@@ -42,6 +42,7 @@ $(function () {
 });
 
 $(document).ready(function(){
+    var socket=io();
     var canvas = document.getElementById('hexmap');
 
     var hexHeight,
@@ -73,7 +74,7 @@ $(document).ready(function(){
         // var posList = [5,11,15,17,21,23,25,27,29,31,31];
         // var startList = [18,13,10,8,7,5,4,3,2,1,0];
 
-        drawBoard2(ctx, posList, startList);
+        drawBoard(ctx, posList, startList);
         canvas.style.visibility = "hidden";
 
         canvas.addEventListener("mousemove", function(eventInfo) {
@@ -96,30 +97,16 @@ $(document).ready(function(){
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            var oldBoard = false;
+            drawBoard(ctx, posList, startList);
 
-            if(oldBoard){
-                drawBoard(ctx, boardWidth, boardHeight);
-            } else {
-                drawBoard2(ctx, posList, startList);
-            }
 
             // Check if the mouse's coords are on the board
-            if(oldBoard){
-                if(hexY >= 0 && hexY < boardHeight) {
-                    if(hexX >= 0 && hexX < boardWidth) {
-                        ctx.fillStyle = "#000000";
-                        drawHexagon(ctx, screenX, screenY, true);
-                    }
-                }
-            } else {
-                if(hexY >= 0 && hexY < posList.length) {
-                    if(hexX >= startList[hexY] && hexX < posList[hexY]+startList[hexY]) {
-                        ctx.fillStyle = "#000000";
-                        drawHexagon(ctx, screenX, screenY, true);
-                    }
+            if(hexY >= 0 && hexY < posList.length) {
+                if(hexX >= startList[hexY] && hexX < posList[hexY]+startList[hexY]) {
+                    drawHexagon(ctx, screenX, screenY, true,0,0, "#cccccc");
                 }
             }
+
         });
 
         canvas.addEventListener("click", function (eventInfo) {
@@ -145,45 +132,98 @@ $(document).ready(function(){
 
             if(hexY >= 0 && hexY < posList.length) {
                 if (hexX >= startList[hexY] && hexX < posList[hexY] + startList[hexY]) {
-                    ctx.fillStyle = "#FF0000";
-                    drawHexagon(ctx, screenX, screenY, true);
+                    drawHexagon(ctx, screenX, screenY, true, 0, 0, "#FF0000");
                     console.log("[",hexX,", ",hexY,"]");
                 }
             }
         });
     }
 
-    function drawBoard(canvasContext, width, height) {
-        var i,
-            j;
+    // function drawBoard(canvasContext, width, height) {
+    //     var i,
+    //         j;
+    //
+    //     for(i = 0; i < width; ++i) {
+    //         for(j = 0; j < height; ++j) {
+    //             drawHexagon(
+    //                 canvasContext,
+    //                 i * hexRectangleWidth + ((j % 2) * hexRadius),
+    //                 j * (sideLength + hexHeight),
+    //                 false, i, j
+    //             );
+    //         }
+    //     }
+    // }
 
-        for(i = 0; i < width; ++i) {
-            for(j = 0; j < height; ++j) {
-                drawHexagon(
-                    canvasContext,
-                    i * hexRectangleWidth + ((j % 2) * hexRadius),
-                    j * (sideLength + hexHeight),
-                    false, i, j
-                );
+    function drawBoard(canvasContext, posList, startList) {
+        var queryString = decodeURIComponent(window.location.search);
+        queryString = queryString.substring(1);
+        var gameText = queryString.split("=")[1];
+
+        socket.emit('give all tiles',"Prototype",gameText);
+
+        var free, inMine, usedOthers;
+        socket.on('Used Tiles', function (f, m, o) {
+            free=f;
+            inMine=m;
+            usedOthers=o;
+
+            for(var j = 0; j < posList.length; j++) {
+                for(var i = startList[j]; i < posList[j]+startList[j]; i++) {
+
+                    var color, found = false;
+
+                    for(x=0; x<free.length; x++){
+                        tile = free[x];
+                        // console.log("---FREE---")
+                        // console.log(tile)
+                        if(tile.planet_id===(1000*i+j)){
+                            color = "#FFFFFF";
+                            found = true;
+                        }
+                    }
+                    if(!found){
+                        for(x=0; x<inMine.length; x++){
+                            tile = inMine[x];
+                            if(tile.planet_id===(1000*i+j)){
+                                color = "#0000FF";
+                                found = true;
+                            }
+                        }
+                    }
+                    if(!found){
+                        for(x=0; x<inMine.length; x++){
+                            tile = inMine[x];
+                            if(tile.planet_id===(1000*i+j)){
+                                color = "#FF0000";
+                                found = true;
+                            }
+                        }
+                    }
+
+                    if(color === "FFFFFF") {
+                        drawHexagon(
+                            canvasContext,
+                            i * hexRectangleWidth + ((j % 2) * hexRadius),
+                            j * (sideLength + hexHeight),
+                            false, i, j, color
+                        );
+                    } else {
+                        drawHexagon(
+                            canvasContext,
+                            i * hexRectangleWidth + ((j % 2) * hexRadius),
+                            j * (sideLength + hexHeight),
+                            true, i, j, color
+                        );
+                    }
+
+                }
             }
-        }
+        });
+
     }
 
-    function drawBoard2(canvasContext, posList, startList) {
-
-        for(var j = 0; j < posList.length; j++) {
-            for(var i = startList[j]; i < posList[j]+startList[j]; i++) {
-                drawHexagon(
-                    canvasContext,
-                    i * hexRectangleWidth + ((j % 2) * hexRadius),
-                    j * (sideLength + hexHeight),
-                    false, i, j
-                );
-            }
-        }
-    }
-
-    function drawHexagon(canvasContext, x, y, fill, i, j) {
+    function drawHexagon(canvasContext, x, y, fill, i, j, fillColor) {
         var fill = fill || false;
 
         canvasContext.beginPath();
@@ -196,9 +236,10 @@ $(document).ready(function(){
         canvasContext.closePath();
 
         if(fill) {
+            ctx.fillStyle = fillColor;
             canvasContext.fill();
         } else {
-            canvasContext.fillText(""+i+","+j, x+hexRectangleWidth/2-5, y+hexRadius+5);
+            canvasContext.fillText(""+i+","+j+" ("+(1000*i+j)+")", x+hexRectangleWidth/2-20, y+hexRadius);
             canvasContext.stroke();
         }
     }
