@@ -239,7 +239,7 @@ io.on('connection', function(socket) {
                 var tileNum = (1000*xcoords[j]+ycoords[j]);
                 var tile = {
                     tile_id: "a" + tileNum.toString(),
-                    planet: siteList[i][0], planet_id: tileNum, game: "FREE"
+                    planet: "Prototype", planet_id: tileNum, game: "FREE"
                 };
                 tiles.push(tile);
                 tileNum++;
