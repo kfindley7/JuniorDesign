@@ -310,14 +310,19 @@ io.on('connection', function(socket) {
         });
     });
 
-    // Functionality to retrieve used tiles and the activity they're used for
+    // Functionality to retrieve all tiles in a planet and return them
+    // all within 3 different arrays. Specifically, free is the array with
+    // tiles not used for any games, inMine is the array with tiles used
+    // for the activity of interest, and usedOthers is the array with all
+    // tiles being used for an activity that isn't the activity of interst.
     // Searches for tiles in use and returns what they're being used for.
 
-    // To use this, call socket.emit('give used tiles', planet) where planet
-    // is the name of the planet wanting to be searched.
-    // An array of used tiles will be returned to the caller. To receive
-    // the array of used tiles, call socket.on('Used Tiles', function(data){...});.
-    socket.on('give used tiles', function (planet) {
+    // To use this, call socket.emit('give all tiles', planet, activityName)
+    // here planet is the name of the planet wanting to be searched.
+    // Three arrays of all tiles will be returned to the caller. To receive
+    // the arrays of used tiles, call
+    // socket.on('Used Tiles', function(free, inMine, usedOthers){...});.
+    socket.on('give all tiles', function (planet, activityName) {
         MongoClient.connect(uri, function(err, db) {
             db.collection("Cluster0").find(
                 {
@@ -330,49 +335,21 @@ io.on('connection', function(socket) {
                     game: true
                 }
             ).toArray(function(err, results) {
-                var data = [];
+                var usedOthers = [];
+                var inMine = [];
+                var free = [];
                 results.forEach(function (item) {
-                    if (item.game !== "FREE") {
-                        data.push(item);
+                    if (item.game === "FREE") {
+                        free.push(item);
+                    } else if (item.game === activityName) {
+                        inMine.push(item);
+                    } else {
+                        usedOthers.push(item);
                     }
                 });
                 db.close();
-                socket.emit('Used Tiles', data);
+                socket.emit('Used Tiles', free, inMine, usedOthers);
             })
         })
-    });
-
-    // Functionality to retrieve used tiles for the activity given.
-    // Searches for the tiles in use for the given activity and returns them.
-
-    // To use this, call socket.emit('give tiles in activity', planet, activityName)
-    // where planet is the planet of of interest and activityName is the activity
-    // of interest. An array of the tiles in use on the given planet by the given
-    // activity will be returned to the caller. To recieve the array of used tiles,
-    // call socket.on('Tiles reserved for activity', function(data) {...});.
-    socket.on('give tiles in activity', function(planet, activityName) {
-        MongoClient.connect(uri, function (err, db) {
-            db.collection("Cluster0").find(
-                {
-                    planet: planet,
-                    game: activityName
-                },
-                {
-                    tile_id: true,
-                    planet: true,
-                    planet_id: true,
-                    game: true
-                }
-            ).toArray(function (err, results) {
-                var data = [];
-                results.forEach( function (item) {
-                    if (Object.keys(item).length > 0) {
-                        data.push(item);
-                    }
-                });
-                db.close();
-                socket.emit('Tiles reserved for activity', data);
-            });
-        });
     });
 });
