@@ -77,7 +77,7 @@ $(function() {
     // Scenario when the activity and name combination are accepted.
     socket.on('activity created', function() {
         alert("Your activity has been created successfully.");
-        window.location = "home-page.html";
+        window.location = "game-page.html?para=" + activityName;
     });
 
     // Scenario when the activity and name combination already exist.

@@ -1,4 +1,47 @@
-(function(){
+$(function () {
+    $('.choose-loc').click(function () {
+        mapLoc = $('[id=location]').val();
+        if (mapLoc === "Earth") {
+            // circle.r = 389;
+            // circle.pos.y = canvas_height / 3;
+            // ctx.clearRect(0,0, canvas_width, canvas_height);
+            // fill_CircleWithHex(circle);
+        } else if (mapLoc === "Mars") {
+            // circle.r = 213;
+            // circle.pos.y = canvas_height / 5;
+            // ctx.clearRect(0,0, canvas_width, canvas_height);
+            // fill_CircleWithHex(circle);
+        } else if (mapLoc === "Moon") {
+            // circle.r = 145;
+            // circle.pos.y = canvas_height / 6;
+            // ctx.clearRect(0,0, canvas_width, canvas_height);
+            // fill_CircleWithHex(circle);
+        }
+        // ctx.rotate(90);
+    });
+
+    $('.js-back-button').click(function () {
+        var map = $('[id=hexmap]');
+        if (map[0].style.visibility === "hidden") {
+            window.location = "home-page.html"
+        } else {
+            $('.js-game1').show();
+            map[0].style.visibility = "hidden";
+            $('[id=location]').hide();
+            $('.choose-loc').hide();
+        }
+    });
+
+    $('[id=reserve]').click(function() {
+        $('.js-game1').hide();
+        var map = $('[id=hexmap]');
+        map[0].style.visibility = "visible";
+        $('[id=location]').show();
+        $('.choose-loc').show();
+    })
+});
+
+$(document).ready(function(){
     var canvas = document.getElementById('hexmap');
 
     var hexHeight,
@@ -31,6 +74,7 @@
         // var startList = [18,13,10,8,7,5,4,3,2,1,0];
 
         drawBoard2(ctx, posList, startList);
+        canvas.style.visibility = "hidden";
 
         canvas.addEventListener("mousemove", function(eventInfo) {
             var x,
@@ -96,8 +140,8 @@
             screenX = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
             screenY = hexY * (hexHeight + sideLength);
 
-            var posList = [2,3,2];
-            var startList = [1,0,1];
+            // var posList = [2,3,2];
+            // var startList = [1,0,1];
 
             if(hexY >= 0 && hexY < posList.length) {
                 if (hexX >= startList[hexY] && hexX < posList[hexY] + startList[hexY]) {
@@ -158,5 +202,5 @@
             canvasContext.stroke();
         }
     }
+});
 
-})();

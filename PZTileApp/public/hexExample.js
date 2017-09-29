@@ -276,13 +276,13 @@ $(document).ready(function () {
         x = eventInfo.offsetX || eventInfo.layerX;
         y = eventInfo.offsetY || eventInfo.layerY;
 
-        hexY = Math.floor(y / hex_h + hex_s);
+        hexY = Math.floor(y / (hex_h + hex_s));
         hexX = Math.floor((x - (hexY % 2) * 20) / 40);
 
         screenX = hexX * 40 + ((hexY % 2) * 20);
         screenY = hexY * (hex_h + hex_s);
 
-        ctx.clearRect(screenX,screenY, canvas_width, canvas_height);
+        // ctx.clearRect(screenX,screenY, canvas_width, canvas_height);
 
         ctx.fillStyle = "#000000";
         drawHexagonAt({r: 20, pos:{x: screenX, y: screenY}}, true);
