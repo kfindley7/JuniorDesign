@@ -347,9 +347,9 @@ io.on('connection', function(socket) {
                         usedOthers.push(item);
                     }
                 });
-                db.close();
                 socket.emit('Used Tiles', free, inMine, usedOthers);
-            })
+            });
+            db.close();
         })
     });
 });

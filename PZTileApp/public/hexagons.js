@@ -95,15 +95,16 @@ $(document).ready(function(){
             screenX = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
             screenY = hexY * (hexHeight + sideLength);
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            //ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            drawBoard(ctx, posList, startList);
+            //drawBoard(ctx, posList, startList);
 
 
             // Check if the mouse's coords are on the board
             if(hexY >= 0 && hexY < posList.length) {
                 if(hexX >= startList[hexY] && hexX < posList[hexY]+startList[hexY]) {
-                    drawHexagon(ctx, screenX, screenY, true,0,0, "#cccccc");
+                    // drawHexagon(ctx, screenX, screenY, true,0,0, "#cccccc");
+                    console.log("Hovering over ["+hexX+", "+hexY+"]");
                 }
             }
 
@@ -171,7 +172,7 @@ $(document).ready(function(){
             for(var j = 0; j < posList.length; j++) {
                 for(var i = startList[j]; i < posList[j]+startList[j]; i++) {
 
-                    var color, found = false;
+                    var color, found = false, fill=false;
 
                     for(x=0; x<free.length; x++){
                         tile = free[x];
@@ -180,6 +181,7 @@ $(document).ready(function(){
                         if(tile.planet_id===(1000*i+j)){
                             color = "#FFFFFF";
                             found = true;
+                            fill=true;
                         }
                     }
                     if(!found){
@@ -188,6 +190,7 @@ $(document).ready(function(){
                             if(tile.planet_id===(1000*i+j)){
                                 color = "#0000FF";
                                 found = true;
+                                fill=true;
                             }
                         }
                     }
@@ -197,23 +200,24 @@ $(document).ready(function(){
                             if(tile.planet_id===(1000*i+j)){
                                 color = "#FF0000";
                                 found = true;
+                                fill=true;
                             }
                         }
                     }
 
-                    if(color === "FFFFFF") {
+                    if(color === "#FFFFFF") {
                         drawHexagon(
                             canvasContext,
                             i * hexRectangleWidth + ((j % 2) * hexRadius),
                             j * (sideLength + hexHeight),
-                            false, i, j, color
+                            fill, i, j, color
                         );
                     } else {
                         drawHexagon(
                             canvasContext,
                             i * hexRectangleWidth + ((j % 2) * hexRadius),
                             j * (sideLength + hexHeight),
-                            true, i, j, color
+                            fill, i, j, color
                         );
                     }
 
@@ -226,6 +230,7 @@ $(document).ready(function(){
     function drawHexagon(canvasContext, x, y, fill, i, j, fillColor) {
         var fill = fill || false;
 
+        canvasContext.strokeStyle = "#000000";
         canvasContext.beginPath();
         canvasContext.moveTo(x + hexRadius, y);
         canvasContext.lineTo(x + hexRectangleWidth, y + hexHeight);
@@ -236,8 +241,9 @@ $(document).ready(function(){
         canvasContext.closePath();
 
         if(fill) {
-            ctx.fillStyle = fillColor;
+            canvasContext.fillStyle = fillColor;
             canvasContext.fill();
+            canvasContext.stroke();
         } else {
             canvasContext.fillText(""+i+","+j+" ("+(1000*i+j)+")", x+hexRectangleWidth/2-20, y+hexRadius);
             canvasContext.stroke();
