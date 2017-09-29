@@ -316,7 +316,7 @@ io.on('connection', function(socket) {
     // To use this, call socket.emit('give used tiles', planet) where planet
     // is the name of the planet wanting to be searched.
     // An array of used tiles will be returned to the caller. To receive
-    // the array of used tiles, call socket.on('Used Tiles', function(data){...})
+    // the array of used tiles, call socket.on('Used Tiles', function(data){...});.
     socket.on('give used tiles', function (planet) {
         MongoClient.connect(uri, function(err, db) {
             db.collection("Cluster0").find(
@@ -340,5 +340,39 @@ io.on('connection', function(socket) {
                 socket.emit('Used Tiles', data);
             })
         })
+    });
+
+    // Functionality to retrieve used tiles for the activity given.
+    // Searches for the tiles in use for the given activity and returns them.
+
+    // To use this, call socket.emit('give tiles in activity', planet, activityName)
+    // where planet is the planet of of interest and activityName is the activity
+    // of interest. An array of the tiles in use on the given planet by the given
+    // activity will be returned to the caller. To recieve the array of used tiles,
+    // call socket.on('Tiles reserved for activity', function(data) {...});.
+    socket.on('give tiles in activity', function(planet, activityName) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").find(
+                {
+                    planet: planet,
+                    game: activityName
+                },
+                {
+                    tile_id: false,
+                    planet: false,
+                    planet_id: true,
+                    game: true
+                }
+            ).toArray(function (err, results) {
+                var data = [];
+                results.forEach( function (item) {
+                    if (Object.keys(item).length > 0) {
+                        data.push(item);
+                    }
+                });
+                db.close();
+                socket.emit('Tiles reserved for activity', data);
+            });
+        });
     });
 });
