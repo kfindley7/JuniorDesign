@@ -324,8 +324,8 @@ io.on('connection', function(socket) {
                     planet: planet
                 },
                 {
-                    tile_id: false,
-                    planet: false,
+                    tile_id: true,
+                    planet: true,
                     planet_id: true,
                     game: true
                 }
@@ -358,8 +358,8 @@ io.on('connection', function(socket) {
                     game: activityName
                 },
                 {
-                    tile_id: false,
-                    planet: false,
+                    tile_id: true,
+                    planet: true,
                     planet_id: true,
                     game: true
                 }
