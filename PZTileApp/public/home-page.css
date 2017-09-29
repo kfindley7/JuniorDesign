@@ -217,3 +217,9 @@ body {
   white-space: normal;
   z-index: 0;
 }
+
+canvas {
+    border:0;
+    display:block;
+    margin:0 auto;
+}
