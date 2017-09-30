@@ -176,15 +176,13 @@ $(document).ready(function(){
         if (!found) {
             for (x = 0; x < free.length; x++) {
                 tile = free[x];
-                // console.log("---FREE---")
-                console.log("TILE", tile);
                 var indexInAdded = addTileList.indexOf(tile);
                 if (tile.planet_id === (1000 * tileX + tileY) && indexInAdded === -1) {
                     color = "#88f281";
                     found = true;
                     addTileList.push(tile);
                     break;
-                } else if (indexInAdded !== -1) {
+                } else if (tile.planet_id === (1000 * tileX + tileY) && indexInAdded !== -1) {
                     found = true;
                     color = "#FFFFFF";
                     addTileList.splice(indexInAdded, 1);
@@ -196,15 +194,13 @@ $(document).ready(function(){
         if (!found) {
             for (x = 0; x < inMine.length; x++) {
                 tile = inMine[x];
-                // console.log("---FREE---")
-                console.log("TILE",tile);
                 var indexInRemoved = removeTileList.indexOf(tile);
                 if (tile.planet_id === (1000 * tileX + tileY) && indexInRemoved === -1) {
                     color = "#FF0000";
                     found = true;
                     removeTileList.push(tile);
                     break;
-                } else if (indexInRemoved !== -1) {
+                } else if (tile.planet_id === (1000 * tileX + tileY) && indexInRemoved !== -1) {
                     found = true;
                     color = "#0000FF";
                     removeTileList.splice(indexInRemoved, 1);
@@ -216,8 +212,6 @@ $(document).ready(function(){
         if (!found) {
             for (x = 0; x < usedOthers.length; x++) {
                 tile = usedOthers[x];
-                // console.log("---FREE---")
-                console.log("TILE",tile);
                 if (tile.planet_id === (1000 * tileX + tileY)) {
                     color = "#FF0000";
                     found = true;
@@ -227,9 +221,7 @@ $(document).ready(function(){
         }
 
         if (!unavailable) {
-            console.log(color);
             drawHexagon(ctx, screenX, screenY, true, 0, 0, color);
-            console.log(addTileList, removeTileList);
         }
 
     }
@@ -308,28 +300,12 @@ $(document).ready(function(){
                         for(x=0; x<usedOthers.length; x++){
                             tile = usedOthers[x];
                             if(tile.planet_id===(1000*i+j)){
-                                color = "#FF0000";
+                                color = "#000000";
                                 found = true;
                                 fill=true;
                             }
                         }
                     }
-
-                    // if(color === "#FFFFFF") {
-                    //     drawHexagon(
-                    //         canvasContext,
-                    //         i * hexRectangleWidth + ((j % 2) * hexRadius),
-                    //         j * (sideLength + hexHeight),
-                    //         fill, i, j, color
-                    //     );
-                    // } else {
-                    //     drawHexagon(
-                    //         canvasContext,
-                    //         i * hexRectangleWidth + ((j % 2) * hexRadius),
-                    //         j * (sideLength + hexHeight),
-                    //         fill, i, j, color
-                    //     );
-                    // }
                     drawHexagon(
                         canvasContext,
                         i * hexRectangleWidth + ((j % 2) * hexRadius),
@@ -393,11 +369,15 @@ $(document).ready(function(){
         if (map[0].style.visibility === "hidden") {
             window.location = "home-page.html"
         } else {
-            $('.js-game1').show();
-            map[0].style.visibility = "hidden";
-            $('[id=location]').hide();
-            $('.choose-loc').hide();
-            $('.create-activity-button').hide();
+            var userConfirm = confirm("Are you sure you want to go back? Any unsaved changes will be lost.");
+            if (userConfirm) {
+                $('.js-game1').show();
+                map[0].style.visibility = "hidden";
+                $('[id=location]').hide();
+                $('.choose-loc').hide();
+                $('.create-activity-button').hide();
+                $('[id=legend]').hide();
+            }
         }
     });
 
@@ -408,7 +388,8 @@ $(document).ready(function(){
         $('[id=location]').show();
         $('.choose-loc').show();
         $('.create-activity-button').show();
-        // drawBoard(ctx, posList, startList);
+        $('[id=legend]').show();
+        drawBoard(ctx, posList, startList);
     })
 });
 

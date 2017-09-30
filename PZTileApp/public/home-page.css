@@ -223,3 +223,11 @@ canvas {
     display:block;
     margin:0 auto;
 }
+
+.legend-style {
+    position: relative;
+    width: 20%;
+    float: right;
+    text-wrap: normal;
+    text-align: center;
+}

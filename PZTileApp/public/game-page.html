@@ -47,8 +47,10 @@
         <option class="iss" value="ISS">ISS</option>
     </select>
     <button class="_button choose-loc" style="display: none; position: relative;">Choose Location</button>
-
-    <canvas id="hexmap" width="1000" height="600" style="left: 10%; position: relative; overflow: scroll; display:block; margin: 0 auto;"></canvas>
+    <p id="legend" style="display: none" class="text legend-style"><strong style="font-size: medium">Legend:</strong>
+        BLUE = In selected game, WHITE = Free, BLACK = Belongs to a different game.
+        Click on blue tile to remove from game. Click on white tile to add to game.</p>
+    <canvas id="hexmap" width="700" height="400" style="left: 10%; position: relative; overflow: scroll; display:block; margin: 0 auto;"></canvas>
     <button class="_button create-activity-button" style="display: none">SAVE TILE CHANGES</button>
 </body>
 </html>
