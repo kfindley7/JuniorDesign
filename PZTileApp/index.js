@@ -203,7 +203,7 @@ io.on('connection', function(socket) {
     // successfully, call socket.on('all tiles added successfully', function() {...});.
     // To check if there were any failures or to get the list of tiles that failed to
     // be added, call socket.on('some tiles failed addition', function(failedTiles) {...});.
-    socket.on('add tiles to game', function (tiles) {
+    socket.on('add tiles to game', function (tiles, activityName) {
         var flag = 0;
         var failedTiles = [];
         MongoClient.connect(uri, function (err, db) {
@@ -227,6 +227,7 @@ io.on('connection', function(socket) {
                             );
                             flag++;
                         } else {
+                            console.log("UPDATINGGGGG", item.planet, item.planet_id, item.activityName);
                             db.collection("Cluster0").updateOne(
                                 {
                                     planet: item.planet,
@@ -234,7 +235,7 @@ io.on('connection', function(socket) {
                                 },
                                 {
                                     $set: {
-                                        game: item.activityName
+                                        game: activityName
                                     }
                                 }
                             );
@@ -266,6 +267,7 @@ io.on('connection', function(socket) {
         var failedTiles = [];
         MongoClient.connect(uri, function (err, db) {
             tiles.forEach(function (item) {
+                console.log(item);
                 db.collection("Cluster0").findOne(
                     {
                         game: item.activityName,
@@ -274,6 +276,7 @@ io.on('connection', function(socket) {
                     }
                 ).then(
                     function(data) {
+                        console.log("DATAAA",data);
                         if (data.game !== item.acivityName) {
                             db.close();
                             failedTiles.push(
@@ -286,6 +289,7 @@ io.on('connection', function(socket) {
                             );
                             flag++;
                         } else {
+                            console.log("REMOVE", item.planet, item.planet_id);
                             db.collection("Cluster0").updateOne(
                                 {
                                     planet: item.planet,
@@ -323,6 +327,7 @@ io.on('connection', function(socket) {
     // the arrays of used tiles, call
     // socket.on('Used Tiles', function(free, inMine, usedOthers){...});.
     socket.on('give all tiles', function (planet, activityName) {
+        console.log("GAME NAMEEE", activityName)
         MongoClient.connect(uri, function(err, db) {
             db.collection("Cluster0").find(
                 {
@@ -338,6 +343,7 @@ io.on('connection', function(socket) {
                 var usedOthers = [];
                 var inMine = [];
                 var free = [];
+                console.log("RESULTS",results);
                 results.forEach(function (item) {
                     if (item.game === "FREE") {
                         free.push(item);
