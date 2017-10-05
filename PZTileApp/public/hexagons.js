@@ -18,6 +18,7 @@ $(document).ready(function(){
     var posList, startList;
     var tilesFailed = [];
     var gameText;
+    var changes = false;
 
     hexHeight = Math.sin(hexagonAngle) * sideLength;
     hexRadius = Math.cos(hexagonAngle) * sideLength;
@@ -171,6 +172,14 @@ $(document).ready(function(){
                     unavailable = true;
                 }
             }
+        }
+
+        if (addTileList.length > 0 && removeTileList.length > 0) {
+            changes = true;
+        } else if (addTileList.length > 0) {
+            changes = true;
+        } else {
+            changes = removeTileList.length > 0;
         }
 
         if (!unavailable) {
@@ -328,8 +337,18 @@ $(document).ready(function(){
         if (map[0].style.visibility === "hidden") {
             window.location = "home-page.html"
         } else {
-            var userConfirm = confirm("Are you sure you want to go back? Any unsaved changes will be lost.");
-            if (userConfirm) {
+            if (changes) {
+                var userConfirm = confirm("Are you sure you want to go back? Any unsaved changes will be lost.");
+                if (userConfirm) {
+                    $('.js-game1').show();
+                    map[0].style.visibility = "hidden";
+                    $('[id=location]').hide();
+                    $('.choose-loc').hide();
+                    $('.create-activity-button').hide();
+                    $('[id=legend]').hide();
+                }
+                changes = false;
+            } else {
                 $('.js-game1').show();
                 map[0].style.visibility = "hidden";
                 $('[id=location]').hide();
