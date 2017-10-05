@@ -189,24 +189,30 @@ $(document).ready(function(){
         if (removeTileList.length > 0) {
             socket.emit('remove tiles from game', removeTileList);
         }
+
+        if (tilesFailed.length === 0) {
+            alert("All tiles were added/removed successfully!");
+        } else {
+            alert("Some tiles failed to be removed/added: \n" + tilesFailed.toString());
+        }
     });
 
     socket.on('all tiles added successfully', function () {
-        alert("Tiles added to game successfully!");
         addTileList = [];
         drawBoard(ctx, posList, startList);
     });
 
     socket.on('some tiles failed addition', function (failedTiles) {
+        addTileList = [];
         tilesFailed.push(failedTiles);
     });
 
     socket.on('all tiles removed successfully', function() {
-        alert("Tiles removed from game successfully!");
         removeTileList = [];
         drawBoard(ctx, posList, startList);
     });
     socket.on('some tiles failed removal', function (failedTiles) {
+        removeTileList = [];
         tilesFailed.push(failedTiles);
     });
 
