@@ -23,7 +23,7 @@ io.on('connection', function(socket) {
 
     // Query DB to check if user has entered correct credentials
     // send socket message accordingly - to each corresponding
-    // socket message in main.js
+    // socket message in home_page.js
     socket.on('login check', function (username, password) {
         MongoClient.connect(uri, function(err, db) {
             db.collection("Cluster0").findOne(
