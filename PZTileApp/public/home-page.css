@@ -9,27 +9,6 @@ body {
     min-width: 850px;
 }
 
-.header-logout-back {
-    z-index: 0;
-    width: auto;
-    min-width: 100%;
-}
-
-.nav-buttons {
-    z-index: 0;
-    width: auto;
-    min-width: 100%;
-}
-
-.js-list-of-games {
-    float: left;
-    z-index: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0);
-    overflow: scroll;
-    min-height: 100%;
-}
-
 .rt-element {
     font-style: normal;
     font-family: inherit;
@@ -66,20 +45,6 @@ body {
     padding-top: 1.2%;
 }
 
-.text {
-    position: relative;
-    float: left;
-}
-
-._button {
-    display: block;
-    position: relative;
-    float: left;
-    font-size: 1em;
-    text-align: center;
-    color: rgb(0, 0, 0);
-}
-
 .create-activity-button {
     width: auto;
     min-width: 100%;
@@ -92,6 +57,15 @@ body {
     z-index: 0;
     min-width: 100%;
     padding-left: 0.5%
+}
+
+.js-list-of-games {
+    float: left;
+    z-index: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    overflow: scroll;
+    min-height: 100%;
 }
 
 .text-1 {
@@ -123,45 +97,6 @@ body {
     bottom: auto;
     font-style: italic;
     font-size: small
-}
-
-.js-logout-button {
-    z-index: 0;
-    float: right;
-    width: auto;
-    min-width: 16%;
-    min-height: 3em;
-    position: relative;
-    border-radius: 1px;
-    background-color: rgb(222, 222, 222);
-}
-
-.js-edit-task-button {
-    clear: both;
-    z-index: 1;
-    width: auto;
-    min-width: 33.33%;
-    height: 54px;
-    border: 1px solid rgb(0, 0, 0);
-    background-color: rgb(145, 183, 249);
-}
-
-.js-visual-button {
-    z-index: 1;
-    width: auto;
-    min-width: 33.33%;
-    height: 54px;
-    border: 1px solid rgb(0, 0, 0);
-    background-color: rgb(145, 183, 249);
-}
-
-.js-sensing-button {
-    z-index: 1;
-    width: auto;
-    min-width: 33.33%;
-    height: 54px;
-    border: 1px solid rgb(0, 0, 0);
-    background-color: rgb(145, 183, 249);
 }
 
 .text span {

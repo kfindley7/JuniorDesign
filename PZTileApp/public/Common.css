@@ -1,0 +1,74 @@
+/* John Berry
+   October 19th
+ */
+
+.nav-buttons {
+    z-index: 0;
+    width: auto;
+    min-width: 100%;
+}
+
+.header-logout-back {
+    z-index: 0;
+    width: auto;
+    min-width: 100%;
+}
+
+.js-logout-button {
+    width: auto;
+    min-width: 16%;
+    min-height: 3em;
+    position: relative;
+    float: right;
+    border-radius: 1px;
+    background-color: rgb(222, 222, 222);
+}
+
+.js-back-button {
+    width: 16%;
+    min-width: 16%;
+    min-height: 3em;
+    border-radius: 1px;
+    position: relative;
+    float: left;
+    background-color: rgb(222, 222, 222);
+}
+
+.js-edit-task-button {
+    clear: both;
+    width: auto;
+    min-width: 33.33%;
+    height: 54px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(145, 183, 249);
+}
+
+.js-visual-button {
+    width: auto;
+    min-width: 33.33%;
+    height: 54px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(145, 183, 249);
+}
+
+.js-sensing-button {
+    width: auto;
+    min-width: 33.33%;
+    height: 54px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(145, 183, 249);
+}
+
+._button {
+    display: block;
+    position: relative;
+    float: left;
+    font-size: 1em;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.text {
+    position: relative;
+    float: left;
+}
