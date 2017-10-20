@@ -21,7 +21,7 @@ $(function() {
     function showGames(aList) {
         for (var i = 0; i < aList.length; i++) {
             $listGames.append("<div class=\"element js-game1\"><p class=\"text text-2\">" + aList[i].activityName + "</p>" +
-                "      <p class=\"text text-1\"><span>Edit Game</span></p>\n" +
+                "      <p class=\"text-1\">Edit Game</p>\n" +
                 "      <img class=\"image\" src=\"android-arrow-dropright.png\">\n" +
                 "<p class=\"text text-3\">" + aList[i].activity + "</p>\n" +
                 "    </div>");
