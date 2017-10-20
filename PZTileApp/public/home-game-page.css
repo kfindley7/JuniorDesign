@@ -2,13 +2,6 @@
 /*Fri 9/8*/
 
 
-body {
-    background-color: rgb(255, 255, 255);
-    font: 400 1em/1.38 Helvetica;
-    color: rgb(0, 0, 0);
-    min-width: 850px;
-}
-
 .location-dropdown {
     padding-bottom: 5%;
     display: none;
@@ -104,33 +97,6 @@ body {
     font-style: italic;
     font-size: small;
     float: left;
-}
-
-.text strong {
-  border-top-width: 0;
-  border-right-width: 0;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-color: transparent;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-  background-color: transparent;
-  font-family: inherit;
-  font-style: inherit;
-  font-size: 2.188em;
-  font-weight: 700;
-  text-transform: inherit;
-  text-decoration: inherit;
-  letter-spacing: inherit;
-  word-spacing: inherit;
-  color: #000000;
-  opacity: 1;
-  word-break: normal;
-  word-wrap: normal;
-  white-space: normal;
-  z-index: 0;
 }
 
 canvas {
