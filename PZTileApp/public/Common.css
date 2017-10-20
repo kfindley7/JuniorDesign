@@ -4,13 +4,13 @@
 
 .nav-buttons {
     z-index: 0;
-    width: auto;
+    width: 100%;
     min-width: 100%;
 }
 
 .header-logout-back {
     z-index: 0;
-    width: auto;
+    width: 100%;
     min-width: 100%;
 }
 
