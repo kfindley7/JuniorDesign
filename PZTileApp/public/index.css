@@ -49,16 +49,28 @@ body {
   color: rgb(0, 0, 0);
 }
 
-.text-1 {
+.title {
   margin-top: 105px;
+  font-style: inherit;
+  font-size: 3.125em;
+  font-weight: inherit;
+  color: inherit;
 }
 
-.text-2 {
+.usernameText {
   margin-top: 25px;
+  font-style: normal;
+  font-size: inherit;
+  font-weight: 700;
+  color: inherit;
 }
 
-.text-3 {
+.passwordText {
   margin-top: 84px;
+  font-style: normal;
+  font-size: inherit;
+  font-weight: 700;
+  color: inherit;
 }
 
 .text-4 {
@@ -125,20 +137,6 @@ body {
   white-space: normal;
 }
 
-.text-1 span {
-  font-style: inherit;
-  font-size: 3.125em;
-  font-weight: inherit;
-  color: inherit;
-}
-
-.text-2 span,
-.text-3 span {
-  font-style: normal;
-  font-size: inherit;
-  font-weight: 700;
-  color: inherit;
-}
 
 .text-4 span {
   font-style: normal;
