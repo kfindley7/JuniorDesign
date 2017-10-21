@@ -188,7 +188,7 @@ $(document).ready(function(){
 
     }
 
-    $('.create-activity-button').click(function() {
+    $('.bottom-span-button').click(function() {
         if (addTileList.length === 0 && removeTileList.length === 0) {
             alert("No Changes to Save. Please select tiles to add/remove.")
         }
@@ -344,7 +344,7 @@ $(document).ready(function(){
                     map[0].style.visibility = "hidden";
                     $('[id=location]').hide();
                     $('.choose-loc').hide();
-                    $('.create-activity-button').hide();
+                    $('.bottom-span-button').hide();
                     $('[id=legend]').hide();
                 }
                 changes = false;
@@ -353,7 +353,7 @@ $(document).ready(function(){
                 map[0].style.visibility = "hidden";
                 $('[id=location]').hide();
                 $('.choose-loc').hide();
-                $('.create-activity-button').hide();
+                $('.bottom-span-button').hide();
                 $('[id=legend]').hide();
             }
         }
@@ -365,7 +365,7 @@ $(document).ready(function(){
         map[0].style.visibility = "visible";
         $('[id=location]').show();
         $('.choose-loc').show();
-        $('.create-activity-button').show();
+        $('.bottom-span-button').show();
         $('[id=legend]').show();
         drawBoard(ctx, posList, startList);
     })

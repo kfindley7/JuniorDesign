@@ -6,7 +6,7 @@ $(function() {
     // Crate_Activity_Page variables
     var $activityInput = $('[id=gameSelect]');
     var $activityNameInput = $('.js-activity-name');
-    var $saveNewActivityButton = $('.save_activity_button');
+    var $saveNewActivityButton = $('.bottom-span-button');
     var $logoutButton = $('.js-logout-button');
     var $backButton = $('.js-back-button');
 
