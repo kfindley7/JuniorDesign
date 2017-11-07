@@ -222,7 +222,8 @@ io.on('connection', function(socket) {
                                     planet: item.planet,
                                     planet_id: item.planet_id,
                                     game: item.game,
-                                    tile_id: item.tile_id
+                                    tile_id: item.tile_id,
+                                    mapping: "None"
                                 }
                             );
                             flag++;
@@ -330,7 +331,8 @@ io.on('connection', function(socket) {
                     tile_id: true,
                     planet: true,
                     planet_id: true,
-                    game: true
+                    game: true,
+                    mapping: true
                 }
             ).toArray(function(err, results) {
                 var usedOthers = [];

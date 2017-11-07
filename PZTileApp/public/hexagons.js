@@ -248,8 +248,6 @@ $(document).ready(function(){
 
                     for(x=0; x<free.length; x++){
                         tile = free[x];
-                        // console.log("---FREE---")
-                        // console.log(tile)
                         if(tile.planet_id===(1000*i+j)){
                             color = "#FFFFFF";
                             found = true;
@@ -260,7 +258,7 @@ $(document).ready(function(){
                         for(x=0; x<inMine.length; x++){
                             tile = inMine[x];
                             if(tile.planet_id===(1000*i+j)){
-                                console.log("tileeeee", tile);
+                                console.log("tileeeee", tile.mapping);
                                 if (reserveOrMapping == 'mapping' && tile.mapping == "None") {
                                     color = "#949093"
                                 } else {
