@@ -51,9 +51,15 @@
         Click on blue tile to remove from game. Click on white tile to add to game.</p>
     <canvas id="hexmap" class="reserve-map" width="700" height="400"></canvas>
 
-    <button class="_button bottom-span-button" style="display: none">SAVE TILE CHANGES</button>
-
-    <div class="map-side">MAP SIDE
+    <div class="map-side">
+        <select id="location2" class="location-dropdown">
+            <option class="prototype" value="Prototype">PROTOTYPE</option>
+            <option class="earth" value="Earth">EARTH</option>
+            <option class="mars" value="Mars">MARS</option>
+            <option class="moon" value="Moon">MOON</option>
+            <option class="iss" value="ISS">ISS</option>
+        </select>
+        <button id="loc-button" class="_button choose-loc" style="display: none; position: relative;">Choose Location</button>
         <canvas id="map-left-side" class="split-view-canvas" width="400" height="400"></canvas>
         <p id="mapping-legend" class="legend-style"><strong style="font-size: medium">Legend:</strong>
             BLUE = In selected game: edit mapping, WHITE = Unavailable. Free to add to activity.,
@@ -61,5 +67,6 @@
             Click on blue or grey tile to add to change list and edit mapping.</p>
     </div>
     <div class="change-list">CHANGE LIST</div>
+    <button class="_button bottom-span-button" style="display: none">SAVE TILE CHANGES</button>
 </body>
 </html>

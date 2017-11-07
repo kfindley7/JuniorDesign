@@ -151,4 +151,7 @@
     border-right-style: solid;
     border-bottom: solid;
     border-bottom-width: 1px;
+    text-align: center;
+    font-size: x-large;
+    font-weight: 800;
 }

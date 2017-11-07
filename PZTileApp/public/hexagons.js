@@ -258,7 +258,7 @@ $(document).ready(function(){
                         for(x=0; x<inMine.length; x++){
                             tile = inMine[x];
                             if(tile.planet_id===(1000*i+j)){
-                                console.log("tileeeee", tile.mapping);
+                                console.log("tileeeee", tile);
                                 if (reserveOrMapping == 'mapping' && tile.mapping == "None") {
                                     color = "#949093"
                                 } else {
@@ -389,6 +389,9 @@ $(document).ready(function(){
         $('#hexmap').hide();
         $('#map-left-side').show();
         $('#mapping-legend').show();
+        $('#location2').show();
+        $('#loc-button').show();
+        $('.bottom-span-button').show();
         var mapping_canvas = document.getElementById('map-left-side');
         drawBoard(mapping_canvas.getContext('2d'), posList, startList);
     });
