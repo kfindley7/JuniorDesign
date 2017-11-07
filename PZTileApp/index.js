@@ -193,6 +193,8 @@ io.on('connection', function(socket) {
         })
     });
 
+    // This method only for the DB Admin branch. Clears database
+
     socket.on('clear all', function() {
         MongoClient.connect(uri, function (err, db) {
             db.collection("Cluster0").deleteMany({});
@@ -201,35 +203,26 @@ io.on('connection', function(socket) {
         });
     });
 
+    // This method only for the DB Admin branch. Adds all the game types supported
+
     socket.on('add game types', function() {
         MongoClient.connect(uri, function (err, db) {
-            db.collection("Cluster0").insertMany([{gameType: "ESCAPE FROM MARS"}, {gameType: "ROCKET JUMP"},
-                {gameType: "SPACE INVADERS"}, {gameType: "WHACK-A-MOLE"}, {gameType: "GALAGA"},
-                {gameType: "SIMON SAYS"}, {gameType: "SPACEFOOD SQUEEZE"}, {gameType: "PACMAN"},
-                {gameType: "SCAVENGER HUNT"}, {gameType: "SPACE TRIVIA"}]);
+            db.collection("Cluster0").insertMany([{gameType: "ESCAPE FROM MARS", functionsList: [""]},
+                {gameType: "ROCKET JUMP", functionsList: ["JUMP"]}, {gameType: "SPACE INVADERS", functionsList: ["LEFT", "RIGHT", "FIRE CANNON"]},
+                {gameType: "WHACK-A-MOLE", functionsList: ["WHACK", "LEFT", "RIGHT", "UP", "DOWN"]},
+                {gameType: "GALAGA", functionsList: [""]}, {gameType: "SIMON SAYS", functionsList: [""]},
+                {gameType: "SPACEFOOD SQUEEZE", functionsList: [""]}, {gameType: "PACMAN", functionsList: ["UP", "DOWN", "LEFT", "RIGHT"]},
+                {gameType: "SCAVENGER HUNT", functionsList: ["STEP 1", "STEP 2", "STEP 3", "STEP 4", "STEP 5"]},
+                {gameType: "SPACE TRIVIA", functionsList: [""]}]);
             db.close();
             console.log("GAME TYPES RE-ENTERED");
         });
     });
 
+    // This method only for the DB Admin branch. Adds tiles for prototype map
+
     socket.on('add tiles', function() {
         MongoClient.connect(uri, function (err, db) {
-            // ---Right now this is just for adding the prototype---
-            //
-            // Commented out because the planet_id indexing system is different
-            //
-            // var siteList = [["Prototype", 7], ["Earth", 425], ["Moon", 55], ["Mars", 121], ["ISS", 117]];
-            // var aList = ["a", "b", "c", "d"];
-            // var tiles = [];
-            // for (var i = 0; i < siteList.length; i++) {
-            //     var tileNum = 1;
-            //     for (var j = 0; j < siteList[i][1]; j++) {
-            //         var tile = {tile_id: aList[i] + "00" + tileNum.toString(),
-            //             planet: siteList[i][0], planet_id: tileNum, game: "FREE"};
-            //         tiles.push(tile);
-            //         tileNum++;
-            //     }
-            // }
             var tiles = [];
             var xcoords = [1,2,0,1,2,1,2];
             var ycoords = [0,0,1,1,1,2,2];
@@ -239,7 +232,7 @@ io.on('connection', function(socket) {
                 var tileNum = (1000*xcoords[j]+ycoords[j]);
                 var tile = {
                     tile_id: "a" + tileNum.toString(),
-                    planet: "Prototype", planet_id: tileNum, game: "FREE"
+                    planet: "Prototype", planet_id: tileNum, game: "FREE", mapping: "None"
                 };
                 tiles.push(tile);
                 tileNum++;
@@ -251,6 +244,8 @@ io.on('connection', function(socket) {
         });
     });
 
+    // This method only for the DB Admin branch. Gets the tiles
+
     socket.on('get tiles', function () {
         MongoClient.connect(uri, function (err, db) {
             var tile_id = db.collection("Cluster0").distinct("tile_id").then(function(data) {
@@ -259,6 +254,8 @@ io.on('connection', function(socket) {
             });
         })
     });
+
+    // This method only for the DB Admin branch. Adds a user manually
 
     socket.on('add user manually', function () {
         MongoClient.connect(uri, function (err, db) {
@@ -269,6 +266,8 @@ io.on('connection', function(socket) {
         })
     });
 
+    // This method only for the DB Admin branch. Shows the user credentials for login
+
     socket.on('show user', function() {
         MongoClient.connect(uri, function (err, db) {
             db.collection("Cluster0").findOne({username: "admin", password: "pztiles17",
@@ -278,7 +277,7 @@ io.on('connection', function(socket) {
                 socket.emit('user', user);
             })
         })
-    })
+    });
 
 
     // Functionality for adding tiles to a game.
