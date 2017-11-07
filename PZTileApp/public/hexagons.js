@@ -200,11 +200,12 @@ $(document).ready(function(){
         if (removeTileList.length > 0) {
             socket.emit('remove tiles from game', removeTileList);
         }
-
-        if (tilesFailed.length === 0) {
-            alert("All tiles were added/removed successfully!");
-        } else {
-            alert("Some tiles failed to be removed/added: \n" + tilesFailed.toString());
+        if (changes) {
+            if (tilesFailed.length === 0) {
+                alert("All tiles were added/removed successfully!");
+            } else {
+                alert("Some tiles failed to be removed/added: \n" + tilesFailed.toString());
+            }
         }
     });
 
