@@ -49,16 +49,28 @@ body {
   color: rgb(0, 0, 0);
 }
 
-.text-1 {
+.title {
   margin-top: 105px;
+  font-style: inherit;
+  font-size: 3.125em;
+  font-weight: inherit;
+  color: inherit;
 }
 
-.text-2 {
+.usernameText {
   margin-top: 25px;
+  font-style: normal;
+  font-size: inherit;
+  font-weight: 700;
+  color: inherit;
 }
 
-.text-3 {
+.passwordText {
   margin-top: 84px;
+  font-style: normal;
+  font-size: inherit;
+  font-weight: 700;
+  color: inherit;
 }
 
 .text-4 {
@@ -125,20 +137,6 @@ body {
   white-space: normal;
 }
 
-.text-1 span {
-  font-style: inherit;
-  font-size: 3.125em;
-  font-weight: inherit;
-  color: inherit;
-}
-
-.text-2 span,
-.text-3 span {
-  font-style: normal;
-  font-size: inherit;
-  font-weight: 700;
-  color: inherit;
-}
 
 .text-4 span {
   font-style: normal;
@@ -156,4 +154,35 @@ body {
   height: 30px;
   float: inherit;
 
+}
+
+.security-question {
+  display: block;
+  float: left;
+  clear: both;
+  height: 35px;
+  width: 27.2%;
+  margin-left: 36.39871%;
+  padding: 0 10px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 2px;
+  background: rgb(255, 255, 255);
+  font-size: 0.813em;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+.back-button{
+  position:absolute;
+  top:0;
+  left:0;
+  margin: 0 0 0 0;
+}
+
+.security-questions{
+  display: none;
+}
+
+.reset-password{
+  display: none;
 }

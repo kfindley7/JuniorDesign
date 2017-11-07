@@ -23,7 +23,7 @@ io.on('connection', function(socket) {
 
     // Query DB to check if user has entered correct credentials
     // send socket message accordingly - to each corresponding
-    // socket message in main.js
+    // socket message in home_page.js
     socket.on('login check', function (username, password) {
         MongoClient.connect(uri, function(err, db) {
             db.collection("Cluster0").findOne(
@@ -280,4 +280,162 @@ io.on('connection', function(socket) {
         })
     })
 
+
+    // Functionality for adding tiles to a game.
+    // Changes the "game" field of all tiles to the "activityName" given.
+    // Also sends back a list of tiles that couldn't be changed if necessary.
+
+    // To use this, call socket.emit('add tiles to game', tiles) where tiles
+    // is an array of tiles with all fields specified plus the activityName
+    // of the activity to add the tiles to. To check if all tiles were added
+    // successfully, call socket.on('all tiles added successfully', function() {...});.
+    // To check if there were any failures or to get the list of tiles that failed to
+    // be added, call socket.on('some tiles failed addition', function(failedTiles) {...});.
+    socket.on('add tiles to game', function (tiles, activityName) {
+        var flag = 0;
+        var failedTiles = [];
+        MongoClient.connect(uri, function (err, db) {
+            tiles.forEach(function (item) {
+                db.collection("Cluster0").findOne(
+                    {
+                        planet: item.planet,
+                        planet_id: item.planet_id
+                    }
+                ).then(
+                    function(data) {
+                        if (data.game !== "FREE") {
+                            db.close();
+                            failedTiles.push(
+                                {
+                                    planet: item.planet,
+                                    planet_id: item.planet_id,
+                                    game: item.game,
+                                    tile_id: item.tile_id
+                                }
+                            );
+                            flag++;
+                        }
+                    }
+                );
+                db.collection("Cluster0").updateOne(
+                    {
+                        planet: item.planet,
+                        planet_id: item.planet_id
+                    },
+                    {
+                        $set: {
+                            game: activityName
+                        }
+                    }
+                );
+            });
+            db.close();
+            if (flag === 0) {
+                socket.emit('all tiles added successfully');
+            } else {
+                socket.emit('some tiles failed addition', failedTiles);
+            }
+        });
+    });
+
+    // Functionality for removing tiles from a game.
+    // Changes the "game" field of a tile to "FREE".
+    // Also sends back a list of tiles that couldn't be changed if necessary.
+
+    // To use this, call socket.emit('remove tiles from game', tiles) where tiles
+    // is an array of tiles with all fields specified plus the activityName
+    // of the activity to add the tiles to. To check if all tiles were removed
+    // successfully, call socket.on('all tiles removed successfully', function() {...});.
+    // To check if there were any failures or to get the list of tiles that failed to
+    // be removed, call socket.on('some tiles failed removal', function(failedTiles) {...});.
+    socket.on('remove tiles from game', function (tiles) {
+        var flag = 0;
+        var failedTiles = [];
+        MongoClient.connect(uri, function (err, db) {
+            tiles.forEach(function (item) {
+                db.collection("Cluster0").findOne(
+                    {
+                        game: item.game,
+                        planet: item.planet,
+                        planet_id: item.planet_id
+                    }
+                ).then(
+                    function(data) {
+                        if (data.game !== item.game) {
+                            db.close();
+                            failedTiles.push(
+                                {
+                                    planet: item.planet,
+                                    planet_id: item.planet_id,
+                                    game: item.game,
+                                    tile_id: item.tile_id
+                                }
+                            );
+                            flag++;
+                        }
+                    }
+                );
+                db.collection("Cluster0").updateOne(
+                    {
+                        planet: item.planet,
+                        planet_id: item.planet_id
+                    },
+                    {
+                        $set: {
+                            game: "FREE"
+                        }
+                    }
+                );
+            });
+            db.close();
+            if (flag === 0) {
+                socket.emit('all tiles removed successfully');
+            } else {
+                socket.emit('some tiles failed removal', failedTiles);
+            }
+        });
+    });
+
+    // Functionality to retrieve all tiles in a planet and return them
+    // all within 3 different arrays. Specifically, free is the array with
+    // tiles not used for any games, inMine is the array with tiles used
+    // for the activity of interest, and usedOthers is the array with all
+    // tiles being used for an activity that isn't the activity of interst.
+    // Searches for tiles in use and returns what they're being used for.
+
+    // To use this, call socket.emit('give all tiles', planet, activityName)
+    // here planet is the name of the planet wanting to be searched.
+    // Three arrays of all tiles will be returned to the caller. To receive
+    // the arrays of used tiles, call
+    // socket.on('Used Tiles', function(free, inMine, usedOthers){...});.
+    socket.on('give all tiles', function (planet, activityName) {
+        MongoClient.connect(uri, function(err, db) {
+            db.collection("Cluster0").find(
+                {
+                    planet: planet
+                },
+                {
+                    tile_id: true,
+                    planet: true,
+                    planet_id: true,
+                    game: true
+                }
+            ).toArray(function(err, results) {
+                var usedOthers = [];
+                var inMine = [];
+                var free = [];
+                results.forEach(function (item) {
+                    if (item.game === "FREE") {
+                        free.push(item);
+                    } else if (item.game === activityName) {
+                        inMine.push(item);
+                    } else {
+                        usedOthers.push(item);
+                    }
+                });
+                socket.emit('Used Tiles', free, inMine, usedOthers);
+            });
+            db.close();
+        })
+    });
 });

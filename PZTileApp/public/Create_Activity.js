@@ -6,7 +6,7 @@ $(function() {
     // Crate_Activity_Page variables
     var $activityInput = $('[id=gameSelect]');
     var $activityNameInput = $('.js-activity-name');
-    var $saveNewActivityButton = $('.save_activity_button');
+    var $saveNewActivityButton = $('.bottom-span-button');
     var $logoutButton = $('.js-logout-button');
     var $backButton = $('.js-back-button');
 
@@ -77,7 +77,7 @@ $(function() {
     // Scenario when the activity and name combination are accepted.
     socket.on('activity created', function() {
         alert("Your activity has been created successfully.");
-        window.location = "home-page.html";
+        window.location = "game-page.html?para=" + activityName;
     });
 
     // Scenario when the activity and name combination already exist.

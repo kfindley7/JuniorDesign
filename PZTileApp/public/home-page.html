@@ -8,18 +8,18 @@
   <meta name="viewport" content="initial-scale=1.0">
   <title>PZ Tile Manager</title>
   <link rel="stylesheet" href="standardize.css">
-  <link rel="stylesheet" href="home-page-grid.css">
-  <link rel="stylesheet" href="home-page.css">
+  <link rel="stylesheet" href="home-game-page.css">
+  <link rel="stylesheet" href="Common.css">
   <script src="/socket.io/socket.io.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-  <script type="application/javascript" src="main.js">
+  <script type="application/javascript" src="home_page.js">
   </script>
 </head>
 <body class="body page-home-page clearfix">
   <div class="header-logout-back">
       <p class="text"><strong>HOME PAGE</strong></p>
-      <button class="_button js-logout-button">Logout</button>
+      <button class="js-logout-button">Logout</button>
   </div>
   <div class="nav-buttons">
       <button class="_button js-edit-task-button">Edit Task</button>
@@ -33,6 +33,6 @@
       })
     </script>
   </div>
-  <button onClick="window.location='Create_Activity.html';" class="button create-activity-button">CREATE NEW ACTIVITY</button>
+  <button onClick="window.location='Create_Activity.html';" class="button bottom-span-button">CREATE NEW ACTIVITY</button>
 </body>
 </html>
