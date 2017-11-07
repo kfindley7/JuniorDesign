@@ -378,6 +378,8 @@ $(document).ready(function(){
         $('.choose-loc').show();
         $('.bottom-span-button').show();
         $('[id=legend]').show();
+        canvas = document.getElementById('hexmap');
+        ctx = canvas.getContext('2d');
         drawBoard(ctx, posList, startList);
     });
 
@@ -392,8 +394,9 @@ $(document).ready(function(){
         $('#location2').show();
         $('#loc-button').show();
         $('.bottom-span-button').show();
-        var mapping_canvas = document.getElementById('map-left-side');
-        drawBoard(mapping_canvas.getContext('2d'), posList, startList);
+        canvas = document.getElementById('map-left-side');
+        ctx = canvas.getContext('2d');
+        drawBoard(ctx, posList, startList);
     });
 });
 
