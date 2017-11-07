@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Game Page</title>
-    <!--<link rel="stylesheet" href="visualization-page.css">-->
     <link rel="stylesheet" href="home-game-page.css">
     <link rel="stylesheet" href="Common.css">
     <script src="/socket.io/socket.io.js"></script>
@@ -46,7 +45,7 @@
         <option class="iss" value="ISS">ISS</option>
     </select>
     <button class="_button choose-loc" style="display: none; position: relative;">Choose Location</button>
-    <p id="legend" style="display: none" class="legend-style"><strong style="font-size: medium">Legend:</strong>
+    <p id="legend" class="legend-style"><strong style="font-size: medium">Legend:</strong>
         BLUE = In selected game, WHITE = Free, BLACK = Belongs to a different game.
         Click on blue tile to remove from game. Click on white tile to add to game.</p>
     <canvas id="hexmap" class="reserve-map" width="700" height="400"></canvas>
@@ -59,7 +58,7 @@
             <option class="moon" value="Moon">MOON</option>
             <option class="iss" value="ISS">ISS</option>
         </select>
-        <button id="loc-button" class="_button choose-loc" style="display: none; position: relative;">Choose Location</button>
+        <button id="loc-button" class="_button choose-loc">Choose Location</button>
         <canvas id="map-left-side" class="split-view-canvas" width="400" height="400"></canvas>
         <p id="mapping-legend" class="legend-style"><strong style="font-size: medium">Legend:</strong>
             BLUE = In selected game: edit mapping, WHITE = Unavailable. Free to add to activity.,

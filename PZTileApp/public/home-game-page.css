@@ -127,6 +127,10 @@
     text-align: center;
     display: none
 }
+.choose-loc {
+    display: none;
+    position: relative;
+}
 
 .map-side {
     width: 70%;
