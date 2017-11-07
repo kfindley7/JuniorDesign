@@ -49,7 +49,17 @@
     <p id="legend" style="display: none" class="legend-style"><strong style="font-size: medium">Legend:</strong>
         BLUE = In selected game, WHITE = Free, BLACK = Belongs to a different game.
         Click on blue tile to remove from game. Click on white tile to add to game.</p>
-    <canvas id="hexmap" width="700" height="400" style="left: 10%; position: relative; overflow: scroll; display:block; margin: 0 auto;"></canvas>
+    <canvas id="hexmap" class="reserve-map" width="700" height="400"></canvas>
+
     <button class="_button bottom-span-button" style="display: none">SAVE TILE CHANGES</button>
+
+    <div class="map-side">MAP SIDE
+        <canvas id="map-left-side" class="split-view-canvas" width="400" height="400"></canvas>
+        <p id="mapping-legend" class="legend-style"><strong style="font-size: medium">Legend:</strong>
+            BLUE = In selected game: edit mapping, WHITE = Unavailable. Free to add to activity.,
+            BLACK = Unavailable. Belongs to a different game., GREY = In selected game but no mapping assigned.
+            Click on blue or grey tile to add to change list and edit mapping.</p>
+    </div>
+    <div class="change-list">CHANGE LIST</div>
 </body>
 </html>

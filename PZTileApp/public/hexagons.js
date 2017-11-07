@@ -2,6 +2,8 @@ $(document).ready(function(){
     var socket=io();
     var canvas = document.getElementById('hexmap');
 
+    var reserveOrMapping = "";
+
     var free, inMine, usedOthers;
     var addTileList = [];
     var removeTileList = [];
@@ -41,7 +43,7 @@ $(document).ready(function(){
         // var startList = [18,13,10,8,7,5,4,3,2,1,0];
 
         drawBoard(ctx, posList, startList);
-        canvas.style.visibility = "hidden";
+        $('#hexmap').hide();
 
         canvas.addEventListener("mousemove", function(eventInfo) {
             var x,
@@ -258,7 +260,13 @@ $(document).ready(function(){
                         for(x=0; x<inMine.length; x++){
                             tile = inMine[x];
                             if(tile.planet_id===(1000*i+j)){
-                                color = "#0000FF";
+                                console.log("tileeeee", tile);
+                                if (reserveOrMapping == 'mapping' && tile.mapping == "None") {
+                                    color = "#949093"
+                                } else {
+                                    color = "#0000FF";
+                                }
+
                                 found = true;
                                 fill=true;
                             }
@@ -274,6 +282,7 @@ $(document).ready(function(){
                             }
                         }
                     }
+
                     drawHexagon(
                         canvasContext,
                         i * hexRectangleWidth + ((j % 2) * hexRadius),
@@ -333,41 +342,57 @@ $(document).ready(function(){
     });
 
     $('.js-back-button').click(function () {
-        var map = $('[id=hexmap]');
-        if (map[0].style.visibility === "hidden") {
+        if ($('#hexmap').css('display') === 'none' && $('.map-side').css('display') === 'none'
+            && $('.change-list').css('display') === 'none') {
             window.location = "home-page.html"
         } else {
             if (changes) {
                 var userConfirm = confirm("Are you sure you want to go back? Any unsaved changes will be lost.");
                 if (userConfirm) {
                     $('.js-game1').show();
-                    map[0].style.visibility = "hidden";
+                    $('#hexmap').hide();
                     $('[id=location]').hide();
                     $('.choose-loc').hide();
                     $('.bottom-span-button').hide();
                     $('[id=legend]').hide();
+                    $('.map-side').hide();
+                    $('.change-list').hide();
                 }
                 changes = false;
             } else {
                 $('.js-game1').show();
-                map[0].style.visibility = "hidden";
+                $('#hexmap').hide();
                 $('[id=location]').hide();
                 $('.choose-loc').hide();
                 $('.bottom-span-button').hide();
                 $('[id=legend]').hide();
+                $('.map-side').hide();
+                $('.change-list').hide();
             }
         }
     });
 
     $('[id=reserve]').click(function() {
+        reserveOrMapping = 'reserve';
         $('.js-game1').hide();
-        var map = $('[id=hexmap]');
-        map[0].style.visibility = "visible";
+        $('#hexmap').show();
         $('[id=location]').show();
         $('.choose-loc').show();
         $('.bottom-span-button').show();
         $('[id=legend]').show();
         drawBoard(ctx, posList, startList);
-    })
+    });
+
+    $('#mapping').click(function () {
+        reserveOrMapping = 'mapping';
+        $('.js-game1').hide();
+        $('.map-side').show();
+        $('.change-list').show();
+        $('#hexmap').hide();
+        $('#map-left-side').show();
+        $('#mapping-legend').show();
+        var mapping_canvas = document.getElementById('map-left-side');
+        drawBoard(mapping_canvas.getContext('2d'), posList, startList);
+    });
 });
 

@@ -99,10 +99,24 @@
     float: left;
 }
 
-canvas {
+.reserve-map {
     border:0;
-    display:block;
+    display: none;
     margin:0 auto;
+    left: 10%;
+    position: relative;
+    overflow: scroll;
+}
+
+.split-view-canvas {
+    display: none;
+    overflow: scroll;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .legend-style {
@@ -111,4 +125,30 @@ canvas {
     float: right;
     text-wrap: normal;
     text-align: center;
+    display: none
+}
+
+.map-side {
+    width: 70%;
+    float: left;
+    height: 800px;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    display: none;
+    position: relative;
+}
+
+.change-list {
+    width: 29.5%;
+    float: right;
+    height: 800px;
+    background-color: rgba(255, 47, 21, 0.6);
+    display: none;
+    position: relative;
+    border-right-color: black;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-bottom: solid;
+    border-bottom-width: 1px;
 }
