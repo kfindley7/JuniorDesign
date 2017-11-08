@@ -45,9 +45,16 @@
         <option class="iss" value="ISS">ISS</option>
     </select>
     <button class="_button choose-loc" style="display: none; position: relative;">Choose Location</button>
-    <p id="legend" class="legend-style"><strong style="font-size: medium">Legend:</strong>
-        BLUE = In selected game, WHITE = Free, BLACK = Belongs to a different game.
-        Click on blue tile to remove from game. Click on white tile to add to game.</p>
+    <fieldset id="legend" class="legend-style">
+        <legend><strong>Legend:</strong></legend>
+        <p>BLUE: In the selected activity</p>
+        <p>WHITE: Free tile</p>
+        <p>BLACK: Belongs in another activity</p>
+        <p>Select Blue tile to remove from activity. Select White tile to add to activity.</p>
+    </fieldset>
+    <!--<p id="legend" class="legend-style"><strong style="font-size: medium">Legend:</strong>-->
+        <!--BLUE = In selected game, WHITE = Free, BLACK = Belongs to a different game.-->
+        <!--Click on blue tile to remove from game. Click on white tile to add to game.</p>-->
     <canvas id="hexmap" class="reserve-map" width="700" height="400"></canvas>
 
     <div class="map-side">
@@ -60,10 +67,18 @@
         </select>
         <button id="loc-button" class="_button choose-loc">Choose Location</button>
         <canvas id="map-left-side" class="split-view-canvas" width="400" height="400"></canvas>
-        <p id="mapping-legend" class="legend-style"><strong style="font-size: medium">Legend:</strong>
-            BLUE = In selected game: edit mapping, WHITE = Unavailable. Free to add to activity.,
-            BLACK = Unavailable. Belongs to a different game., GREY = In selected game but no mapping assigned.
-            Click on blue or grey tile to add to change list and edit mapping.</p>
+        <fieldset id="mapping-legend" class="legend-style">
+            <legend><strong>Legend:</strong></legend>
+            <p>BLUE: In selected activity and has an assigned mapping.</p>
+            <p>WHITE: Free tile to add to activity. Unavailable for mapping.</p>
+            <p>BLACK: Belongs in another activity. Unavailable for mapping</p>
+            <p>GREY: In selected activity but does not have a mapping.</p>
+            <p>Select Blue or Grey to edit mapping.</p>
+        </fieldset>
+        <!--<p id="mapping-legend" class="legend-style"><strong style="font-size: medium">Legend:</strong>-->
+            <!--BLUE = In selected game: edit mapping, WHITE = Unavailable. Free to add to activity.,-->
+            <!--BLACK = Unavailable. Belongs to a different game., GREY = In selected game but no mapping assigned.-->
+            <!--Click on blue or grey tile to add to change list and edit mapping.</p>-->
     </div>
     <div class="change-list">CHANGE LIST</div>
     <button class="_button bottom-span-button" style="display: none">SAVE TILE CHANGES</button>

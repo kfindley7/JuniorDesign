@@ -135,7 +135,7 @@
 .map-side {
     width: 70%;
     float: left;
-    height: 800px;
+    height: 600px;
     border-color: black;
     border-style: solid;
     border-width: 1px;
@@ -146,7 +146,7 @@
 .change-list {
     width: 29.5%;
     float: right;
-    height: 800px;
+    height: 600px;
     background-color: rgba(255, 47, 21, 0.6);
     display: none;
     position: relative;

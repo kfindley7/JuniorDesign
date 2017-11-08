@@ -13,9 +13,7 @@ $(document).ready(function(){
         hexRectangleHeight,
         hexRectangleWidth,
         hexagonAngle = 0.523598776, // 30 degrees in radians
-        sideLength = 36,
-        boardWidth = 10,
-        boardHeight = 10;
+        sideLength = 36
 
     var posList, startList;
     var tilesFailed = [];
@@ -108,22 +106,6 @@ $(document).ready(function(){
             }
         });
     }
-
-    // function drawBoard(canvasContext, width, height) {
-    //     var i,
-    //         j;
-    //
-    //     for(i = 0; i < width; ++i) {
-    //         for(j = 0; j < height; ++j) {
-    //             drawHexagon(
-    //                 canvasContext,
-    //                 i * hexRectangleWidth + ((j % 2) * hexRadius),
-    //                 j * (sideLength + hexHeight),
-    //                 false, i, j
-    //             );
-    //         }
-    //     }
-    // }
 
     function selectTile(screenX, screenY, tileX, tileY) {
         var color, found = false;
@@ -321,20 +303,11 @@ $(document).ready(function(){
     $('.choose-loc').click(function () {
         mapLoc = $('[id=location]').val();
         if (mapLoc === "Earth") {
-            // circle.r = 389;
-            // circle.pos.y = canvas_height / 3;
-            // ctx.clearRect(0,0, canvas_width, canvas_height);
-            // fill_CircleWithHex(circle);
+
         } else if (mapLoc === "Mars") {
-            // circle.r = 213;
-            // circle.pos.y = canvas_height / 5;
-            // ctx.clearRect(0,0, canvas_width, canvas_height);
-            // fill_CircleWithHex(circle);
+
         } else if (mapLoc === "Moon") {
-            // circle.r = 145;
-            // circle.pos.y = canvas_height / 6;
-            // ctx.clearRect(0,0, canvas_width, canvas_height);
-            // fill_CircleWithHex(circle);
+
         } else if (mapLoc === "Prototype") {
 
         }
