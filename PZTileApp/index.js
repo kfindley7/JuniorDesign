@@ -391,7 +391,7 @@ io.on('connection', function(socket) {
                                 }
                             )
                         } else {
-                            flagg++;
+                            flag++;
                             failedTiles.push(
                                 {
                                     planet: item.planet,
