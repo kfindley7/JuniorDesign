@@ -1,7 +1,7 @@
 /*
 Kaley Findley
 Tues. 9/5
-Modified by John Berry September 8, 2017.
+Modified by John Berry
     * added socket.on('create activity', ...)
     * added socket.on('get activities', ...)
 */
@@ -215,6 +215,7 @@ io.on('connection', function(socket) {
                     }
                 ).then(
                     function(data) {
+                        // May need to also check if data.game !== item.game).
                         if (data.game !== "FREE") {
                             db.close();
                             failedTiles.push(
@@ -230,6 +231,7 @@ io.on('connection', function(socket) {
                         }
                     }
                 );
+                // Might add the tile even if it belongs to another activity.
                 db.collection("Cluster0").updateOne(
                     {
                         planet: item.planet,
@@ -288,6 +290,7 @@ io.on('connection', function(socket) {
                         }
                     }
                 );
+                // Might still remove a tile if the tile belongs to another activity.
                 db.collection("Cluster0").updateOne(
                     {
                         planet: item.planet,
@@ -351,5 +354,61 @@ io.on('connection', function(socket) {
             });
             db.close();
         })
+    });
+
+    // Functionality to change the mapping of a given tile.
+    // Changes the "mapping" field to the given mapping.
+    // Returns a list of tiles that failed to change the mapping if any fail.
+
+    // To use this, call socket.emit('edit mapping', tiles) where tiles
+    // is an array of tiles with some fields specified. The specified fields should be
+    // {planet, planet_id, mapping}. To check if all tiles were remapped successfully,
+    // call socket.on('all tiles remapped successfully', function() {...});.
+    // To check if there were any failures or to get the list of tiles that failed to
+    // be remapped, call socket.on('some tiles failed remapping', function(failedTiles) {...});.
+    socket.on('edit mapping', function (tiles) {
+        var flag = 0;
+        var failedTiles = [];
+        MongoClient.connect(uri, function (err, db) {
+            tiles.forEach(function (item) {
+                db.collection("Cluster0").findOne(
+                    {
+                        planet: item.planet,
+                        planet_id: item.planet_id
+                    }
+                ).then(
+                    function(data) {
+                        if (data) {
+                            db.collection("Cluster0").updateOne(
+                                {
+                                    planet: item.planet,
+                                    planet_id: item.planet_id
+                                },
+                                {
+                                    $set: {
+                                        mapping: item.mapping
+                                    }
+                                }
+                            )
+                        } else {
+                            flagg++;
+                            failedTiles.push(
+                                {
+                                    planet: item.planet,
+                                    planet_id: item.planet_id,
+                                    mapping: item.mapping
+                                }
+                            )
+                        }
+                    }
+                );
+            });
+            db.close();
+            if (flag === 0) {
+                socket.emit('all tiles remapped successfully');
+            } else {
+                socket.emit('some tiles failed remapping', failedTiles);
+            }
+        });
     });
 });
