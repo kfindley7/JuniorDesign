@@ -104,6 +104,46 @@ div {
     float: left;
 }
 
+.tile-div {
+    position: relative;
+    width: auto;
+    height: auto;
+    align-content: center;
+    border-bottom-color: black;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.tile-text {
+    position: relative;
+    float: left;
+    font-size: medium;
+    padding-right: 2%;
+}
+
+.function-select-menu {
+    position: relative;
+    float: left;
+    width: 35%;
+    height: 20px;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+
+.delete-tile-x {
+    position: relative;
+    float: right;
+    margin-top: 15px;
+    margin-right: 5px;
+    background: #bbc0de;
+    color: black;
+    border: 0;
+    cursor: pointer;
+    font-size: 1em;
+    opacity: 0.9;
+    border-radius: 3px;
+}
+
 .reserve-map {
     border:0;
     display: none;
@@ -146,17 +186,20 @@ div {
     border-radius: 3px;
 }
 
-.choose-loc:active {
+.choose-loc:active, .delete-tile-x:active {
     top: 2px;
     margin-bottom: 0;
 }
 
-.choose-loc:hover {
+.choose-loc:hover, .delete-tile-x:hover {
     opacity: 1;
 }
 
 .choose-loc:active,
-.choose-loc:focus {
+.choose-loc:focus,
+.delete-tile-x:focus,
+.function-select-menu:focus,
+.location-dropdown:focus {
     outline: 0;
 }
 
