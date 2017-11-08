@@ -17,15 +17,13 @@
   </script>
 </head>
 <body class="body page-home-page clearfix">
-  <div class="header-logout-back">
-      <p class="text"><strong>HOME PAGE</strong></p>
-      <button class="js-logout-button">Logout</button>
-  </div>
-  <div class="nav-buttons">
-      <button class="_button js-edit-task-button">Edit Task</button>
-      <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
-      <button class="_button js-sensing-button">Sensing</button>
-  </div>
+    <ul id="nav-buttons">
+        <li id="home-button"><a class="active" href="home-page.html">Edit Task</a></li>
+        <li><a href="visualization.html">Visualization</a></li>
+        <li id="sensing-button"><a>Sensing</a></li>
+        <li id="logout-button" class="logout"><a>Logout</a></li>
+        <li class="title">Home Page</li>
+    </ul>
   <div id="listGames" class="js-list-of-games">
     <script>
       $(window).load(function () {

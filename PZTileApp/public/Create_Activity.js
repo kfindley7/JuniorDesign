@@ -7,8 +7,9 @@ $(function() {
     var $activityInput = $('[id=gameSelect]');
     var $activityNameInput = $('.js-activity-name');
     var $saveNewActivityButton = $('.bottom-span-button');
-    var $logoutButton = $('.js-logout-button');
-    var $backButton = $('.js-back-button');
+    var $logoutButton = $('#logout-button');
+    var $backButton = $('#back-button');
+    var $visualButton = $('#visual-button');
 
     var activity;
     var activityName;
@@ -59,6 +60,13 @@ $(function() {
     // When user clicks save new activity, create and save it to the database.
     $saveNewActivityButton.click(function () {
         createActivity();
+    });
+
+    $visualButton.click(function () {
+        var userConfirm = confirm("Are you sure you want to quit activity creation? Any unsaved changes will be lost.");
+        if (userConfirm) {
+            window.location = "visualization.html";
+        }
     });
 
     // Creates an activity and sends it to store in the mongoDB

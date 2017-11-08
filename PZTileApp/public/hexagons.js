@@ -313,7 +313,7 @@ $(document).ready(function(){
         }
     });
 
-    $('.js-back-button').click(function () {
+    $('#back-button').click(function () {
         if ($('#hexmap').css('display') === 'none' && $('.map-side').css('display') === 'none'
             && $('.change-list').css('display') === 'none') {
             window.location = "home-page.html"
@@ -372,5 +372,6 @@ $(document).ready(function(){
         ctx = canvas.getContext('2d');
         drawBoard(ctx, posList, startList);
     });
+
 });
 

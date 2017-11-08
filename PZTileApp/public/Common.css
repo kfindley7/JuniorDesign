@@ -9,69 +9,12 @@ body {
     min-width: 850px;
 }
 
-.nav-buttons {
-    z-index: 0;
-    width: 100%;
-    min-width: 100%;
-}
-
-.header-logout-back {
-    z-index: 0;
-    width: 100%;
-    min-width: 100%;
-}
-
-.js-logout-button {
-    width: auto;
-    min-width: 16%;
-    min-height: 3em;
-    position: relative;
-    float: right;
-    border-radius: 1px;
-    background-color: rgb(222, 222, 222);
-}
-
-.js-back-button {
-    width: 16%;
-    min-width: 16%;
-    min-height: 3em;
-    border-radius: 1px;
-    position: relative;
-    float: left;
-    background-color: rgb(222, 222, 222);
-}
-
-.js-edit-task-button {
-    clear: both;
-    width: auto;
-    min-width: 33.33%;
-    height: 54px;
-    border: 1px solid rgb(0, 0, 0);
-    background-color: rgb(145, 183, 249);
-}
-
-.js-visual-button {
-    width: auto;
-    min-width: 33.33%;
-    height: 54px;
-    border: 1px solid rgb(0, 0, 0);
-    background-color: rgb(145, 183, 249);
-}
-
-.js-sensing-button {
-    width: auto;
-    min-width: 33.33%;
-    height: 54px;
-    border: 1px solid rgb(0, 0, 0);
-    background-color: rgb(145, 183, 249);
-}
-
 .bottom-span-button {
     width: auto;
     min-width: 100%;
     height: 54px;
     border: 1px solid rgb(0, 0, 0);
-    background-color: rgb(145, 183, 249);
+    background-color: #236dff;
 }
 
 ._button {
@@ -127,4 +70,61 @@ body {
     word-wrap: normal;
     white-space: normal;
     z-index: 0;
+}
+
+/*Playing around with Nav Bar*/
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: relative;
+    top: 0;
+    width: 100%;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #236dff;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    display: block;
+    padding: 14px 16px;
+    border-left: solid;
+    border-left-color: white;
+    border-left-width: 2px;
+}
+
+.back {
+    border-right: solid;
+    border-right-color: white;
+    border-right-width: 2px;
+}
+
+.logout {
+    float: right;
+    border-left: solid;
+    border-left-color: white;
+    border-left-width: 2px;
 }

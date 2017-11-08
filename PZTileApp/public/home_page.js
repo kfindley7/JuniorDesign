@@ -4,7 +4,7 @@
 * */
 
 $(function() {
-    var $logoutButton = $('.js-logout-button');
+    var $logoutButton = $('#logout-button');
 
     var $listGames = $('.js-list-of-games');
 
@@ -31,6 +31,14 @@ $(function() {
     $listGames.click(function(item) {
         console.log(item.target.childNodes[0].innerHTML);
         window.location = "game-page.html?para=" + item.target.childNodes[0].innerHTML;
+    });
+
+    $('#visual-button').click(function () {
+        var userConfirm = confirm("Are you sure you want to leave this page? Any unsaved changes will be lost.");
+        if (userConfirm) {
+            window.location = "visualization.html";
+        }
+
     });
 
 

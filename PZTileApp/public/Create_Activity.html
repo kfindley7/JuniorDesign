@@ -12,18 +12,14 @@
     <script src="Create_Activity.js"></script>
 </head>
 <body class="body clearfix">
-    <div class="header-logout-back">
-        <button onClick="window.location='home-page.html';" class="_button js-back-button">Back</button>
-        <div class="text-container">
-            <p class="text"><strong>CREATE ACTIVITY PAGE</strong></p>
-        </div>
-        <button class="_button js-logout-button">Logout</button>
-    </div>
-    <div class="nav-buttons">
-        <button onClick="window.location='home-page.html';" class="_button js-edit-task-button">Edit Task</button>
-        <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
-        <button class="_button js-sensing-button">Sensing</button>
-    </div>
+    <ul id="nav-buttons">
+        <li class="back" id="back-button"><a>BACK</a></li>
+        <li id="home-button"><a class="active" href="home-page.html">Edit Task</a></li>
+        <li id="visual-button"><a href="visualization.html">Visualization</a></li>
+        <li id="sensing-button"><a>Sensing</a></li>
+        <li id="logout-button" class="logout"><a>Logout</a></li>
+        <li class="title">Create Activity Page</li>
+    </ul>
 
     <div class="activity-fields">
         <p class="activity-text-header activity-text">SELECT DESIRED ACTIVITY:</p>

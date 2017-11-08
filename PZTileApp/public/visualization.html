@@ -16,21 +16,17 @@
     <link rel="stylesheet" href="Common.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="home_page.js"></script>
+    <!--<script src="home_page.js"></script>-->
     <title>PZ Tile Manager</title>
 </head>
 <body class="body page-visualization-page clearfix">
-    <div class="header-logout-back">
-        <button onClick="window.location='home-page.html';" class="_button js-back-button">Back</button>
-        <div class="text-container">
-            <p class="text"><strong>VISUALIZATION</strong></p>
-        </div>
-        <button class="_button js-logout-button">Logout</button>
-    </div>
-    <div class="nav-buttons">
-        <button onClick="window.location='home-page.html';" class="_button js-edit-task-button">Edit Task</button>
-        <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
-        <button class="_button js-sensing-button">Sensing</button>
-    </div>
+    <ul id="nav-buttons">
+        <li class="back" id="back-button"><a href="home-page.html">BACK</a></li>
+        <li id="home-button"><a href="home-page.html">Edit Task</a></li>
+        <li id="visual-button"><a class="active" href="visualization.html">Visualization</a></li>
+        <li id="sensing-button"><a>Sensing</a></li>
+        <li id="logout-button" class="logout"><a>Logout</a></li>
+        <li class="title">Visualization Page</li>
+    </ul>
 </body>
 </html>

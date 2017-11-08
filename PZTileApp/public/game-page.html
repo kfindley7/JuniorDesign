@@ -13,23 +13,39 @@
     <script src="hexagons.js"></script>
 </head>
 <body>
-    <div class="nav-buttons">
-        <button class="_button js-back-button">Back</button>
-        <div class="text-container">
-            <p class="text"><strong>
-                <script>
-                    var queryString = decodeURIComponent(window.location.search);
-                    queryString = queryString.substring(1);
-                    var gameText = queryString.split("=")[1];
-                    document.write(gameText);
-                </script>
-            </strong></p>
-        </div>
-        <button class="_button js-logout-button">Logout</button>
-        <button onClick="window.location='home-page.html';" class="_button js-edit-task-button">Edit Task</button>
-        <button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>
-        <button class="_button js-sensing-button">Sensing</button>
-    </div>
+    <ul id="nav-buttons">
+        <li class="back" id="back-button"><a>BACK</a></li>
+        <li id="home-button"><a class="active" href="home-page.html">Edit Task</a></li>
+        <li id="visual-button"><a>Visualization</a></li>
+        <li id="sensing-button"><a href="">Sensing</a></li>
+        <li id="logout-button" class="logout"><a>Logout</a></li>
+        <li class="title"><script>
+            var queryString = decodeURIComponent(window.location.search);
+            queryString = queryString.substring(1);
+            var gameText = queryString.split("=")[1];
+            document.write(gameText);
+        </script>
+        </li>
+    </ul>
+    <!--<div class="nav-buttons">-->
+        <!--<button class="_button js-back-button">Back</button>-->
+        <!--<div class="text-container">-->
+            <!--<p class="text">-->
+                <!--<strong>-->
+                    <!--<script>-->
+                        <!--var queryString = decodeURIComponent(window.location.search);-->
+                        <!--queryString = queryString.substring(1);-->
+                        <!--var gameText = queryString.split("=")[1];-->
+                        <!--document.write(gameText);-->
+                    <!--</script>-->
+                <!--</strong>-->
+            <!--</p>-->
+        <!--</div>-->
+        <!--<button class="_button js-logout-button">Logout</button>-->
+        <!--<button onClick="window.location='home-page.html';" class="_button js-edit-task-button">Edit Task</button>-->
+        <!--<button onClick="window.location='visualization.html';" class="_button js-visual-button">Visualization</button>-->
+        <!--<button class="_button js-sensing-button">Sensing</button>-->
+    <!--</div>-->
 
     <div id="reserve" class='element js-game1'><p class='text text-2'>Edit Tile Reservations</p>
          <img class='image' style="padding-top: 2%; padding-right: 3%; width: 45px;" src='android-arrow-dropright.png'>
@@ -52,9 +68,6 @@
         <p>BLACK: Belongs in another activity</p>
         <p>Select Blue tile to remove from activity. Select White tile to add to activity.</p>
     </fieldset>
-    <!--<p id="legend" class="legend-style"><strong style="font-size: medium">Legend:</strong>-->
-        <!--BLUE = In selected game, WHITE = Free, BLACK = Belongs to a different game.-->
-        <!--Click on blue tile to remove from game. Click on white tile to add to game.</p>-->
     <canvas id="hexmap" class="reserve-map" width="700" height="400"></canvas>
 
     <div class="map-side">
@@ -75,10 +88,6 @@
             <p>GREY: In selected activity but does not have a mapping.</p>
             <p>Select Blue or Grey to edit mapping.</p>
         </fieldset>
-        <!--<p id="mapping-legend" class="legend-style"><strong style="font-size: medium">Legend:</strong>-->
-            <!--BLUE = In selected game: edit mapping, WHITE = Unavailable. Free to add to activity.,-->
-            <!--BLACK = Unavailable. Belongs to a different game., GREY = In selected game but no mapping assigned.-->
-            <!--Click on blue or grey tile to add to change list and edit mapping.</p>-->
     </div>
     <div class="change-list">CHANGE LIST</div>
     <button class="_button bottom-span-button" style="display: none">SAVE TILE CHANGES</button>

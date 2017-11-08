@@ -50,7 +50,8 @@
 .js-game1 {
     z-index: 0;
     min-width: 100%;
-    padding-left: 0.5%
+    padding-left: 0.5%;
+    position: relative;
 }
 
 .js-list-of-games {
