@@ -55,6 +55,7 @@ body {
   font-size: 3.125em;
   font-weight: inherit;
   color: inherit;
+  text-shadow: 2px 2px 4px #949093;
 }
 
 .usernameText {
@@ -81,10 +82,7 @@ body {
 
 ._input-1 {
   width: 27.2%;
-}
-
-._input-2 {
-  width: 27.1993534482%;
+  margin-bottom: 10px;
 }
 
 .text span {
@@ -145,6 +143,10 @@ body {
   color: rgb(57, 191, 255);
 }
 
+button {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .button-small{
   font-style: normal;
   font-size: 0.75em;
@@ -153,7 +155,6 @@ body {
   margin: auto;
   height: 30px;
   float: inherit;
-
 }
 
 .security-question {

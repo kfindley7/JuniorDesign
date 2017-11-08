@@ -15,6 +15,7 @@ body {
     height: 54px;
     border: 1px solid rgb(0, 0, 0);
     background-color: #236dff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 ._button {
@@ -24,6 +25,7 @@ body {
     font-size: 1em;
     text-align: center;
     color: rgb(0, 0, 0);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .text {
@@ -83,6 +85,7 @@ ul {
     position: relative;
     top: 0;
     width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 li {
