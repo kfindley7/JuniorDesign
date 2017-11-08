@@ -42,6 +42,12 @@ $(function() {
        window.location = 'recover-password.html'
     });
 
+    $("#password").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#login").click();
+        }
+    });
+
     socket.on('login unsuccessful', function() {
         // put some pop up here to alert user of login failure
         alert("Login Failure! Incorrect username or password. Please try again.");
