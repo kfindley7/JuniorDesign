@@ -1,19 +1,21 @@
 $(document).ready(function(){
     var socket=io();
     var canvas = document.getElementById('hexmap');
+    var canvasMapping = document.getElementById('map-left-side');
+
+    var reserveOrMapping = "";
 
     var free, inMine, usedOthers;
     var addTileList = [];
     var removeTileList = [];
+    var changeList = [];
 
     var hexHeight,
         hexRadius,
         hexRectangleHeight,
         hexRectangleWidth,
         hexagonAngle = 0.523598776, // 30 degrees in radians
-        sideLength = 36,
-        boardWidth = 10,
-        boardHeight = 10;
+        sideLength = 36;
 
     var posList, startList;
     var tilesFailed = [];
@@ -25,12 +27,20 @@ $(document).ready(function(){
     hexRectangleHeight = sideLength + 2 * hexHeight;
     hexRectangleWidth = 2 * hexRadius;
 
-    if (canvas.getContext){
+    if (canvas.getContext && canvasMapping.getContext){
+
+        setupListenersForCanvas(canvas);
+        setupListenersForCanvas(canvasMapping);
         var ctx = canvas.getContext('2d');
+        var ctxMap = canvasMapping.getContext('2d');
 
         ctx.fillStyle = "#000000";
         ctx.strokeStyle = "#CCCCCC";
         ctx.lineWidth = 1;
+
+        ctxMap.fillStyle = "#000000";
+        ctxMap.strokeStyle = "#CCCCCC";
+        ctxMap.lineWidth = 1;
 
         //prototype
         posList = [2,3,2];
@@ -40,10 +50,13 @@ $(document).ready(function(){
         // var posList = [5,11,15,17,21,23,25,27,29,31,31];
         // var startList = [18,13,10,8,7,5,4,3,2,1,0];
 
-        drawBoard(ctx, posList, startList);
-        canvas.style.visibility = "hidden";
+        // drawBoard(ctx, posList, startList);
+        // $('#hexmap').hide();
 
-        canvas.addEventListener("mousemove", function(eventInfo) {
+    }
+
+    function setupListenersForCanvas(canvas) {
+        canvas.addEventListener("mousemove", function (eventInfo) {
             var x,
                 y,
                 hexX,
@@ -67,10 +80,10 @@ $(document).ready(function(){
 
 
             // Check if the mouse's coords are on the board
-            if(hexY >= 0 && hexY < posList.length) {
-                if(hexX >= startList[hexY] && hexX < posList[hexY]+startList[hexY]) {
+            if (hexY >= 0 && hexY < posList.length) {
+                if (hexX >= startList[hexY] && hexX < posList[hexY] + startList[hexY]) {
                     // drawHexagon(ctx, screenX, screenY, true,0,0, "#cccccc");
-                    console.log("Hovering over ["+hexX+", "+hexY+"]");
+                    console.log("Hovering over [" + hexX + ", " + hexY + "]");
                 }
             }
 
@@ -97,33 +110,90 @@ $(document).ready(function(){
             // var posList = [2,3,2];
             // var startList = [1,0,1];
 
-            if(hexY >= 0 && hexY < posList.length) {
+            if (hexY >= 0 && hexY < posList.length) {
                 if (hexX >= startList[hexY] && hexX < posList[hexY] + startList[hexY]) {
-
-                    selectTile(screenX, screenY, hexX, hexY);
-                    console.log("[",hexX,", ",hexY,"]");
+                    if (reserveOrMapping == 'reserve') {
+                        selectTileForReserve(screenX, screenY, hexX, hexY);
+                    } else if  (reserveOrMapping == 'mapping') {
+                        selectTileForMapping(screenX, screenY, hexX, hexY);
+                    }
+                    console.log("[", hexX, ", ", hexY, "]");
                 }
             }
         });
     }
 
-    // function drawBoard(canvasContext, width, height) {
-    //     var i,
-    //         j;
-    //
-    //     for(i = 0; i < width; ++i) {
-    //         for(j = 0; j < height; ++j) {
-    //             drawHexagon(
-    //                 canvasContext,
-    //                 i * hexRectangleWidth + ((j % 2) * hexRadius),
-    //                 j * (sideLength + hexHeight),
-    //                 false, i, j
-    //             );
-    //         }
-    //     }
-    // }
+    function selectTileForMapping(screenX, screenY, tileX, tileY) {
+        console.log("SELECTED A TILE", tileX, tileY);
+        var color, found = false;
+        var unavailable = true;
 
-    function selectTile(screenX, screenY, tileX, tileY) {
+        if (!found) {
+            for (i = 0; i < inMine.length; i++) {
+                var tile = inMine[i];
+                var indexInChangeList = changeList.indexOf(tile.planet + "-" + tile.planet_id);
+                if (tile.planet_id == (1000 * tileX + tileY) && indexInChangeList === -1) {
+                    if (tile.mapping === "None") {
+                        color = "#0000FF";
+                    } else {
+                        color = "#FF0000";
+                    }
+                    unavailable = false;
+                    found = true;
+                    changes = true;
+                    changeList.push(tile.planet + "-" + tile.planet_id);
+                    break;
+                }
+            }
+        }
+
+        if (!unavailable && found) {
+            console.log(changeList);
+            drawHexagon(ctx, screenX, screenY, true, 0, 0, color);
+            addTileToChangeListColumn(tile);
+        }
+    }
+
+    function addTileToChangeListColumn(tile) {
+        var $tileDiv = $("<div>", {id: tile.planet + "-" + tile.planet_id, class: "tile-div"});
+        $tileDiv.append("<p class='tile-text'>" + tile.planet + "-" + tile.planet_id + "</p>");
+        var $functionDropdown = $("<select>", {class: 'function-select-menu'});
+        // socket.emit('get activity functions');
+        var functionList = ["Test1", "Test2", "Test3", "Test4", "Test5"];
+        for (var i = 0; i < functionList.length; i++) {
+            $functionDropdown.append("<option class='tile-function-menu' value="
+                + functionList[i] + "> " + functionList[i] + "</option>")
+        }
+        $tileDiv.append($functionDropdown);
+        $tileDiv.append("<button class='delete-tile-x' onclick='$(window).deleteTileFromChanges(event)'>&times;</button>");
+
+        $('.change-list').append($tileDiv);
+
+        socket.emit('get function list', tile.game);
+    }
+
+    $.fn.deleteTileFromChanges = function(event) {
+        var tile = event.path[1].id;
+        $('#' + tile).remove();
+        var tileIdLoc = tile.split("-");
+        console.log(tile, tileIdLoc);
+        for (i = 0; i < changeList.length; i++) {
+            var tempTile = changeList[i].split("-");
+            if (tempTile[0] == tileIdLoc[0]
+                && tempTile[1] == tileIdLoc[1]) {
+                changeList.splice(i, 1);
+                break;
+            }
+        }
+
+        changes = changeList.length !== 0;
+
+        drawBoard(ctxMap, startList, posList);
+        console.log("CHANGE LIST AFTER REMOVE", changeList);
+
+    };
+
+    function selectTileForReserve(screenX, screenY, tileX, tileY) {
         var color, found = false;
         var unavailable = false;
 
@@ -189,20 +259,31 @@ $(document).ready(function(){
     }
 
     $('.bottom-span-button').click(function() {
-        if (addTileList.length === 0 && removeTileList.length === 0) {
-            alert("No Changes to Save. Please select tiles to add/remove.")
-        }
-        if (addTileList.length > 0) {
-            socket.emit('add tiles to game', addTileList, gameText);
-        }
-        if (removeTileList.length > 0) {
-            socket.emit('remove tiles from game', removeTileList);
-        }
+        if (reserveOrMapping == 'reserve') {
 
-        if (tilesFailed.length === 0) {
-            alert("All tiles were added/removed successfully!");
-        } else {
-            alert("Some tiles failed to be removed/added: \n" + tilesFailed.toString());
+            if (addTileList.length === 0 && removeTileList.length === 0) {
+                alert("No Changes to Save. Please select tiles to add/remove.")
+            }
+            if (addTileList.length > 0) {
+                socket.emit('add tiles to game', addTileList, gameText);
+            }
+            if (removeTileList.length > 0) {
+                socket.emit('remove tiles from game', removeTileList);
+            }
+            if (changes) {
+                if (tilesFailed.length === 0) {
+                    alert("All tiles were added/removed successfully!");
+                } else {
+                    alert("Some tiles failed to be removed/added: \n" + tilesFailed.toString());
+                }
+            }
+        } else if (reserveOrMapping == 'mapping') {
+            if (changeList.length === 0) {
+                alert("No Changes to Save. Select tiles to make changes to mappings.");
+            } else {
+                // socket.emit('update tile mappings', changeList);
+                console.log("ATTEMPTING TO SAVE. Functionality not completed yet. Nothing should change.")
+            }
         }
     });
 
@@ -229,7 +310,7 @@ $(document).ready(function(){
         var queryString = decodeURIComponent(window.location.search);
         queryString = queryString.substring(1);
         gameText = queryString.split("=")[1];
-        console.log("GAME TEXT",gameText);
+        // console.log("GAME TEXT",gameText);
 
         socket.emit('give all tiles',"Prototype",gameText);
 
@@ -237,7 +318,7 @@ $(document).ready(function(){
             free=f;
             inMine=m;
             usedOthers=o;
-            console.log("OTHERS",usedOthers);
+            // console.log("OTHERS",usedOthers);
 
             for(var j = 0; j < posList.length; j++) {
                 for(var i = startList[j]; i < posList[j]+startList[j]; i++) {
@@ -246,8 +327,6 @@ $(document).ready(function(){
 
                     for(x=0; x<free.length; x++){
                         tile = free[x];
-                        // console.log("---FREE---")
-                        // console.log(tile)
                         if(tile.planet_id===(1000*i+j)){
                             color = "#FFFFFF";
                             found = true;
@@ -258,7 +337,13 @@ $(document).ready(function(){
                         for(x=0; x<inMine.length; x++){
                             tile = inMine[x];
                             if(tile.planet_id===(1000*i+j)){
-                                color = "#0000FF";
+                                if (reserveOrMapping == 'mapping' && tile.mapping == "None"
+                                    && changeList.indexOf(tile.planet + "-" + tile.planet_id) == -1) {
+                                    color = "#949093"
+                                } else {
+                                    color = "#0000FF";
+                                }
+
                                 found = true;
                                 fill=true;
                             }
@@ -274,6 +359,7 @@ $(document).ready(function(){
                             }
                         }
                     }
+
                     drawHexagon(
                         canvasContext,
                         i * hexRectangleWidth + ((j % 2) * hexRadius),
@@ -313,61 +399,75 @@ $(document).ready(function(){
     $('.choose-loc').click(function () {
         mapLoc = $('[id=location]').val();
         if (mapLoc === "Earth") {
-            // circle.r = 389;
-            // circle.pos.y = canvas_height / 3;
-            // ctx.clearRect(0,0, canvas_width, canvas_height);
-            // fill_CircleWithHex(circle);
+
         } else if (mapLoc === "Mars") {
-            // circle.r = 213;
-            // circle.pos.y = canvas_height / 5;
-            // ctx.clearRect(0,0, canvas_width, canvas_height);
-            // fill_CircleWithHex(circle);
+
         } else if (mapLoc === "Moon") {
-            // circle.r = 145;
-            // circle.pos.y = canvas_height / 6;
-            // ctx.clearRect(0,0, canvas_width, canvas_height);
-            // fill_CircleWithHex(circle);
+
         } else if (mapLoc === "Prototype") {
 
         }
     });
 
-    $('.js-back-button').click(function () {
-        var map = $('[id=hexmap]');
-        if (map[0].style.visibility === "hidden") {
+    $('#back-button').click(function () {
+        if ($('#hexmap').css('display') === 'none' && $('.map-side').css('display') === 'none'
+            && $('.change-list').css('display') === 'none') {
             window.location = "home-page.html"
         } else {
             if (changes) {
-                var userConfirm = confirm("Are you sure you want to go back? Any unsaved changes will be lost.");
+                var userConfirm = confirm("Are you sure you want to go back? Any unsaved changes may be lost.");
                 if (userConfirm) {
                     $('.js-game1').show();
-                    map[0].style.visibility = "hidden";
+                    $('#hexmap').hide();
                     $('[id=location]').hide();
                     $('.choose-loc').hide();
                     $('.bottom-span-button').hide();
                     $('[id=legend]').hide();
+                    $('.map-side').hide();
+                    $('.change-list').hide();
                 }
                 changes = false;
             } else {
                 $('.js-game1').show();
-                map[0].style.visibility = "hidden";
+                $('#hexmap').hide();
                 $('[id=location]').hide();
                 $('.choose-loc').hide();
                 $('.bottom-span-button').hide();
                 $('[id=legend]').hide();
+                $('.map-side').hide();
+                $('.change-list').hide();
             }
         }
     });
 
     $('[id=reserve]').click(function() {
+        reserveOrMapping = 'reserve';
         $('.js-game1').hide();
-        var map = $('[id=hexmap]');
-        map[0].style.visibility = "visible";
+        $('#hexmap').show();
         $('[id=location]').show();
         $('.choose-loc').show();
         $('.bottom-span-button').show();
         $('[id=legend]').show();
+        canvas = document.getElementById('hexmap');
+        ctx = canvas.getContext('2d');
         drawBoard(ctx, posList, startList);
-    })
+    });
+
+    $('#mapping').click(function () {
+        reserveOrMapping = 'mapping';
+        $('.js-game1').hide();
+        $('.map-side').show();
+        $('.change-list').show();
+        $('#hexmap').hide();
+        $('#map-left-side').show();
+        $('#mapping-legend').show();
+        $('#location2').show();
+        $('#loc-button').show();
+        $('.bottom-span-button').show();
+        canvas = document.getElementById('map-left-side');
+        ctx = canvas.getContext('2d');
+        drawBoard(ctx, posList, startList);
+    });
+
 });
 
