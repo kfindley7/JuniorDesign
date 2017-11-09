@@ -185,7 +185,7 @@ $(document).ready(function(){
     });
 
     $.fn.deleteTileFromChanges = function(event) {
-        var tile = event.path[1].id;
+        var tile = event.currentTarget.offsetParent.id;
         $('#' + tile).remove();
         var tileIdLoc = tile.split("-");
         console.log(tile, tileIdLoc);
