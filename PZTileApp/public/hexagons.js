@@ -157,9 +157,16 @@ $(document).ready(function(){
     function addTileToChangeListColumn(tile) {
         var $tileDiv = $("<div>", {id: tile.planet + "-" + tile.planet_id, class: "tile-div"});
         $tileDiv.append("<p class='tile-text'>" + tile.planet + "-" + tile.planet_id + "</p>");
+
+        socket.emit('get function list', tile.game);
+        var functionList = [];
+        socket.on('got function list', function (functions) {
+            functionList = functions;
+        });
+
         var $functionDropdown = $("<select>", {class: 'function-select-menu'});
         // socket.emit('get activity functions');
-        var functionList = ["Test1", "Test2", "Test3", "Test4", "Test5"];
+        // var functionList = ["Test1", "Test2", "Test3", "Test4", "Test5"];
         for (var i = 0; i < functionList.length; i++) {
             $functionDropdown.append("<option class='tile-function-menu' value="
                 + functionList[i] + "> " + functionList[i] + "</option>")
@@ -168,6 +175,7 @@ $(document).ready(function(){
         $tileDiv.append("<button class='delete-tile-x' onclick='$(window).deleteTileFromChanges(event)'>&times;</button>");
 
         $('.change-list').append($tileDiv);
+
     }
 
     $.fn.deleteTileFromChanges = function(event) {
@@ -186,7 +194,7 @@ $(document).ready(function(){
 
         changes = changeList.length !== 0;
 
-        drawBoard(ctxMap, startList, posList);
+        drawBoard(ctxMap, posList, startList);
         console.log("CHANGE LIST AFTER REMOVE", changeList);
 
     };
@@ -279,10 +287,37 @@ $(document).ready(function(){
             if (changeList.length === 0) {
                 alert("No Changes to Save. Select tiles to make changes to mappings.");
             } else {
-                // socket.emit('update tile mappings', changeList);
-                console.log("ATTEMPTING TO SAVE. Functionality not completed yet. Nothing should change.")
+
+                var mappingValues = document.getElementsByClassName("function-select-menu");
+                console.log(mappingValues);
+                console.log(changeList);
+                for (var i = 0; i < mappingValues.length; i++) {
+                    var planetAndId = changeList[i].split("-");
+                    if (mappingValues[i].value !== "") {
+                        changeList[i] = {
+                            planet: planetAndId[0],
+                            planet_id: planetAndId[1],
+                            mapping: mappingValues[i].value
+                        }
+                    } else {
+                        changeList[i] = {
+                            planet: planetAndId[0],
+                            planet_id: planetAndId[1],
+                            mapping: "None"
+                        }
+                    }
+                }
+
+                socket.emit('edit mapping', changeList);
+                // console.log("ATTEMPTING TO SAVE. Functionality not completed yet. Nothing should change.")
             }
         }
+    });
+
+    socket.on('all tiles remapped successfully', function () {
+        changeList = [];
+        alert("All tiles re-mapped successfully!");
+        drawBoard(ctxMap, posList, startList);
     });
 
     socket.on('all tiles added successfully', function () {
