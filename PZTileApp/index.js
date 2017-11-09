@@ -371,6 +371,7 @@ io.on('connection', function(socket) {
         var failedTiles = [];
         MongoClient.connect(uri, function (err, db) {
             tiles.forEach(function (item) {
+                console.log(item);
                 db.collection("Cluster0").findOne(
                     {
                         planet: item.planet,
@@ -378,6 +379,7 @@ io.on('connection', function(socket) {
                     }
                 ).then(
                     function(data) {
+                        console.log(data);
                         if (data) {
                             db.collection("Cluster0").updateOne(
                                 {
@@ -412,6 +414,27 @@ io.on('connection', function(socket) {
         });
     });
 
+    socket.on('function list helper', function(data) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").findOne(
+                {
+                    gameType: data.activity
+                }
+            ).then(
+                function (gameData) {
+                    if (gameData) {
+                        db.close();
+                        socket.emit('functions found', gameData.functionsList);
+                    } else {
+                        db.close();
+                        socket.emit('gameType not found');
+                    }
+                }
+            );
+            db.close();
+        });
+    });
+
     // Functionality to give the requester a list of function
     // mappings of a given activity. The requester will send
     // the activity name to the backend and await a response
@@ -434,27 +457,15 @@ io.on('connection', function(socket) {
             ).then(
                 function(data) {
                     if (data) {
-                        db.collection("Cluster0").findOne(
-                            {
-                                gameType: data.gameType
-                            }
-                        ).then(
-                            function (gameData) {
-                                if (gameData) {
-                                    db.close();
-                                    socket.emit('functions found', gameData.functionsList);
-                                } else {
-                                    db.close();
-                                    socket.emit('gameType not found');
-                                }
-                            }
-                        )
+                        db.close();
+                        socket.emit('helper', data);
                     } else {
                         db.close();
                         socket.emit('activity not found');
                     }
                 }
             );
+
             db.close();
         });
     });

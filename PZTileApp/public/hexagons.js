@@ -158,20 +158,35 @@ $(document).ready(function(){
         var $tileDiv = $("<div>", {id: tile.planet + "-" + tile.planet_id, class: "tile-div"});
         $tileDiv.append("<p class='tile-text'>" + tile.planet + "-" + tile.planet_id + "</p>");
 
+        console.log(tile.game);
         socket.emit('get function list', tile.game);
         var functionList = [];
-        socket.on('got function list', function (functions) {
-            functionList = functions;
+        socket.on('helper', function (data) {
+            socket.emit('function list helper', data);
+        });
+        socket.on('functions found', function (functions) {
+            console.log("FUNCTIONS",functions);
+            // functionList = functions;
+            var $functionDropdown = $("<select>", {class: 'function-select-menu'});
+            // socket.emit('get activity functions');
+            // var functionList = ["Test1", "Test2", "Test3", "Test4", "Test5"];
+            // console.log("ansdkansdc",function);
+            for (var i = 0; i < functions.length; i++) {
+                $functionDropdown.append("<option class='tile-function-menu' value="
+                    + functions[i] + "> " + functions[i] + "</option>")
+            }
+            $tileDiv.append($functionDropdown);
         });
 
-        var $functionDropdown = $("<select>", {class: 'function-select-menu'});
-        // socket.emit('get activity functions');
-        // var functionList = ["Test1", "Test2", "Test3", "Test4", "Test5"];
-        for (var i = 0; i < functionList.length; i++) {
-            $functionDropdown.append("<option class='tile-function-menu' value="
-                + functionList[i] + "> " + functionList[i] + "</option>")
-        }
-        $tileDiv.append($functionDropdown);
+        // var $functionDropdown = $("<select>", {class: 'function-select-menu'});
+        // // socket.emit('get activity functions');
+        // // var functionList = ["Test1", "Test2", "Test3", "Test4", "Test5"];
+        // console.log("ansdkansdc",functionList);
+        // for (var i = 0; i < functionList.length; i++) {
+        //     $functionDropdown.append("<option class='tile-function-menu' value="
+        //         + functionList[i] + "> " + functionList[i] + "</option>")
+        // }
+        // $tileDiv.append($functionDropdown);
         $tileDiv.append("<button class='delete-tile-x' onclick='$(window).deleteTileFromChanges(event)'>&times;</button>");
 
         $('.change-list').append($tileDiv);
@@ -293,20 +308,22 @@ $(document).ready(function(){
                 console.log(changeList);
                 for (var i = 0; i < mappingValues.length; i++) {
                     var planetAndId = changeList[i].split("-");
+                    console.log("MAPPING",mappingValues[i].value);
                     if (mappingValues[i].value !== "") {
                         changeList[i] = {
                             planet: planetAndId[0],
-                            planet_id: planetAndId[1],
+                            planet_id: parseInt(planetAndId[1]),
                             mapping: mappingValues[i].value
                         }
                     } else {
                         changeList[i] = {
                             planet: planetAndId[0],
-                            planet_id: planetAndId[1],
+                            planet_id: parseInt(planetAndId[1]),
                             mapping: "None"
                         }
                     }
                 }
+                console.log("we did it", changeList);
 
                 socket.emit('edit mapping', changeList);
                 // console.log("ATTEMPTING TO SAVE. Functionality not completed yet. Nothing should change.")
