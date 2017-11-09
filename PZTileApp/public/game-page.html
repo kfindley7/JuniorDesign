@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Game Page</title>
@@ -12,7 +12,7 @@
     <script src="home_page.js"></script>
     <script src="hexagons.js"></script>
 </head>
-<body>
+<body class="body page-home-page clearfix">
     <ul id="nav-buttons">
         <li class="back" id="back-button"><a>BACK</a></li>
         <li id="home-button"><a class="active" href="home-page.html">Edit Task</a></li>
@@ -29,11 +29,11 @@
         </li>
     </ul>
     <div>
-        <div id="reserve" class='element js-game1'><p class='text text-2'>Edit Tile Reservations</p>
-            <img class='image' style="padding-top: 2%; padding-right: 3%; width: 45px;" src='android-arrow-dropright.png'>
+        <div id="reserve" class='element js-game1'><p class='text edit-choice-text'>Edit Tile Reservations</p>
+            <img class='image' src='android-arrow-dropright.png'>
         </div>
-        <div id="mapping" class='element js-game1'><p class='text text-2'>Edit Tile Mappings</p>
-            <img class='image' style="padding-top: 2%; padding-right: 3%; width: 45px;" src='android-arrow-dropright.png'>
+        <div id="mapping" class='element js-game1'><p class='text edit-choice-text'>Edit Tile Mappings</p>
+            <img class='image' src='android-arrow-dropright.png'>
         </div>
     </div>
 
@@ -52,7 +52,7 @@
         <p>BLACK: Belongs to another activity</p>
         <p>Select Blue tile to remove from activity. Select White tile to add to activity.</p>
     </fieldset>
-    <canvas id="hexmap" class="reserve-map" width="700" height="400"></canvas>
+    <canvas id="hexmap" class="reserve-map" width="400" height="400"></canvas>
 
     <div class="map-side">
         <select id="location2" class="location-dropdown">

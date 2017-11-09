@@ -20,10 +20,11 @@ $(function() {
     // add games to home-page.html after querying the DB
     function showGames(aList) {
         for (var i = 0; i < aList.length; i++) {
-            $listGames.append("<div class=\"element js-game1\"><p class=\"text text-2\">" + aList[i].activityName + "</p>" +
-                "      <p class=\"text-1\">Edit Game</p>\n" +
+            $listGames.append("<div class=\"element js-game1\">" +
                 "      <img class=\"image\" src=\"android-arrow-dropright.png\">\n" +
-                "<p class=\"text text-3\">" + aList[i].activity + "</p>\n" +
+                "      <p class=\"text-1\">Edit Game</p>\n" +
+                "<div class='game-text'><p class=\"text text-2\">" + aList[i].activityName + "</p></div>" +
+                "<div class='game-text'><p class=\"text text-3\">" + aList[i].activity + "</p></div>\n" +
                 "    </div>");
         }
     }
