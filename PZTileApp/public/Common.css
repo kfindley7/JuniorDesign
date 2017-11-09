@@ -118,6 +118,7 @@ li a:hover:not(.active) {
     border-left: solid;
     border-left-color: white;
     border-left-width: 2px;
+    cursor: default;
 }
 
 .back {
