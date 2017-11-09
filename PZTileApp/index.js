@@ -411,4 +411,51 @@ io.on('connection', function(socket) {
             }
         });
     });
+
+    // Functionality to give the requester a list of function
+    // mappings of a given activity. The requester will send
+    // the activity name to the backend and await a response
+    // containing either the list of functions used by the
+    // game wrapped by the given activity or an error with queries.
+
+    // To use this, call socket.emit('get function list', activityName) where activityName
+    // is the name of an activity wrapping a game type. To retrieve a successfully found
+    // function list, call socket.on('function list found', function(functions) {...});.
+    // To see if the query failed to find an activity with the given activityName, call
+    // socket.on('activity not found', function() {...});. To see if the query failed to
+    // find a gameType matching that of the given activityName, call
+    // socket.on(gameType not found', function() {...});.
+    socket.on('get function list', function (activityName) {
+        MongoClient.connect(uri, function (err, db) {
+            db.collection("Cluster0").findOne(
+                {
+                    activityName: activityName
+                }
+            ).then(
+                function(data) {
+                    if (data) {
+                        db.collection("Cluster0").findOne(
+                            {
+                                gameType: data.gameType
+                            }
+                        ).then(
+                            function (gameData) {
+                                if (gameData) {
+                                    db.close();
+                                    socket.emit('functions found', gameData.functionsList);
+                                } else {
+                                    db.close();
+                                    socket.emit('gameType not found');
+                                }
+                            }
+                        )
+                    } else {
+                        db.close();
+                        socket.emit('activity not found');
+                    }
+                }
+            );
+            db.close();
+        });
+    });
 });
