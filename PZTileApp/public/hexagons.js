@@ -29,6 +29,7 @@ $(document).ready(function(){
     console.log("GAME TEXT",gameText);
 
     socket.emit('get function list', gameText);
+    socket.emit('give all tiles',"Prototype",gameText);
 
     hexHeight = Math.sin(hexagonAngle) * sideLength;
     hexRadius = Math.cos(hexagonAngle) * sideLength;
@@ -60,6 +61,13 @@ $(document).ready(function(){
 
         // drawBoard(ctx, posList, startList);
     }
+
+    socket.on('Used Tiles', function (f, m, o) {
+        console.log("FOUND TILES");
+        free=f;
+        inMine=m;
+        usedOthers=o;
+    });
 
     function setupListenersForCanvas(canvas) {
         canvas.addEventListener("mousemove", function (eventInfo) {
@@ -157,8 +165,6 @@ $(document).ready(function(){
     function addTileToChangeListDiv(tile) {
         var $tileDiv = $("<div>", {id: tile.planet + "-" + tile.planet_id, class: "tile-div"});
         $tileDiv.append("<p class='tile-text'>" + tile.planet + "-" + tile.planet_id + "</p>");
-        console.log(tile.game);
-        console.log("FUNCTION LIST LENGTH", functionList.length);
         var $functionDropdown = $("<select>", {class: 'function-select-menu'});
         for (var i = 0; i < functionList.length; i++) {
             $functionDropdown.append("<option class='tile-function-menu' value="
@@ -170,7 +176,6 @@ $(document).ready(function(){
     }
 
     socket.on('functions found', function (functions) {
-        console.log("FUNCTIONS",functions);
         functions.push("NONE");
         functionList = functions;
     });
@@ -314,14 +319,11 @@ $(document).ready(function(){
     socket.on('all tiles remapped successfully', function () {
         changeList = [];
         alert("All tiles re-mapped successfully!");
-        // window refresh
         window.location.reload();
-        // drawBoard(ctxMap, posList, startList);
     });
 
     socket.on('all tiles added successfully', function () {
-        addTileList = [];
-        drawBoard(ctx, posList, startList);
+        window.location.reload();
     });
 
     socket.on('some tiles failed addition', function (failedTiles) {
@@ -330,8 +332,7 @@ $(document).ready(function(){
     });
 
     socket.on('all tiles removed successfully', function() {
-        removeTileList = [];
-        drawBoard(ctx, posList, startList);
+        window.location.reload();
     });
     socket.on('some tiles failed removal', function (failedTiles) {
         removeTileList = [];
@@ -339,77 +340,68 @@ $(document).ready(function(){
     });
 
     function drawBoard(canvasContext, posList, startList) {
-        socket.emit('give all tiles',"Prototype",gameText);
 
-        socket.on('Used Tiles', function (f, m, o) {
-            free=f;
-            inMine=m;
-            usedOthers=o;
-            console.log("FREE",free);
-            console.log("IN MINE",inMine);
-            console.log("OTHERS",usedOthers);
+        for(var j = 0; j < posList.length; j++) {
+            for(var i = startList[j]; i < posList[j]+startList[j]; i++) {
 
-            for(var j = 0; j < posList.length; j++) {
-                for(var i = startList[j]; i < posList[j]+startList[j]; i++) {
+                var color, found = false, fill=false;
 
-                    var color, found = false, fill=false;
-
-                    for(x=0; x<free.length; x++){
-                        tile = free[x];
+                for(x=0; x<free.length; x++){
+                    tile = free[x];
+                    if(tile.planet_id===(1000*i+j)){
+                        color = "#FFFFFF";
+                        found = true;
+                        fill=true;
+                    }
+                }
+                if(!found){
+                    for(x=0; x<inMine.length; x++){
+                        tile = inMine[x];
                         if(tile.planet_id===(1000*i+j)){
-                            color = "#FFFFFF";
+                            if (reserveOrMapping == 'mapping') {
+                                if (changeList.indexOf(tile.planet + "-" + tile.planet_id) == -1) {
+                                    if (tile.mapping == "NONE") {
+                                        color = "#949093"
+                                    } else {
+                                        color = "#0000FF";
+                                    }
+                                } else {
+                                    if (tile.mapping == "NONE") {
+                                        color = "#216cff";
+                                    } else {
+                                        color = "#FF0000";
+                                    }
+                                }
+                            } else {
+                                color = "#0000FF";
+                            }
+
                             found = true;
                             fill=true;
                         }
                     }
-                    if(!found){
-                        for(x=0; x<inMine.length; x++){
-                            tile = inMine[x];
-                            if(tile.planet_id===(1000*i+j)){
-                                if (reserveOrMapping == 'mapping') {
-                                    if (changeList.indexOf(tile.planet + "-" + tile.planet_id) == -1) {
-                                        if (tile.mapping == "NONE") {
-                                            color = "#949093"
-                                        } else {
-                                            color = "#0000FF";
-                                        }
-                                    } else {
-                                        if (tile.mapping == "NONE") {
-                                            color = "#216cff";
-                                        } else {
-                                            color = "#FF0000";
-                                        }
-                                    }
-                                } else {
-                                    color = "#0000FF";
-                                }
-
-                                found = true;
-                                fill=true;
-                            }
-                        }
-                    }
-                    if(!found){
-                        for(x=0; x<usedOthers.length; x++){
-                            tile = usedOthers[x];
-                            if(tile.planet_id===(1000*i+j)){
-                                color = "#000000";
-                                found = true;
-                                fill=true;
-                            }
-                        }
-                    }
-
-                    drawHexagon(
-                        canvasContext,
-                        i * hexRectangleWidth + ((j % 2) * hexRadius),
-                        j * (sideLength + hexHeight),
-                        fill, i, j, color
-                    );
-
                 }
+                if(!found){
+                    for(x=0; x<usedOthers.length; x++){
+                        tile = usedOthers[x];
+                        if(tile.planet_id===(1000*i+j)){
+                            color = "#000000";
+                            found = true;
+                            fill=true;
+                        }
+                    }
+                }
+
+                drawHexagon(
+                    canvasContext,
+                    i * hexRectangleWidth + ((j % 2) * hexRadius),
+                    j * (sideLength + hexHeight),
+                    fill, i, j, color
+                );
+
             }
-        });
+        }
+        // });
 
     }
 
