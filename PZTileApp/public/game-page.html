@@ -19,12 +19,13 @@
         <li id="visual-button"><a>Visualization</a></li>
         <li id="sensing-button"><a href="">Sensing</a></li>
         <li id="logout-button" class="logout"><a>Logout</a></li>
-        <li class="title"><script>
-            var queryString = decodeURIComponent(window.location.search);
-            queryString = queryString.substring(1);
-            var gameText = queryString.split("=")[1];
-            document.write(gameText);
-        </script>
+        <li class="title">
+            <script>
+                var queryString = decodeURIComponent(window.location.search);
+                queryString = queryString.substring(1);
+                var gameText = queryString.split("=")[1];
+                document.write(gameText);
+            </script>
         </li>
     </ul>
     <div>

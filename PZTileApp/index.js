@@ -224,7 +224,7 @@ io.on('connection', function(socket) {
                                     planet_id: item.planet_id,
                                     game: item.game,
                                     tile_id: item.tile_id,
-                                    mapping: "None"
+                                    mapping: "NONE"
                                 }
                             );
                             flag++;

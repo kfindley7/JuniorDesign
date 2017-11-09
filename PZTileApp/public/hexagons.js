@@ -9,6 +9,7 @@ $(document).ready(function(){
     var addTileList = [];
     var removeTileList = [];
     var changeList = [];
+    var functionList = [];
 
     var hexHeight,
         hexRadius,
@@ -21,6 +22,13 @@ $(document).ready(function(){
     var tilesFailed = [];
     var gameText;
     var changes = false;
+
+    var queryString = decodeURIComponent(window.location.search);
+    queryString = queryString.substring(1);
+    gameText = queryString.split("=")[1];
+    console.log("GAME TEXT",gameText);
+
+    socket.emit('get function list', gameText);
 
     hexHeight = Math.sin(hexagonAngle) * sideLength;
     hexRadius = Math.cos(hexagonAngle) * sideLength;
@@ -51,8 +59,6 @@ $(document).ready(function(){
         // var startList = [18,13,10,8,7,5,4,3,2,1,0];
 
         // drawBoard(ctx, posList, startList);
-        // $('#hexmap').hide();
-
     }
 
     function setupListenersForCanvas(canvas) {
@@ -60,9 +66,7 @@ $(document).ready(function(){
             var x,
                 y,
                 hexX,
-                hexY,
-                screenX,
-                screenY;
+                hexY;
 
             x = eventInfo.offsetX || eventInfo.layerX;
             y = eventInfo.offsetY || eventInfo.layerY;
@@ -70,14 +74,6 @@ $(document).ready(function(){
 
             hexY = Math.floor(y / (hexHeight + sideLength));
             hexX = Math.floor((x - (hexY % 2) * hexRadius) / hexRectangleWidth);
-
-            screenX = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
-            screenY = hexY * (hexHeight + sideLength);
-
-            //ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            //drawBoard(ctx, posList, startList);
-
 
             // Check if the mouse's coords are on the board
             if (hexY >= 0 && hexY < posList.length) {
@@ -133,8 +129,8 @@ $(document).ready(function(){
                 var tile = inMine[i];
                 var indexInChangeList = changeList.indexOf(tile.planet + "-" + tile.planet_id);
                 if (tile.planet_id == (1000 * tileX + tileY) && indexInChangeList === -1) {
-                    if (tile.mapping === "None") {
-                        color = "#0000FF";
+                    if (tile.mapping === "NONE") {
+                        color = "#216cff";
                     } else {
                         color = "#FF0000";
                     }
@@ -149,49 +145,39 @@ $(document).ready(function(){
 
         if (!unavailable && found) {
             console.log(changeList);
-            drawHexagon(ctx, screenX, screenY, true, 0, 0, color);
-            addTileToChangeListColumn(tile);
+            if (reserveOrMapping == 'mapping') {
+                drawHexagon(ctxMap, screenX, screenY, true, 0, 0, color);
+                addTileToChangeListDiv(tile);
+            } else {
+                drawHexagon(ctx, screenX, screenY, true, 0, 0, color);
+            }
         }
     }
 
-    function addTileToChangeListColumn(tile) {
+    function addTileToChangeListDiv(tile) {
         var $tileDiv = $("<div>", {id: tile.planet + "-" + tile.planet_id, class: "tile-div"});
         $tileDiv.append("<p class='tile-text'>" + tile.planet + "-" + tile.planet_id + "</p>");
-
         console.log(tile.game);
-        socket.emit('get function list', tile.game);
-        var functionList = [];
-        socket.on('helper', function (data) {
-            socket.emit('function list helper', data);
-        });
-        socket.on('functions found', function (functions) {
-            console.log("FUNCTIONS",functions);
-            // functionList = functions;
-            var $functionDropdown = $("<select>", {class: 'function-select-menu'});
-            // socket.emit('get activity functions');
-            // var functionList = ["Test1", "Test2", "Test3", "Test4", "Test5"];
-            // console.log("ansdkansdc",function);
-            for (var i = 0; i < functions.length; i++) {
-                $functionDropdown.append("<option class='tile-function-menu' value="
-                    + functions[i] + "> " + functions[i] + "</option>")
-            }
-            $tileDiv.append($functionDropdown);
-        });
-
-        // var $functionDropdown = $("<select>", {class: 'function-select-menu'});
-        // // socket.emit('get activity functions');
-        // // var functionList = ["Test1", "Test2", "Test3", "Test4", "Test5"];
-        // console.log("ansdkansdc",functionList);
-        // for (var i = 0; i < functionList.length; i++) {
-        //     $functionDropdown.append("<option class='tile-function-menu' value="
-        //         + functionList[i] + "> " + functionList[i] + "</option>")
-        // }
-        // $tileDiv.append($functionDropdown);
+        console.log("FUNCTION LIST LENGTH", functionList.length);
+        var $functionDropdown = $("<select>", {class: 'function-select-menu'});
+        for (var i = 0; i < functionList.length; i++) {
+            $functionDropdown.append("<option class='tile-function-menu' value="
+                + functionList[i] + "> " + functionList[i] + "</option>")
+        }
+        $tileDiv.append($functionDropdown);
         $tileDiv.append("<button class='delete-tile-x' onclick='$(window).deleteTileFromChanges(event)'>&times;</button>");
-
         $('.change-list').append($tileDiv);
-
     }
+
+    socket.on('functions found', function (functions) {
+        console.log("FUNCTIONS",functions);
+        functions.push("NONE");
+        functionList = functions;
+    });
+
+    socket.on('helper', function (data) {
+        socket.emit('function list helper', data);
+    });
 
     $.fn.deleteTileFromChanges = function(event) {
         var tile = event.path[1].id;
@@ -210,7 +196,6 @@ $(document).ready(function(){
         changes = changeList.length !== 0;
 
         drawBoard(ctxMap, posList, startList);
-        console.log("CHANGE LIST AFTER REMOVE", changeList);
 
     };
 
@@ -304,8 +289,6 @@ $(document).ready(function(){
             } else {
 
                 var mappingValues = document.getElementsByClassName("function-select-menu");
-                console.log(mappingValues);
-                console.log(changeList);
                 for (var i = 0; i < mappingValues.length; i++) {
                     var planetAndId = changeList[i].split("-");
                     console.log("MAPPING",mappingValues[i].value);
@@ -319,14 +302,11 @@ $(document).ready(function(){
                         changeList[i] = {
                             planet: planetAndId[0],
                             planet_id: parseInt(planetAndId[1]),
-                            mapping: "None"
+                            mapping: "NONE"
                         }
                     }
                 }
-                console.log("we did it", changeList);
-
                 socket.emit('edit mapping', changeList);
-                // console.log("ATTEMPTING TO SAVE. Functionality not completed yet. Nothing should change.")
             }
         }
     });
@@ -334,7 +314,9 @@ $(document).ready(function(){
     socket.on('all tiles remapped successfully', function () {
         changeList = [];
         alert("All tiles re-mapped successfully!");
-        drawBoard(ctxMap, posList, startList);
+        // window refresh
+        window.location.reload();
+        // drawBoard(ctxMap, posList, startList);
     });
 
     socket.on('all tiles added successfully', function () {
@@ -357,18 +339,15 @@ $(document).ready(function(){
     });
 
     function drawBoard(canvasContext, posList, startList) {
-        var queryString = decodeURIComponent(window.location.search);
-        queryString = queryString.substring(1);
-        gameText = queryString.split("=")[1];
-        // console.log("GAME TEXT",gameText);
-
         socket.emit('give all tiles',"Prototype",gameText);
 
         socket.on('Used Tiles', function (f, m, o) {
             free=f;
             inMine=m;
             usedOthers=o;
-            // console.log("OTHERS",usedOthers);
+            console.log("FREE",free);
+            console.log("IN MINE",inMine);
+            console.log("OTHERS",usedOthers);
 
             for(var j = 0; j < posList.length; j++) {
                 for(var i = startList[j]; i < posList[j]+startList[j]; i++) {
@@ -387,9 +366,20 @@ $(document).ready(function(){
                         for(x=0; x<inMine.length; x++){
                             tile = inMine[x];
                             if(tile.planet_id===(1000*i+j)){
-                                if (reserveOrMapping == 'mapping' && tile.mapping == "None"
-                                    && changeList.indexOf(tile.planet + "-" + tile.planet_id) == -1) {
-                                    color = "#949093"
+                                if (reserveOrMapping == 'mapping') {
+                                    if (changeList.indexOf(tile.planet + "-" + tile.planet_id) == -1) {
+                                        if (tile.mapping == "NONE") {
+                                            color = "#949093"
+                                        } else {
+                                            color = "#0000FF";
+                                        }
+                                    } else {
+                                        if (tile.mapping == "NONE") {
+                                            color = "#216cff";
+                                        } else {
+                                            color = "#FF0000";
+                                        }
+                                    }
                                 } else {
                                     color = "#0000FF";
                                 }
@@ -498,8 +488,6 @@ $(document).ready(function(){
         $('.choose-loc').show();
         $('.bottom-span-button').show();
         $('[id=legend]').show();
-        canvas = document.getElementById('hexmap');
-        ctx = canvas.getContext('2d');
         drawBoard(ctx, posList, startList);
     });
 
@@ -514,9 +502,7 @@ $(document).ready(function(){
         $('#location2').show();
         $('#loc-button').show();
         $('.bottom-span-button').show();
-        canvas = document.getElementById('map-left-side');
-        ctx = canvas.getContext('2d');
-        drawBoard(ctx, posList, startList);
+        drawBoard(ctxMap, posList, startList);
     });
 
 });
