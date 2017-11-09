@@ -380,19 +380,7 @@ io.on('connection', function(socket) {
                 ).then(
                     function(data) {
                         console.log(data);
-                        if (data) {
-                            db.collection("Cluster0").updateOne(
-                                {
-                                    planet: item.planet,
-                                    planet_id: item.planet_id
-                                },
-                                {
-                                    $set: {
-                                        mapping: item.mapping
-                                    }
-                                }
-                            )
-                        } else {
+                        if (!data) {
                             flag++;
                             failedTiles.push(
                                 {
@@ -404,6 +392,17 @@ io.on('connection', function(socket) {
                         }
                     }
                 );
+                db.collection("Cluster0").updateOne(
+                    {
+                        planet: item.planet,
+                        planet_id: item.planet_id
+                    },
+                    {
+                        $set: {
+                            mapping: item.mapping
+                        }
+                    }
+                )
             });
             db.close();
             if (flag === 0) {
