@@ -232,7 +232,7 @@ io.on('connection', function(socket) {
                 var tileNum = (1000*xcoords[j]+ycoords[j]);
                 var tile = {
                     tile_id: "a" + tileNum.toString(),
-                    planet: "Prototype", planet_id: tileNum, game: "FREE", mapping: "None"
+                    planet: "Prototype", planet_id: tileNum, game: "FREE", mapping: "NONE"
                 };
                 tiles.push(tile);
                 tileNum++;
