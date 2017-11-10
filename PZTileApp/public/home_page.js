@@ -20,7 +20,7 @@ $(function() {
     // add games to home-page.html after querying the DB
     function showGames(aList) {
         for (var i = 0; i < aList.length; i++) {
-            $listGames.append("<button class=\"accordion\" onclick='$(window).getGameFromGameDiv(event)'>" +
+            $listGames.append("<button class=\"accordion\" onclick='$(window).openCloseAccordionMenu(event)'>" +
                 "      <img class=\"image\" src=\"android-arrow-dropright.png\" >\n" +
                 "      <p class=\"text-1\">Edit Game</p>\n" +
                 "<div class='game-text'><p class=\"text text-2\">" + aList[i].activityName + "</p></div>" +
@@ -32,59 +32,31 @@ $(function() {
         }
     }
 
-    $.fn.getGameFromGameDiv = function (event) {
-        // var acc = document.getElementsByClassName("accordion");
-        // var i;
-        // console.log(acc);
-        // for (i = 0; i < acc.length; i++) {
-        //     acc[i].onclick = function() {
-                event.currentTarget.classList.toggle("active");
-                var panel = event.currentTarget.nextElementSibling;
-                if (panel.style.maxHeight){
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            // }
-        // }
-        // window.location.replace("game-page.html?para=" + event.target.childNodes[5].innerText);
+    // open and closes the accordion menu for each activity choice
+    $.fn.openCloseAccordionMenu = function (event) {
+        event.currentTarget.classList.toggle("active");
+        var panel = event.currentTarget.nextElementSibling;
+        if (panel.style.maxHeight){
+            panel.style.maxHeight = null;
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        }
     };
 
+    // when accordion is empty, Edit Tile Reservations and Edit Tile Mappings is shown. When user
+    // clicks on one, the corresponding class name is added to the page url so the game name and
+    // type of edit is clear to user. Shows as title in next page and the reserveOrMapping var is
+    // used in the next page to determine which map-view to show.
     $.fn.gamePageChoice = function (event) {
         var reserveOrMapping = event.currentTarget.className;
-        console.log(reserveOrMapping);
         var gameText = event.target.parentNode.previousElementSibling.childNodes[5].innerText;
         console.log(gameText);
         window.location.replace("game-page.html?para=" + gameText + " - " + reserveOrMapping)
     };
 
-    $.fn.getGameSelectedFromChildHtml = function (event) {
-        var acc = document.getElementsByClassName("accordion");
-        var i;
-        console.log(acc);
-        for (i = 0; i < acc.length; i++) {
-            acc[i].onclick = function() {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                console.log(panel);
-                if (panel.style.maxHeight){
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            }
-        }
-        // window.location.replace("game-page.html?para=" + event.target.offsetParent.childNodes[5].innerText);
-        event.stopPropagation();
-    };
-
-
+    // user clicks Visualization button, go to corresponding page - page is not completed yet
     $('#visual-button').click(function () {
-        var userConfirm = confirm("Are you sure you want to leave this page? Any unsaved changes will be lost.");
-        if (userConfirm) {
-            window.location = "visualization.html";
-        }
-
+        window.location.replace("visualization.html");
     });
 
 
@@ -94,6 +66,8 @@ $(function() {
         socket.emit('get activities');
     };
 
+    // when successfully receiving the currently running activities from the database
+    // call showGames(games) to dynamically add them to home-page.html
     socket.on('activity list', function (games) {
         showGames(games);
     });

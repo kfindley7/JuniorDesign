@@ -82,7 +82,8 @@ $(function() {
         }
     }
 
-    // Scenario when the activity and name combination are accepted.
+    // Scenario when the activity and name combination are accepted. Automatically go to reserve
+    // page to immediately add tiles to the game
     socket.on('activity created', function() {
         alert("Your activity has been created successfully.");
         window.location = "game-page.html?para=" + activityName + " - " + "reserve" ;

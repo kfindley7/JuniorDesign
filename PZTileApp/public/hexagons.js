@@ -21,6 +21,7 @@ $(document).ready(function(){
     var gameText;
     var changes = false;
 
+    // get activity name and the editing type
     var queryString = decodeURIComponent(window.location.search);
     queryString = queryString.substring(1);
     gameText = queryString.split("=")[1];
@@ -30,6 +31,7 @@ $(document).ready(function(){
     gameText = gameTextAndEdit[0];
     var reserveOrMapping = gameTextAndEdit[1].toLowerCase();
 
+    // go ahead and get the function list for the activity and the tiles
     socket.emit('get function list', gameText);
     socket.emit('give all tiles',"Prototype",gameText);
 
@@ -64,6 +66,8 @@ $(document).ready(function(){
         // drawBoard(ctx, posList, startList);
     }
 
+    // when tiles are successfully received from the database
+    // then show the corresponding edit type the user specified
     socket.on('Used Tiles', function (f, m, o) {
         console.log("FOUND TILES");
         free=f;
@@ -89,6 +93,7 @@ $(document).ready(function(){
         }
     });
 
+    // used in setting up the contexts and listeners for each of the canvases
     function setupListenersForCanvas(canvas) {
         canvas.addEventListener("mousemove", function (eventInfo) {
             var x,
@@ -147,6 +152,10 @@ $(document).ready(function(){
         });
     }
 
+    // tile selection functionality for the mapping page
+    // if the tile is in the activity and does not have a mapping yet and selected
+    // color it light blue, otherwise color it red
+    // then add tile to change list on the right side
     function selectTileForMapping(screenX, screenY, tileX, tileY) {
         console.log("SELECTED A TILE", tileX, tileY);
         var color, found = false;
@@ -173,15 +182,14 @@ $(document).ready(function(){
 
         if (!unavailable && found) {
             console.log(changeList);
-            if (reserveOrMapping == 'mapping') {
-                drawHexagon(ctxMap, screenX, screenY, true, 0, 0, color);
-                addTileToChangeListDiv(tile);
-            } else {
-                drawHexagon(ctx, screenX, screenY, true, 0, 0, color);
-            }
+            drawHexagon(ctxMap, screenX, screenY, true, 0, 0, color);
+            addTileToChangeListDiv(tile);
         }
     }
 
+    // helper method to add tile to change list div on the right
+    // consists of the planet-planet_id, function list as a dropdown, and and 'x'
+    // button to delete the tile if needed.
     function addTileToChangeListDiv(tile) {
         var $tileDiv = $("<div>", {id: tile.planet + "-" + tile.planet_id, class: "tile-div"});
         $tileDiv.append("<p class='tile-text'>" + tile.planet + "-" + tile.planet_id + "</p>");
@@ -196,15 +204,24 @@ $(document).ready(function(){
         $('.change-list').append($tileDiv);
     }
 
+    // when functions are received from database,
+    // then put the option of NONE in it, assign to global var
     socket.on('functions found', function (functions) {
         functions.push("NONE");
         functionList = functions;
     });
 
+    // Helper method for the backend. The DB takes the activity name to query
+    // for the game type, then once it has that it can get the function list
+    // This helper is passing the activity object found from 1st query to find
+    // the game type
     socket.on('helper', function (data) {
         socket.emit('function list helper', data);
     });
 
+    // delete tile from change list div on right
+    // and remove from changeList variable
+    // then update board
     $.fn.deleteTileFromChanges = function(event) {
         var tile = event.currentTarget.offsetParent.id;
         $('#' + tile).remove();
@@ -225,6 +242,9 @@ $(document).ready(function(){
 
     };
 
+    // method to handle tile selection functionality for reservations
+    // if tile is free and is selected color it green, if it's in the activity and selected, color it red
+    // it it's in another activity, color it black - unavailable for selection
     function selectTileForReserve(screenX, screenY, tileX, tileY) {
         var color, found = false;
         var unavailable = false;
@@ -290,6 +310,10 @@ $(document).ready(function(){
 
     }
 
+    // when the save changes button is pressed:
+    // If in reservation mode: send addTileList and removeTileList to DB
+    // If in mapping mode: grab all new mapping values for the tiles selected
+    // to the corresponding tiles in the change list variable, send to DB
     $('.bottom-span-button').click(function() {
         if (reserveOrMapping == 'reserve') {
 
@@ -338,7 +362,6 @@ $(document).ready(function(){
     });
 
     socket.on('all tiles remapped successfully', function () {
-        changeList = [];
         alert("All tiles re-mapped successfully!");
         window.location.reload();
     });
@@ -360,6 +383,9 @@ $(document).ready(function(){
         tilesFailed.push(failedTiles);
     });
 
+    // method that draws the map on the canvas
+    // If in reservation mode: if it's free, color it white, in activity = blue, in another activity = black
+    // If in mapping mode: If in activity and no mapping = Grey, in activity with mapping = Blue
     function drawBoard(canvasContext, posList, startList) {
 
         for(var j = 0; j < posList.length; j++) {
@@ -422,8 +448,6 @@ $(document).ready(function(){
 
             }
         }
-        // });
-
     }
 
     function drawHexagon(canvasContext, x, y, fill, i, j, fillColor) {
@@ -449,6 +473,7 @@ $(document).ready(function(){
         }
     }
 
+    // eventually will have other planets - not implemented yet
     $('.choose-loc').click(function () {
         mapLoc = $('[id=location]').val();
         if (mapLoc === "Earth") {
@@ -462,6 +487,8 @@ $(document).ready(function(){
         }
     });
 
+    // back button functionality: if there are no changes then simply go back without asking
+    // otherwise have user confirm they want to leave and discard all changes
     $('#back-button').click(function () {
         if ($('#hexmap').css('display') === 'none' && $('.map-side').css('display') === 'none'
             && $('.change-list').css('display') === 'none') {

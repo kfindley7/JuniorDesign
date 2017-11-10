@@ -20,6 +20,8 @@
         <li id="sensing-button"><a href="">Sensing</a></li>
         <li id="logout-button" class="logout"><a>Logout</a></li>
         <li class="title">
+            <!--this script pulls the activity name and editing type from the url that was
+             passed over from the selected activity home page-->
             <script>
                 var queryString = decodeURIComponent(window.location.search);
                 queryString = queryString.substring(1);
@@ -28,14 +30,6 @@
             </script>
         </li>
     </ul>
-    <!--<div>-->
-        <!--<div id="reserve" class='element js-game1'><p class='text edit-choice-text'>Edit Tile Reservations</p>-->
-            <!--<img class='image' src='android-arrow-dropright.png'>-->
-        <!--</div>-->
-        <!--<div id="mapping" class='element js-game1'><p class='text edit-choice-text'>Edit Tile Mappings</p>-->
-            <!--<img class='image' src='android-arrow-dropright.png'>-->
-        <!--</div>-->
-    <!--</div>-->
 
     <select id="location" class="location-dropdown">
         <option class="prototype" value="Prototype">PROTOTYPE</option>
