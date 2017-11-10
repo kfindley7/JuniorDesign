@@ -298,7 +298,8 @@ io.on('connection', function(socket) {
                     },
                     {
                         $set: {
-                            game: "FREE"
+                            game: "FREE",
+                            mapping: "NONE"
                         }
                     }
                 );
