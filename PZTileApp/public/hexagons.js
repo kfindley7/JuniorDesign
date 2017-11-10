@@ -190,6 +190,7 @@ $(document).ready(function(){
             $functionDropdown.append("<option class='tile-function-menu' value="
                 + functionList[i] + "> " + functionList[i] + "</option>")
         }
+        $functionDropdown.val(tile.mapping);
         $tileDiv.append($functionDropdown);
         $tileDiv.append("<button class='delete-tile-x' onclick='$(window).deleteTileFromChanges(event)'>&times;</button>");
         $('.change-list').append($tileDiv);
