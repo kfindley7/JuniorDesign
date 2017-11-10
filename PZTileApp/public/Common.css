@@ -108,6 +108,7 @@ li a:hover:not(.active) {
 
 .active {
     background-color: #236dff;
+    cursor: pointer;
 }
 
 .title {

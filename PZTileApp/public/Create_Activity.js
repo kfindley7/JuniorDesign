@@ -10,6 +10,7 @@ $(function() {
     var $logoutButton = $('#logout-button');
     var $backButton = $('#back-button');
     var $visualButton = $('#visual-button');
+    var $homeButton = $('#home-button');
 
     var activity;
     var activityName;
@@ -66,6 +67,13 @@ $(function() {
         var userConfirm = confirm("Are you sure you want to quit activity creation? Any unsaved changes will be lost.");
         if (userConfirm) {
             window.location = "visualization.html";
+        }
+    });
+
+    $homeButton.click(function () {
+        var userConfirm = confirm("Are you sure you want to quit activity creation? Any unsaved changes will be lost.");
+        if (userConfirm) {
+            window.location = "home-page.html";
         }
     });
 
