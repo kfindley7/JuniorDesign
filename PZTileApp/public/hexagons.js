@@ -3,8 +3,6 @@ $(document).ready(function(){
     var canvas = document.getElementById('hexmap');
     var canvasMapping = document.getElementById('map-left-side');
 
-    var reserveOrMapping = "";
-
     var free, inMine, usedOthers;
     var addTileList = [];
     var removeTileList = [];
@@ -27,6 +25,10 @@ $(document).ready(function(){
     queryString = queryString.substring(1);
     gameText = queryString.split("=")[1];
     console.log("GAME TEXT",gameText);
+
+    var gameTextAndEdit = gameText.split(" - ");
+    gameText = gameTextAndEdit[0];
+    var reserveOrMapping = gameTextAndEdit[1].toLowerCase();
 
     socket.emit('get function list', gameText);
     socket.emit('give all tiles',"Prototype",gameText);
@@ -67,6 +69,24 @@ $(document).ready(function(){
         free=f;
         inMine=m;
         usedOthers=o;
+        if (reserveOrMapping == 'reserve') {
+            $('#hexmap').show();
+            $('[id=location]').show();
+            $('.choose-loc').show();
+            $('.bottom-span-button').show();
+            $('[id=legend]').show();
+            drawBoard(ctx, posList, startList);
+        } else if (reserveOrMapping == 'mapping') {
+            $('.map-side').show();
+            $('.change-list').show();
+            $('#hexmap').hide();
+            $('#map-left-side').show();
+            $('#mapping-legend').show();
+            $('#location2').show();
+            $('#loc-button').show();
+            $('.bottom-span-button').show();
+            drawBoard(ctxMap, posList, startList);
+        }
     });
 
     function setupListenersForCanvas(canvas) {
@@ -449,52 +469,13 @@ $(document).ready(function(){
             if (changes) {
                 var userConfirm = confirm("Are you sure you want to go back? Any unsaved changes may be lost.");
                 if (userConfirm) {
-                    $('.js-game1').show();
-                    $('#hexmap').hide();
-                    $('[id=location]').hide();
-                    $('.choose-loc').hide();
-                    $('.bottom-span-button').hide();
-                    $('[id=legend]').hide();
-                    $('.map-side').hide();
-                    $('.change-list').hide();
+                    window.location.replace("home-page.html");
                 }
                 changes = false;
             } else {
-                $('.js-game1').show();
-                $('#hexmap').hide();
-                $('[id=location]').hide();
-                $('.choose-loc').hide();
-                $('.bottom-span-button').hide();
-                $('[id=legend]').hide();
-                $('.map-side').hide();
-                $('.change-list').hide();
+                window.location.replace("home-page.html");
             }
         }
-    });
-
-    $('[id=reserve]').click(function() {
-        reserveOrMapping = 'reserve';
-        $('.js-game1').hide();
-        $('#hexmap').show();
-        $('[id=location]').show();
-        $('.choose-loc').show();
-        $('.bottom-span-button').show();
-        $('[id=legend]').show();
-        drawBoard(ctx, posList, startList);
-    });
-
-    $('#mapping').click(function () {
-        reserveOrMapping = 'mapping';
-        $('.js-game1').hide();
-        $('.map-side').show();
-        $('.change-list').show();
-        $('#hexmap').hide();
-        $('#map-left-side').show();
-        $('#mapping-legend').show();
-        $('#location2').show();
-        $('#loc-button').show();
-        $('.bottom-span-button').show();
-        drawBoard(ctxMap, posList, startList);
     });
 
 });
