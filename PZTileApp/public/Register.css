@@ -46,6 +46,12 @@ body {
     color: rgb(0, 0, 0);
 }
 
+.button_register {
+  background-color: #286CEE ;
+  color: white;
+  /* Rectangle 160: */
+}
+
 ._input {
     display: block;
     clear: both;
