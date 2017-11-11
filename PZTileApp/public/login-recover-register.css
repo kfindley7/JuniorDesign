@@ -12,6 +12,20 @@ body {
   color: rgb(0, 0, 0);
 }
 
+.background {
+    background-color: rgb(0, 0, 0);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 500px;
+    width: 500px;
+    margin: auto;
+    margin-top: 60px;
+    /* Rectangle: */
+    background: #FFFFFF;
+    box-shadow: 0 12px 15px 0 rgba(0,0,0,0.13);
+}
+
+
 .text {
   margin-right: auto;
   margin-left: auto;
@@ -20,13 +34,22 @@ body {
   color: rgb(0, 0, 0);
 }
 
+.text-1 {
+    margin-top: 10px;
+    font-style: inherit;
+    font-size: 1.65em;
+    font-weight: inherit;
+    color: inherit;
+}
 ._button {
   display: block;
-  float: left;
   clear: both;
-  width: 12%;
+  width: 70%;
   height: 34px;
-  margin: 62px 0 0 44%;
+  margin: 62px 0 0 0;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 0px
   border-radius: 3px;
   background-color: rgb(222, 222, 222);
   font-size: 1em;
@@ -34,20 +57,27 @@ body {
   color: rgb(0, 0, 0);
 }
 
+.button_login {
+  background-color: #286CEE ;
+  color: white;
+  /* Rectangle 160: */
+}
+
 ._input {
   display: block;
-  float: left;
   clear: both;
   height: 35px;
   margin-left: 36.39871%;
   padding: 0 10px;
   border: 1px solid rgb(0, 0, 0);
+  border-color: #D9D9D7;
   border-radius: 2px;
   background: rgb(255, 255, 255);
   font-size: 0.813em;
   text-align: center;
   color: rgb(0, 0, 0);
 }
+
 
 .title {
   margin-top: 105px;
@@ -67,7 +97,7 @@ body {
 }
 
 .passwordText {
-  margin-top: 84px;
+  margin-top: 30px;
   font-style: normal;
   font-size: inherit;
   font-weight: 700;
@@ -81,8 +111,8 @@ body {
 }
 
 ._input-1 {
-  width: 27.2%;
-  margin-bottom: 10px;
+  width: 70%;
+  margin: 0 auto 0;
 }
 
 .text span {
@@ -144,15 +174,16 @@ body {
 }
 
 button {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
 }
 
 .button-small{
   font-style: normal;
   font-size: 0.75em;
   font-weight: 700;
-  width: 10%;
+  width: 70%;
   margin: auto;
+  margin-top: 10px;
   height: 30px;
   float: inherit;
 }
